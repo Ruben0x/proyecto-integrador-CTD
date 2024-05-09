@@ -107,17 +107,29 @@ export const AddProductForm = () => {
         </FormControl>
         {/* UPLOAD IMAGE */}
         <FormControl>
-          <OutlinedInput
+          {/* <OutlinedInput
             id='imagen'
-            name='imagen'
+            name='imagen[]'
             type='file'
             accept='image/*'
+            multiple
             //   onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             onChange={(e) =>
               formik.setFieldValue('imagen', e.currentTarget.files[0])
             }
-          ></OutlinedInput>
+          ></OutlinedInput> */}
+          <input
+            type='file'
+            multiple
+            id='imagen'
+            name='imagen[]'
+            accept='image/*'
+            onBlur={formik.handleBlur}
+            onChange={(e) =>
+              formik.setFieldValue('imagen', e.currentTarget.files)
+            }
+          />
         </FormControl>
         {/* UPLOAD IMAGE */}
         <Button color='primary' variant='contained' fullWidth type='submit'>

@@ -6,7 +6,7 @@ const port = process.env.PORT ?? 3000;
 
 app.use(cors()); //Enable CORS
 
-app.get('/hola', (req, res) => {
+app.get('/', (req, res) => {
   return res.status(200).json({ data: [], message: 'Hola mundo!' });
 });
 
