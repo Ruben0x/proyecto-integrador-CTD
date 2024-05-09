@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-
-
-const Card = () => {
-
-
-return(null)
-
-}
-export default Card;
+const InstrumentCard = () => {
+  return (
+    <>
+      <h1>Listado de Productos</h1>
+    </>
+  );
+};
+export default InstrumentCardCard;
