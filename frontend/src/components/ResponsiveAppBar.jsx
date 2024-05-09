@@ -49,8 +49,9 @@ function ResponsiveAppBar() {
           >
             LOREM IMPSUM
           </Typography>
-
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          </Link>
           <Typography
             variant='h5'
             noWrap
@@ -73,24 +74,24 @@ function ResponsiveAppBar() {
               display: { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
-            <Link to={'/login'} style={{ textDecoration: 'none' }}>
-              <Button
-                variant='contained'
-                color='primary'
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Iniciar Sesión
-              </Button>
-            </Link>
-            <Link to={'/createuser'} style={{ textDecoration: 'none' }}>
-              <Button
-                variant='contained'
-                color='primary'
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Crear Cuenta
-              </Button>
-            </Link>
+            {/* <Link to={'/login'} style={{ textDecoration: 'none' }}> */}
+            <Button
+              variant='contained'
+              color='primary'
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Iniciar Sesión
+            </Button>
+            {/* </Link> */}
+            {/* <Link to={'/createuser'} style={{ textDecoration: 'none' }}> */}
+            <Button
+              variant='contained'
+              color='primary'
+              sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              Crear Cuenta
+            </Button>
+            {/* </Link> */}
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
