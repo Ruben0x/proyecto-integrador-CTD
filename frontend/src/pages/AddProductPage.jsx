@@ -7,7 +7,6 @@ export const AddProductPage = () => {
   return (
     <Container>
       <Typography variant='h4' sx={{ py: 3 }}>
-        {' '}
         Agregar Producto
       </Typography>
       <AddProductForm />

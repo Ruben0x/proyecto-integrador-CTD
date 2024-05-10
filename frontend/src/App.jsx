@@ -8,6 +8,7 @@ import ResponsiveBody from './components/ResponsiveBody';
 import { AddProductPage } from './pages/AddProductPage';
 
 import { AdminPage } from './pages/AdminPage';
+import { AdminProductList } from './pages/AdminProductList';
 
 export const App = () => {
   return (
@@ -17,8 +18,9 @@ export const App = () => {
         <Route element={<LogInPage />} path='/login' />
         <Route element={<CreateNewUserPage />} path='/createuser' />
         <Route element={<HomePage />} path='/' />
-        <Route element={<AddProductPage />} path='/addProduct' />
-        <Route element={<AdminPage />} path='/administrador' />
+        <Route element={<AdminPage />} path='/administracion' />
+        <Route element={<AddProductPage />} path='/agregar-producto' />
+        <Route element={<AdminProductList />} path='/listar-productos' />
       </Routes>
     </>
   );
