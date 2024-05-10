@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { Divider } from '@mui/material';
 import logoportalsonoroprincipal from "../assets/img/logoportalsonoroprincipal.png"
 import logomobile from "../assets/img/logomobile.png"
+
 const pages = ['Crear Cuenta', 'Iniciar Sesión'];
 
 function ResponsiveAppBar() {
@@ -27,7 +28,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position='sticky'>
+    <AppBar position='sticky' color="neutralColor">
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Link to={'/'} style={{ textDecoration: 'none' }}>
