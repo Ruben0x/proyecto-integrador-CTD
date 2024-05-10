@@ -9,8 +9,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import AdbIcon from '@mui/icons-material/GolfCourse';
 import { Link } from 'react-router-dom';
+import { Divider } from '@mui/material';
 
 const pages = ['Crear Cuenta', 'Iniciar Sesión'];
 
