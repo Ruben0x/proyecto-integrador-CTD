@@ -9,10 +9,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/GolfCourse';
 import { Link } from 'react-router-dom';
 import { Divider } from '@mui/material';
-
+import logoportalsonoroprincipal from "../assets/img/logoportalsonoroprincipal.png"
+import logomobile from "../assets/img/logomobile.png"
 const pages = ['Crear Cuenta', 'Iniciar Sesión'];
 
 function ResponsiveAppBar() {
@@ -31,7 +31,7 @@ function ResponsiveAppBar() {
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+           <Divider sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}><img src= { logoportalsonoroprincipal } alt="" /></Divider>
           </Link>
 
           <Typography
@@ -48,10 +48,9 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOREM IMPSUM
           </Typography>
           <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Divider sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}><img src= { logomobile } alt="" /></Divider>
           </Link>
           <Typography
             variant='h5'
