@@ -9,6 +9,7 @@ import { AddProductPage } from './pages/AddProductPage';
 
 import { AdminPage } from './pages/AdminPage';
 import { AdminProductList } from './pages/AdminProductList';
+import { Footer } from './components/Footer';
 
 export const App = () => {
   return (
