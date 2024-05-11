@@ -18,10 +18,11 @@ export const App = () => {
         <Route element={<LogInPage />} path='/login' />
         <Route element={<CreateNewUserPage />} path='/createuser' />
         <Route element={<HomePage />} path='/' />
-        <Route element={<AdminPage />} path='/administracion' />
-        <Route element={<AddProductPage />} path='/agregar-producto' />
-        <Route element={<AdminProductList />} path='/listar-productos' />
+        <Route element={<AddProductPage />} path='/addProduct' />
+        <Route element={<AdminPage />} path='/administrador' />
       </Routes>
+
+      <Footer />
     </>
   );
 };
