@@ -21,6 +21,11 @@ export const App = () => {
         <Route element={<HomePage />} path='/' />
         <Route element={<AddProductPage />} path='/addProduct' />
         <Route element={<AdminPage />} path='/administrador' />
+        <Route element={<LogInPage />} path='/login' />
+        <Route element={<CreateNewUserPage />} path='/createuser' />
+        <Route element={<HomePage />} path='/' />
+        <Route element={<AddProductPage />} path='/addProduct' />
+        <Route element={<AdminPage />} path='/administrador' />
       </Routes>
 
       <Footer />
