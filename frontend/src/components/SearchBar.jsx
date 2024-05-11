@@ -20,9 +20,9 @@ export default function SearchBar({maxWidth}) {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="Busca acá tu Instrumento"
-        inputProps={{ 'aria-label': 'Busca acá tu Instrumento' }}
+        inputProps={{ 'Poppins': 'Busca acá tu Instrumento' }}
       />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+      <IconButton type="button" sx={{ p: '10px' }} Poppins="search">
         <SearchIcon />
       </IconButton>
 
