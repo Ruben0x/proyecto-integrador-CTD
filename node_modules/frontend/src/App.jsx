@@ -16,16 +16,12 @@ export const App = () => {
     <>
       <ResponsiveAppBar />
       <Routes>
+        <Route element={<HomePage />} path='/' />
         <Route element={<LogInPage />} path='/login' />
         <Route element={<CreateNewUserPage />} path='/createuser' />
-        <Route element={<HomePage />} path='/' />
-        <Route element={<AddProductPage />} path='/addProduct' />
-        <Route element={<AdminPage />} path='/administrador' />
-        <Route element={<LogInPage />} path='/login' />
-        <Route element={<CreateNewUserPage />} path='/createuser' />
-        <Route element={<HomePage />} path='/' />
-        <Route element={<AddProductPage />} path='/addProduct' />
-        <Route element={<AdminPage />} path='/administrador' />
+        <Route element={<AdminPage />} path='/administracion' />
+        <Route element={<AdminProductList />} path='/listar-productos' />
+        <Route element={<AddProductPage />} path='/agregar-productos' />
       </Routes>
 
       <Footer />

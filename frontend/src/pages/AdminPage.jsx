@@ -1,7 +1,6 @@
 import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MenuAdmin } from '../components/MenuAdmin';
 
 export const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(
@@ -31,21 +30,23 @@ export const AdminPage = () => {
           </Typography>
         </Container>
       ) : (
-        <Box sx={{ display: 'flex' }}>
-          {/* <PanelAdmin /> */}
-          <ul>
-            <li>
-              <Link to={'/agregar-producto'}>
-                <Button color='primary'>Agregar Producto</Button>
-              </Link>
-            </li>
-            <li>
-              <Link to={'/listar-productos'}>
-                <Button color='primary'>Lista de productos</Button>
-              </Link>
-            </li>
-          </ul>
-        </Box>
+        <>
+          <Box sx={{ display: 'flex' }}>
+            {/* <PanelAdmin /> */}
+            <ul>
+              <li>
+                <Link to={'/agregar-productos'}>
+                  <Button color='primary'>Agregar Producto</Button>
+                </Link>
+              </li>
+              <li>
+                <Link to={'/listar-productos'}>
+                  <Button color='primary'>Lista de productos</Button>
+                </Link>
+              </li>
+            </ul>
+          </Box>
+        </>
       )}
     </>
   );

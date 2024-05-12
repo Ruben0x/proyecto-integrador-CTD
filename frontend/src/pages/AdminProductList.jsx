@@ -1,5 +1,34 @@
-import React from 'react';
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { instrumentos } from '../assets/utils';
+import { Box, Container } from '@mui/material';
 
-export const AdminProductList = () => {
-  return <></>;
+const columns = [
+  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'nombre', headerName: 'Nombre', width: 130 },
+  { field: 'acciones', headerName: 'Acciones', width: 130 },
+];
+
+export const AdminProductList = ({}) => {
+  instrumentos;
+
+  return (
+    <Container
+      sx={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}
+    >
+      <Box sx={{ height: 400, width: '60%' }}>
+        <DataGrid
+          rows={instrumentos}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+        />
+      </Box>
+    </Container>
+  );
 };
