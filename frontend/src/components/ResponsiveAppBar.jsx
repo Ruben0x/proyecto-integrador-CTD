@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,25 +15,6 @@ import logoportalsonoroprincipal from "../assets/img/logoportalsonoroprincipal.p
 import logomobile from "../assets/img/logomobile.png";
 
 const pages = ["Crear Cuenta", "Iniciar Sesión"];
-=======
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
-import { Divider } from '@mui/material';
-import logoportalsonoroprincipal from "../assets/img/logoportalsonoroprincipal.png"
-import logomobile from "../assets/img/logomobile.png"
-
-const pages = ['Crear Cuenta', 'Iniciar Sesión'];
->>>>>>> 433c1edd44d0653bd511f589b3f8756de7d7d750
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -48,13 +28,8 @@ function ResponsiveAppBar() {
   };
 
   return (
-<<<<<<< HEAD
     <AppBar position="sticky">
       <Container maxWidth="xl">
-=======
-    <AppBar position='sticky' color="neutralColor">
-      <Container maxWidth='xl'>
->>>>>>> 433c1edd44d0653bd511f589b3f8756de7d7d750
         <Toolbar disableGutters>
           <Link to={"/"} style={{ textDecoration: "none" }}>
             <Divider sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
