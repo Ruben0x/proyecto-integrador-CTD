@@ -13,6 +13,7 @@ export const App = () => {
   return (
     <>
       <ResponsiveAppBar />
+
       <Routes>
         <Route element={<LogInPage />} path='/login' />
         <Route element={<CreateNewUserPage />} path='/createuser' />

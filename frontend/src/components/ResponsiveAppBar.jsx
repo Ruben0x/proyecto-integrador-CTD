@@ -1,18 +1,18 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
-import { Divider } from "@mui/material";
-import logoportalsonoroprincipal from "../assets/img/logoportalsonoroprincipal.png";
-import logomobile from "../assets/img/logomobile.png";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import { Link } from 'react-router-dom';
+import { Divider } from '@mui/material';
+import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
+import logomobile from '../assets/img/logomobile.png';
 
 const pages = ["Crear Cuenta", "Iniciar Sesión"];
 
@@ -28,12 +28,12 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="sticky" color="neutralColor">
-      <Container maxWidth="xl">
+    <AppBar position='sticky' color='neutralColor'>
+      <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Divider sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
-              <img src={logoportalsonoroprincipal} alt="" />
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <Divider sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+              <img src={logoportalsonoroprincipal} alt='' />
             </Divider>
           </Link>
 
@@ -51,9 +51,9 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           ></Typography>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Divider sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-              <img src={logomobile} alt="" />
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <Divider sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+              <img src={logomobile} alt='' />
             </Divider>
           </Link>
           <Typography
@@ -91,8 +91,6 @@ function ResponsiveAppBar() {
               }}
             >
               Crear Cuenta
-              {/* </Link> */}
-              {/* <Link to={'/createuser'} style={{ textDecoration: 'none' }}> */}
             </Button>
 
             <Button
@@ -108,7 +106,6 @@ function ResponsiveAppBar() {
               }}
             >
               Iniciar Sesión
-              {/* <Link to={'/login'} style={{ textDecoration: 'none' }}> */}
             </Button>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>

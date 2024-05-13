@@ -1,4 +1,3 @@
-import * as React from 'react';
 //import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import SearchBar from './SearchBar';
@@ -32,13 +31,33 @@ const ResponsiveBody = () => {
               : 'right',
           }}
         >
-          <Typography color={'whitesmoke'}>
-            Bienvenido a PORTAL SONORO!{' '}
-          </Typography>
-          <Typography color={'whitesmoke'}>
+            <Typography
+            color={'#FFFFFF'}
+            variant="body1"
+            inline
+            fontSize={32}
+            >
+                Bienvenido a 
+                <Typography
+                variant="body1"
+                sx={{
+                fontWeight: '800',
+                color: '#FF5500',
+                display: 'inline',
+                fontSize:32,
+                }}
+                inline
+                >
+                    {' '}PORTAL SONORO!
+                </Typography> 
+            </Typography>
+
+            <Typography 
+            color={'#FFFFFF'}
+            fontSize={20}>
             Encuentra el equipamiento perfecto para ti
-          </Typography>
-          <SearchBar maxWidth='733px' />
+            </Typography>
+            <SearchBar maxWidth='733px' />
         </Container>
 
         <Container
@@ -49,7 +68,24 @@ const ResponsiveBody = () => {
             height: '300px',
           }}
         >
-          <Typography>Categorías </Typography>
+            <Typography 
+            fontWeight='bold'
+            fontSize={12}>
+                Revisa las categorías - Reserva tus opciones
+            </Typography>   
+            <Typography 
+            
+            fontSize={20}>
+                ENCUENTRA TU {' '}
+                <Typography
+                 fontWeight='800'
+                 fontSize={20}
+                 color={'#FF5500'}
+                 display={'inline'}>
+                    EQUIPAMIENTO
+                </Typography>     
+            </Typography>   
+        [CARDS]
         </Container>
 
         <Container
@@ -58,14 +94,28 @@ const ResponsiveBody = () => {
           sx={{
             width: '100vw',
             height: '300px',
-          }}
-        >
-          <Typography>Recomendados</Typography>
+          }}>
+            <Typography 
+            fontWeight='800'
+            fontSize={20}>
+                <Typography
+                 fontWeight='800'
+                 fontSize={20}
+                 color={'#FF5500'}
+                 display={'inline'}>
+                    100% {' '}
+                </Typography>
+                RECOMENDADOS     
+            </Typography> 
+            <Typography 
+            fontWeight='600'
+            fontSize={12}>
+                Creemos que estas alternativas son perfectas para ti
+            </Typography>
+            [CARDS]
         </Container>
       </Stack>
     </div>
-    //<section class= "secCategorias">Categorías</section>
-    //<section class = "secRecomendados">Recomendados</section>
   );
 };
 export default ResponsiveBody;
