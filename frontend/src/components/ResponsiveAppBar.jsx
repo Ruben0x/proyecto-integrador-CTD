@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,6 +16,25 @@ import logoportalsonoroprincipal from "../assets/img/logoportalsonoroprincipal.p
 import logomobile from "../assets/img/logomobile.png";
 
 const pages = ["Crear Cuenta", "Iniciar Sesión"];
+=======
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import { Link } from 'react-router-dom';
+import { Divider } from '@mui/material';
+import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
+import logomobile from '../assets/img/logomobile.png';
+
+const pages = ['Crear Cuenta', 'Iniciar Sesión'];
+>>>>>>> b8d7e1c04b49281a40fae595025baa6574c7c472
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -28,107 +48,112 @@ function ResponsiveAppBar() {
   };
 
   return (
+<<<<<<< HEAD
     <AppBar position="sticky">
       <Container maxWidth="xl">
+=======
+    <AppBar position='sticky' color='neutralColor'>
+      <Container maxWidth='xl'>
+>>>>>>> b8d7e1c04b49281a40fae595025baa6574c7c472
         <Toolbar disableGutters>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Divider sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
-              <img src={logoportalsonoroprincipal} alt="" />
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <Divider sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+              <img src={logoportalsonoroprincipal} alt='' />
             </Divider>
           </Link>
 
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="a"
+            component='a'
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           ></Typography>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Divider sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-              <img src={logomobile} alt="" />
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <Divider sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+              <img src={logomobile} alt='' />
             </Divider>
           </Link>
           <Typography
-            variant="h5"
+            variant='h5'
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component='a'
+            href='#app-bar-with-responsive-menu'
             sx={{
               mr: 2,
-              display: { xs: "flex", md: "none" },
+              display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           ></Typography>
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex", justifyContent: "flex-end" },
+              display: { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
             {/* <Link to={'/login'} style={{ textDecoration: 'none' }}> */}
             <Button
-              variant="contained"
-              color="primary"
-              sx={{ my: 2, color: "white", display: "block" }}
+              variant='contained'
+              color='primary'
+              sx={{ my: 2, color: 'white', display: 'block' }}
             >
-             Crear Cuenta 
+              Crear Cuenta
             </Button>
             {/* </Link> */}
             {/* <Link to={'/createuser'} style={{ textDecoration: 'none' }}> */}
             <Button
-              variant="contained"
-              color="primary"
-              sx={{ my: 2, color: "white", display: "block" }}
+              variant='contained'
+              color='primary'
+              sx={{ my: 2, color: 'white', display: 'block' }}
             >
               Iniciar Sesión
             </Button>
             {/* </Link> */}
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color='inherit'
             >
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign='center'>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
