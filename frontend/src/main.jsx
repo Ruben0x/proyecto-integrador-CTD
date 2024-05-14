@@ -1,28 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import { BrowserRouter } from 'react-router-dom';
-import { App } from './App.jsx';
-import { createTheme } from '@mui/material';
-import { ThemeProvider } from '@emotion/react';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+import { App } from "./App.jsx";
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#ff5000',
+      main: "#ff5000", // orange
     },
     secondary: {
-      main: '#121312',
+      main: "#121312", // dark lime green
     },
     terceario: {
-      main: '#000000',
+      main: "#000000", // black
     },
     neutralColor: {
-      main: '#ffffff',
+      main: "#ffffff", // white
     },
   },
 });
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
       <App />

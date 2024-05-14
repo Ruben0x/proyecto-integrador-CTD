@@ -9,12 +9,11 @@ import MediaCard from './Card';
 
 //===HARDCODEO DE CATEGORIAS
 const arrayhardcode = [
-  { imagen: "/images/cuerdas-categorias.png", categoria: "cuerdas" },
-  { imagen: "/images/percusiones-categorias.png", categoria: "percusiones" },
-  { imagen: "/images/teclas-categorias.png", categoria: "teclas" },
-  { imagen: "/images/teclas-categorias.png", categoria: "teclas" }
+  { imagen: '/images/cuerdas-categorias.png', categoria: 'cuerdas' },
+  { imagen: '/images/percusiones-categorias.png', categoria: 'percusiones' },
+  { imagen: '/images/teclas-categorias.png', categoria: 'teclas' },
+  { imagen: '/images/teclas-categorias.png', categoria: 'teclas' },
 ];
-
 
 const ResponsiveBody = () => {
   //const {state, dispatch} = useGlobalStates();
@@ -24,7 +23,6 @@ const ResponsiveBody = () => {
       <Stack
         spacing={2}
         sx={{
-          
           backgroundColor: '#F9E9DE',
           width: '100vw',
         }}
@@ -37,36 +35,32 @@ const ResponsiveBody = () => {
             backgroundSize: 'fill',
             width: '100vw',
             height: '300px',
-            backgroundPosition: useMediaQuery('(max-width:900px)')? 'calc(0% - 490px + 10%)' : 'right',
+            backgroundPosition: useMediaQuery('(max-width:900px)')
+              ? 'calc(0% - 490px + 10%)'
+              : 'right',
           }}
         >
+          <Typography color={'#FFFFFF'} variant='body1' inline fontSize={32}>
+            Bienvenido a
             <Typography
-            color={'#FFFFFF'}
-            variant="body1"
-            inline
-            fontSize={32}
-            >
-                Bienvenido a 
-                <Typography
-                variant="body1"
-                sx={{
+              variant='body1'
+              sx={{
                 fontWeight: '800',
                 color: '#FF5500',
                 display: 'inline',
-                fontSize:32,
-                }}
-                inline
-                >
-                    {' '}PORTAL SONORO!
-                </Typography> 
+                fontSize: 32,
+              }}
+              inline
+            >
+              {' '}
+              PORTAL SONORO!
             </Typography>
+          </Typography>
 
-            <Typography 
-            color={'#FFFFFF'}
-            fontSize={20}>
+          <Typography color={'#FFFFFF'} fontSize={20}>
             Encuentra el equipamiento perfecto para ti
-            </Typography>
-            <SearchBar maxWidth='733px' />
+          </Typography>
+          <SearchBar maxWidth='733px' />
         </Container>
 
         <Container
@@ -74,40 +68,23 @@ const ResponsiveBody = () => {
           className='section-categorias'
           sx={{
             width: '100vw',
-            
           }}
         >
-            <Typography 
-            fontWeight='bold'
-            fontSize={12}>
-                Revisa las categorías - Reserva tus opciones
-            </Typography>   
-            <Typography 
-            
-            fontSize={20}>
-                ENCUENTRA TU {' '}
-                <Typography
-                 fontWeight='800'
-                 fontSize={20}
-                 color={'#FF5500'}
-                 display={'inline'}>
-                    EQUIPAMIENTO
-                </Typography>     
-            </Typography>   
-            
-            {/*/contenedor de tarjeta: **esta hardcodeado***/}
-            <Container sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: useMediaQuery('(max-width:736px)')? 'center' : 'space-between',
-              alignContent:"center",
-              flexWrap: "wrap",
-              }}>
-              {arrayhardcode.map((item, index) => (
-              <MediaCard imagen={item.imagen} categoria={item.categoria} key={index}/>
-              ))}
-
-            </Container>
+          <Typography fontWeight='bold' fontSize={12}>
+            Revisa las categorías - Reserva tus opciones
+          </Typography>
+          <Typography fontSize={20}>
+            ENCUENTRA TU{' '}
+            <Typography
+              fontWeight='800'
+              fontSize={20}
+              color={'#FF5500'}
+              display={'inline'}
+            >
+              EQUIPAMIENTO
+            </Typography>
+          </Typography>
+          [CARDS]
         </Container>
 
         <Container
@@ -116,25 +93,23 @@ const ResponsiveBody = () => {
           sx={{
             width: '100vw',
             height: '300px',
-          }}>
-            <Typography 
-            fontWeight='800'
-            fontSize={20}>
-                <Typography
-                 fontWeight='800'
-                 fontSize={20}
-                 color={'#FF5500'}
-                 display={'inline'}>
-                    100% {' '}
-                </Typography>
-                RECOMENDADOS     
-            </Typography> 
-            <Typography 
-            fontWeight='600'
-            fontSize={12}>
-                Creemos que estas alternativas son perfectas para ti
+          }}
+        >
+          <Typography fontWeight='800' fontSize={20}>
+            <Typography
+              fontWeight='800'
+              fontSize={20}
+              color={'#FF5500'}
+              display={'inline'}
+            >
+              100%{' '}
             </Typography>
-            [CARDS]
+            RECOMENDADOS
+          </Typography>
+          <Typography fontWeight='600' fontSize={12}>
+            Creemos que estas alternativas son perfectas para ti
+          </Typography>
+          [CARDS]
         </Container>
       </Stack>
     </div>
