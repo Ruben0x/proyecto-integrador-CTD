@@ -1,6 +1,6 @@
-import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Sidenav } from '../admin/Sidenav';
 
 export const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(
@@ -31,21 +31,7 @@ export const AdminPage = () => {
         </Container>
       ) : (
         <>
-          <Box sx={{ display: 'flex' }}>
-            {/* <PanelAdmin /> */}
-            <ul>
-              <li>
-                <Link to={'/agregar-productos'}>
-                  <Button color='primary'>Agregar Producto</Button>
-                </Link>
-              </li>
-              <li>
-                <Link to={'/listar-productos'}>
-                  <Button color='primary'>Lista de productos</Button>
-                </Link>
-              </li>
-            </ul>
-          </Box>
+          <Sidenav />
         </>
       )}
     </>

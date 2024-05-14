@@ -13,10 +13,8 @@ export const AdminProductList = ({}) => {
   instrumentos;
 
   return (
-    <Container
-      sx={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}
-    >
-      <Box sx={{ height: 400, width: '60%' }}>
+    <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ width: '70%' }}>
         <DataGrid
           rows={instrumentos}
           columns={columns}
