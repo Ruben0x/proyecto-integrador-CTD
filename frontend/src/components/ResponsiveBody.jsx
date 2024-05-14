@@ -84,7 +84,27 @@ const ResponsiveBody = () => {
               EQUIPAMIENTO
             </Typography>
           </Typography>
-          [CARDS]
+
+          {/*/contenedor de tarjeta: **esta hardcodeado***/}
+          <Container
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: useMediaQuery('(max-width:736px)')
+                ? 'center'
+                : 'space-between',
+              alignContent: 'center',
+              flexWrap: 'wrap',
+            }}
+          >
+            {arrayhardcode.map((item, index) => (
+              <MediaCard
+                imagen={item.imagen}
+                categoria={item.categoria}
+                key={index}
+              />
+            ))}
+          </Container>
         </Container>
 
         <Container
