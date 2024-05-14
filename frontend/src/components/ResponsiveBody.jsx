@@ -1,9 +1,20 @@
 //import { Link } from 'react-router-dom';
+import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
 import { useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import MediaCard from './Card';
+
+//===HARDCODEO DE CATEGORIAS
+const arrayhardcode = [
+  { imagen: "/images/cuerdas-categorias.png", categoria: "cuerdas" },
+  { imagen: "/images/percusiones-categorias.png", categoria: "percusiones" },
+  { imagen: "/images/teclas-categorias.png", categoria: "teclas" },
+  { imagen: "/images/teclas-categorias.png", categoria: "teclas" }
+];
+
 
 const ResponsiveBody = () => {
   //const {state, dispatch} = useGlobalStates();
@@ -13,7 +24,7 @@ const ResponsiveBody = () => {
       <Stack
         spacing={2}
         sx={{
-          height: '100vh',
+          
           backgroundColor: '#F9E9DE',
           width: '100vw',
         }}
@@ -26,9 +37,7 @@ const ResponsiveBody = () => {
             backgroundSize: 'fill',
             width: '100vw',
             height: '300px',
-            backgroundPosition: useMediaQuery('(max-width:900px)')
-              ? 'calc(0% - 490px + 10%)'
-              : 'right',
+            backgroundPosition: useMediaQuery('(max-width:900px)')? 'calc(0% - 490px + 10%)' : 'right',
           }}
         >
             <Typography
@@ -65,7 +74,7 @@ const ResponsiveBody = () => {
           className='section-categorias'
           sx={{
             width: '100vw',
-            height: '300px',
+            
           }}
         >
             <Typography 
@@ -85,7 +94,20 @@ const ResponsiveBody = () => {
                     EQUIPAMIENTO
                 </Typography>     
             </Typography>   
-        [CARDS]
+            
+            {/*/contenedor de tarjeta: **esta hardcodeado***/}
+            <Container sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: useMediaQuery('(max-width:736px)')? 'center' : 'space-between',
+              alignContent:"center",
+              flexWrap: "wrap",
+              }}>
+              {arrayhardcode.map((item, index) => (
+              <MediaCard imagen={item.imagen} categoria={item.categoria} key={index}/>
+              ))}
+
+            </Container>
         </Container>
 
         <Container
