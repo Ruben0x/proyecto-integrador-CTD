@@ -1,31 +1,35 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import { BrowserRouter } from "react-router-dom";
-import { App } from "./App.jsx";
-import { createTheme } from "@mui/material";
-import { ThemeProvider } from "@emotion/react";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from './App.jsx';
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+import { ItemsContext } from '../context/ItemsContext.jsx';
+import { ItemsProvider } from '../context/ItemsProvider.jsx';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#ff5000", // orange
+      main: '#ff5000', // orange
     },
     secondary: {
-      main: "#121312", // dark lime green
+      main: '#121312', // dark lime green
     },
     terceario: {
-      main: "#000000", // black
+      main: '#000000', // black
     },
     neutralColor: {
-      main: "#ffffff", // white
+      main: '#ffffff', // white
     },
   },
 });
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <ItemsProvider>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </ItemsProvider>
   </BrowserRouter>
 );

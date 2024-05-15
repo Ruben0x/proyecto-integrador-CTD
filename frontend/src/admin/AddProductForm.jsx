@@ -39,12 +39,12 @@ export const AddProductForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      nombreProducto: '',
-      marca: '',
-      categoria: '',
+      nombre: '',
       descripcion: '',
+      marcaId: '',
+      categoriaId: '',
       precio: '',
-      imagen: '',
+      imagenes: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
