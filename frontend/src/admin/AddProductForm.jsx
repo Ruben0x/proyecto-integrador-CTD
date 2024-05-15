@@ -2,10 +2,10 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
-  Box,
   Button,
   Container,
   FormControl,
+  FormHelperText,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -20,19 +20,31 @@ export const AddProductForm = () => {
       .min(2, 'Mínimo 2 caracteres')
       .max(20, 'Máximo 20 caracteres')
       .required('Nombre es obligatorio'),
-    descripcion: Yup.string('Enter your password')
-      .min(8, 'Password should be of minimum 8 characters length')
-      .required('Password is required'),
+    marca: Yup.string('Ingrese la Marca del producto')
+      .min(2, 'Mínimo 2 caracteres')
+      .max(20, 'Máximo 20 caracteres')
+      .required('Marca es obligatorio'),
+    categoria: Yup.string('Ingrese la categoría').required(
+      'Debe seleccionar una categoría'
+    ),
+    descripcion: Yup.string('Ingrese descripción del producto').required(
+      'El producto debe tener una descripción'
+    ),
+    precio: Yup.number('Ingrese precio')
+      .typeError('El precio debe estar en números')
+      .required('Debe ingresar un precio')
+      .min(0, 'El precio no puede ser menor a 0'),
     imagen: Yup.mixed().required('Required!'),
   });
 
   const formik = useFormik({
     initialValues: {
-      nombreProducto: '',
-      categoria: '',
+      nombre: '',
       descripcion: '',
+      marcaId: '',
+      categoriaId: '',
       precio: '',
-      imagen: '',
+      imagenes: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -64,6 +76,16 @@ export const AddProductForm = () => {
             formik.touched.nombreProducto && formik.errors.nombreProducto
           }
         />
+        <TextField
+          id='marca'
+          name='marca'
+          label='Marca'
+          value={formik.values.marca}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.marca && Boolean(formik.errors.marca)}
+          helperText={formik.touched.marca && formik.errors.marca}
+        />
         <FormControl fullWidth>
           <InputLabel>Categoría</InputLabel>
           <Select
@@ -73,17 +95,24 @@ export const AddProductForm = () => {
             value={formik.values.categoria}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={formik.touched.categoria && Boolean(formik.errors.categoria)}
           >
-            <MenuItem value={'guitarra'}>Guitarra</MenuItem>
-            <MenuItem value={'piano'}>Piano</MenuItem>
-            <MenuItem value={'bateria'}>Bateria</MenuItem>
+            <MenuItem value={'cuerda'}>Cuerda</MenuItem>
+            <MenuItem value={'viento'}>Viento</MenuItem>
+            <MenuItem value={'percusion'}>Percusión</MenuItem>
+            <MenuItem value={'teclado'}>Teclado</MenuItem>
+            <MenuItem value={'electronicos'}>Electrónicos</MenuItem>
           </Select>
+          {!!formik.errors.categoria && (
+            <FormHelperText id='precio-error' sx={{ color: 'red' }}>
+              {formik.touched.categoria && formik.errors.categoria}
+            </FormHelperText>
+          )}
         </FormControl>
         <TextField
           id='descripcion'
           name='descripcion'
           label='Descripción'
-          type='descripcion'
           value={formik.values.descripcion}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -92,33 +121,34 @@ export const AddProductForm = () => {
           }
           helperText={formik.touched.descripcion && formik.errors.descripcion}
         />
-        <FormControl fullWidth>
-          <InputLabel htmlFor='precio'>Precio</InputLabel>
+
+        <FormControl>
+          <InputLabel
+            htmlFor='outlined-adornment-amount'
+            // sx={formik.errors.precio ? { color: 'red' } : ''}
+            sx={{ ...(formik.errors.precio && { color: 'red' }) }}
+          >
+            Precio
+          </InputLabel>
           <OutlinedInput
             id='precio'
             name='precio'
             label='Precio'
-            type='precio'
             value={formik.values.precio}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={formik.touched.precio && Boolean(formik.errors.precio)}
             startAdornment={<InputAdornment position='start'>$</InputAdornment>}
           />
+          {!!formik.errors.precio && (
+            <FormHelperText id='precio-error' sx={{ color: 'red' }}>
+              {formik.touched.precio && formik.errors.precio}
+            </FormHelperText>
+          )}
         </FormControl>
+
         {/* UPLOAD IMAGE */}
         <FormControl>
-          {/* <OutlinedInput
-            id='imagen'
-            name='imagen[]'
-            type='file'
-            accept='image/*'
-            multiple
-            //   onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            onChange={(e) =>
-              formik.setFieldValue('imagen', e.currentTarget.files[0])
-            }
-          ></OutlinedInput> */}
           <input
             type='file'
             multiple
