@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -13,18 +13,21 @@ import {
   Select,
   TextField,
 } from '@mui/material';
+import { ItemsContext } from '../context/ItemsContext';
+import axios from 'axios';
 
 export const AddProductForm = () => {
+  const { postCreateItem } = useContext(ItemsContext);
+
   const validationSchema = Yup.object({
-    nombreProducto: Yup.string('Ingrese el Nombre del producto')
+    nombre: Yup.string('Ingrese el Nombre del producto')
       .min(2, 'Mínimo 2 caracteres')
       .max(20, 'Máximo 20 caracteres')
       .required('Nombre es obligatorio'),
-    marca: Yup.string('Ingrese la Marca del producto')
-      .min(2, 'Mínimo 2 caracteres')
-      .max(20, 'Máximo 20 caracteres')
-      .required('Marca es obligatorio'),
-    categoria: Yup.string('Ingrese la categoría').required(
+    marcaId: Yup.string('Ingrese la Marca del producto').required(
+      'Marca es obligatorio'
+    ),
+    categoriaId: Yup.string('Ingrese la categoría').required(
       'Debe seleccionar una categoría'
     ),
     descripcion: Yup.string('Ingrese descripción del producto').required(
@@ -34,7 +37,7 @@ export const AddProductForm = () => {
       .typeError('El precio debe estar en números')
       .required('Debe ingresar un precio')
       .min(0, 'El precio no puede ser menor a 0'),
-    imagen: Yup.mixed().required('Required!'),
+    imagenes: Yup.mixed().required('Required!'),
   });
 
   const formik = useFormik({
@@ -44,11 +47,42 @@ export const AddProductForm = () => {
       marcaId: '',
       categoriaId: '',
       precio: '',
-      imagenes: '',
+      imagenes: [],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      postCreateItem(values);
+
+      // const formData = new FormData();
+      // for (const key in values) {
+      //   if (values.hasOwnProperty(key)) {
+      //     if (key === 'imagenes') {
+      //       for (let i = 0; i < values.imagenes.length; i++) {
+      //         formData.append(`imagenes`, values.imagenes[i]);
+      //       }
+      //     } else {
+      //       formData.append(key, values[key]);
+      //     }
+      //   }
+      // }
+      // console.log(formData);
+      // try {
+      //   const response = await fetch('http://localhost:3000/productos', {
+      //     method: 'POST',
+      //     body: formData,
+      //   });
+      //   if (response.ok) {
+      //     console.log('Producto creado exitosamente');
+      //   } else {
+      //     console.error('Error al crear producto');
+      //   }
+      // } catch (error) {
+      //   console.error('Error al crear producto:', error);
+      // }
+      // axios
+      //   .post('http://localhost:3000/productos', { body: formData })
+      //   .then((res) => console.log(res));
+      // postCreateItem(values);
     },
   });
   return (
@@ -62,53 +96,15 @@ export const AddProductForm = () => {
         }}
       >
         <TextField
-          id='nombreProducto'
-          name='nombreProducto'
+          id='nombre'
+          name='nombre'
           label='Nombre Producto'
-          value={formik.values.nombreProducto}
+          value={formik.values.nombre}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.nombreProducto &&
-            Boolean(formik.errors.nombreProducto)
-          }
-          helperText={
-            formik.touched.nombreProducto && formik.errors.nombreProducto
-          }
+          error={formik.touched.nombre && Boolean(formik.errors.nombre)}
+          helperText={formik.touched.nombre && formik.errors.nombre}
         />
-        <TextField
-          id='marca'
-          name='marca'
-          label='Marca'
-          value={formik.values.marca}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.marca && Boolean(formik.errors.marca)}
-          helperText={formik.touched.marca && formik.errors.marca}
-        />
-        <FormControl fullWidth>
-          <InputLabel>Categoría</InputLabel>
-          <Select
-            id='categoria'
-            name='categoria'
-            label='Categoría'
-            value={formik.values.categoria}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.categoria && Boolean(formik.errors.categoria)}
-          >
-            <MenuItem value={'cuerda'}>Cuerda</MenuItem>
-            <MenuItem value={'viento'}>Viento</MenuItem>
-            <MenuItem value={'percusion'}>Percusión</MenuItem>
-            <MenuItem value={'teclado'}>Teclado</MenuItem>
-            <MenuItem value={'electronicos'}>Electrónicos</MenuItem>
-          </Select>
-          {!!formik.errors.categoria && (
-            <FormHelperText id='precio-error' sx={{ color: 'red' }}>
-              {formik.touched.categoria && formik.errors.categoria}
-            </FormHelperText>
-          )}
-        </FormControl>
         <TextField
           id='descripcion'
           name='descripcion'
@@ -121,6 +117,59 @@ export const AddProductForm = () => {
           }
           helperText={formik.touched.descripcion && formik.errors.descripcion}
         />
+
+        <FormControl fullWidth>
+          <InputLabel>Marca</InputLabel>
+          <Select
+            id='marcaId'
+            name='marcaId'
+            label='marcaId'
+            value={formik.values.marcaId}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.marcaId && Boolean(formik.errors.marcaId)}
+          >
+            <MenuItem value={1}>Casio</MenuItem>
+            <MenuItem value={2}>Yamaha</MenuItem>
+            <MenuItem value={3}>Fender</MenuItem>
+            <MenuItem value={4}>Zildjian</MenuItem>
+            <MenuItem value={5}>Jackson</MenuItem>
+            <MenuItem value={6}>Gretsch</MenuItem>
+            <MenuItem value={7}>Hohner</MenuItem>
+            <MenuItem value={8}>DAddario</MenuItem>
+            <MenuItem value={9}>Gibraltar</MenuItem>
+            <MenuItem value={10}>Pearl</MenuItem>
+          </Select>
+          {!!formik.errors.marcaId && (
+            <FormHelperText id='marcaId' sx={{ color: 'red' }}>
+              {formik.touched.marcaId && formik.errors.marcaId}
+            </FormHelperText>
+          )}
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            id='categoriaId'
+            name='categoriaId'
+            label='categoriaId'
+            value={formik.values.categoriaId}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
+            }
+          >
+            <MenuItem value={'1'}>Cuerdas</MenuItem>
+            <MenuItem value={'2'}>Percusiones</MenuItem>
+            <MenuItem value={'3'}>Teclas</MenuItem>
+            <MenuItem value={'4'}>Vientos</MenuItem>
+          </Select>
+          {!!formik.errors.categoriaId && (
+            <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
+              {formik.touched.categoriaId && formik.errors.categoriaId}
+            </FormHelperText>
+          )}
+        </FormControl>
 
         <FormControl>
           <InputLabel
@@ -152,18 +201,16 @@ export const AddProductForm = () => {
           <input
             type='file'
             multiple
-            id='imagen'
-            name='imagen[]'
+            id='imagenes'
+            name='imagenes'
             accept='image/*'
             onBlur={formik.handleBlur}
-            onChange={(e) =>
-              formik.setFieldValue('imagen', e.currentTarget.files)
-            }
+            onChange={(e) => formik.setFieldValue('imagenes', e.target.files)}
           />
         </FormControl>
         {/* UPLOAD IMAGE */}
         <Button color='primary' variant='contained' fullWidth type='submit'>
-          Submit
+          Crear Producto
         </Button>
       </Container>
     </form>
