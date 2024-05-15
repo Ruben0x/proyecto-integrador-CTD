@@ -39,7 +39,6 @@ export const Sidenav = () => {
             color: 'white',
           },
         }}
-        containerStyle={{ height: 'calc(100%)' }}
         variant='permanent'
         anchor='left'
       >

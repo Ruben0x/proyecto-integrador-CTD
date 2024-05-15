@@ -2,21 +2,26 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { instrumentos } from '../assets/utils';
 import { Box, Container } from '@mui/material';
+import { useContext } from 'react';
+import { ItemsContext } from '../../context/ItemsContext';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'nombre', headerName: 'Nombre', width: 130 },
+  { field: 'nombre', headerName: 'Nombre', width: 180 },
+  { field: 'descripcion', headerName: 'Descripcion', width: 180 },
   { field: 'acciones', headerName: 'Acciones', width: 130 },
 ];
 
 export const AdminProductList = ({}) => {
-  instrumentos;
+  const { itemState } = useContext(ItemsContext);
+
+  console.log(itemState);
 
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Box sx={{ width: '70%' }}>
+      <Box sx={{ width: '90%' }}>
         <DataGrid
-          rows={instrumentos}
+          rows={itemState.items}
           columns={columns}
           initialState={{
             pagination: {
