@@ -12,7 +12,7 @@ const arrayhardcode = [
   { imagen: '/images/cuerdas-categorias.png', categoria: 'cuerdas' },
   { imagen: '/images/percusiones-categorias.png', categoria: 'percusiones' },
   { imagen: '/images/teclas-categorias.png', categoria: 'teclas' },
-  { imagen: '/images/teclas-categorias.png', categoria: 'teclas' },
+  { imagen: '/images/vientos-categoria.png', categoria: 'vientos' },
 ];
 
 const ResponsiveBody = () => {
@@ -27,12 +27,13 @@ const ResponsiveBody = () => {
           width: '100vw',
         }}
       >
+{/*Seccion Buscador del Body*/}
         <Container
           maxWidth='false'
           className='section-buscar'
           sx={{
             backgroundImage: `url('public/images/banner-portal-sonoro 1.png')`,
-            backgroundSize: 'fill',
+            backgroundSize: 'cover',
             width: '100vw',
             height: '300px',
             backgroundPosition: useMediaQuery('(max-width:900px)')
@@ -40,7 +41,7 @@ const ResponsiveBody = () => {
               : 'right',
           }}
         >
-          <Typography color={'#FFFFFF'} variant='body1' inline fontSize={32}>
+          <Typography color={'#FFFFFF'} variant='body1'  fontSize={32}>
             Bienvenido a
             <Typography
               variant='body1'
@@ -50,7 +51,7 @@ const ResponsiveBody = () => {
                 display: 'inline',
                 fontSize: 32,
               }}
-              inline
+              
             >
               {' '}
               PORTAL SONORO!
@@ -63,6 +64,7 @@ const ResponsiveBody = () => {
           <SearchBar maxWidth='733px' />
         </Container>
 
+{/*Seccion categorias del Body*/}
         <Container
           maxWidth='false'
           className='section-categorias'
@@ -88,14 +90,15 @@ const ResponsiveBody = () => {
           {/*/contenedor de tarjeta: **esta hardcodeado***/}
           <Container
             sx={{
+             
+              minWidth:'100%',
               display: 'flex',
-              flexDirection: 'row',
               justifyContent: useMediaQuery('(max-width:736px)')
                 ? 'center'
                 : 'space-between',
-              alignContent: 'center',
+              alignItems : 'center',
               flexWrap: 'wrap',
-            }}
+             }}
           >
             {arrayhardcode.map((item, index) => (
               <MediaCard
@@ -107,6 +110,7 @@ const ResponsiveBody = () => {
           </Container>
         </Container>
 
+{/*Seccion recomendados del Body*/}
         <Container
           maxWidth='false'
           className='section-recomendados'

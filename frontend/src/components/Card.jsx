@@ -34,7 +34,7 @@ export default function MediaCard({imagen, categoria}) {
                 />
                 <Box sx={stripStyles}> 
                     <Typography variant="h5" component="div" color={"#FFFFFF"}>
-                    {categoria}
+                    {categoria.toUpperCase()}
                     </Typography>
                 </Box>
             </Link>
