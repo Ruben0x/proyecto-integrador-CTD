@@ -17,6 +17,7 @@ export const GridInstrumentos = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
+                    
         {productos.map((instrument, index) => (
           <Grid item xs={4} sm={6} md={6} key={index}>
             <InstrumentCard key={instrument.id} instrument={instrument} />
