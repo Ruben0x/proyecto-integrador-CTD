@@ -12,7 +12,6 @@ import { useContext } from 'react';
 import { InstrumentCard } from './InstrumentCard';
 import { GridInstrumentos } from './GridInstrumentos';
 
-
 //===HARDCODEO DE CATEGORIAS
 const arrayhardcode = [
   { imagen: '/images/cuerdas-categorias.png', categoria: 'cuerdas' },
@@ -37,12 +36,11 @@ const ResponsiveBody = () => {
       <Stack
         spacing={0}
         sx={{
-          
           maxWidth: '1920px',
           minWidth: '380px',
         }}
       >
-{/*Seccion Buscador del Body*/}
+        {/*Seccion Buscador del Body*/}
         <Container
           maxWidth='100%'
           className='section-buscar'
@@ -55,7 +53,7 @@ const ResponsiveBody = () => {
               : 'right',
           }}
         >
-          <Typography color={'#FFFFFF'} variant='body1'  fontSize={32}>
+          <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
             Bienvenido a
             <Typography
               variant='body1'
@@ -65,7 +63,6 @@ const ResponsiveBody = () => {
                 display: 'inline',
                 fontSize: 32,
               }}
-              
             >
               {' '}
               PORTAL SONORO
@@ -78,14 +75,14 @@ const ResponsiveBody = () => {
           <SearchBar maxWidth='733px' />
         </Container>
 
-{/*Seccion categorias del Body*/}
+        {/*Seccion categorias del Body*/}
         <Container
           maxWidth='false'
           className='section-categorias'
           sx={{
             backgroundColor: '#F9E9DE',
-            paddingTop:'50px',
-            paddingBottom:'100px',
+            paddingTop: '50px',
+            paddingBottom: '100px',
             textAlign: 'center',
           }}
         >
@@ -107,13 +104,12 @@ const ResponsiveBody = () => {
           {/*/contenedor de tarjeta: **esta hardcodeado***/}
           <Container
             sx={{
-             
-              minWidth:'100%',
+              minWidth: '100%',
               display: 'flex',
-              justifyContent:'space-around',
+              justifyContent: 'space-around',
 
               flexWrap: 'wrap',
-             }}
+            }}
           >
             {arrayhardcode.map((item, index) => (
               <MediaCard
@@ -125,20 +121,18 @@ const ResponsiveBody = () => {
           </Container>
         </Container>
 
-{/*Seccion recomendados del Body*/}
+        {/*Seccion recomendados del Body*/}
         <Container
-
           className='section-recomendados'
           sx={{
             width: '100%',
             minHeight: '300px',
             height: '100%',
-            textAlign:'center',
-            padding: '30px'
+            textAlign: 'center',
+            padding: '30px',
           }}
         >
-          
-          <Typography fontWeight='800' fontSize={40}>
+          <Typography fontWeight='800' fontSize={35}>
             <Typography
               fontWeight='800'
               fontSize={40}
@@ -153,10 +147,6 @@ const ResponsiveBody = () => {
             Creemos que estas alternativas son perfectas para ti
           </Typography>
           <GridInstrumentos />
-          {/* {productos.map((instrument) => (
-            <InstrumentCard key={instrument.id} instrument={instrument} />
-          ))} */}
-{/*======================*/}                    
         </Container>
       </Stack>
     </>

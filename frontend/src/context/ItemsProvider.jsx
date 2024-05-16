@@ -43,6 +43,9 @@ export const ItemsProvider = ({ children }) => {
       if (response.ok) {
         console.log('Producto creado exitosamente');
         toast.success('Producto creado exitosamente');
+        setTimeout(() => {
+          location.reload();
+        }, 300);
       } else {
         toast.error('Ya existe un producto con ese nombre');
       }
