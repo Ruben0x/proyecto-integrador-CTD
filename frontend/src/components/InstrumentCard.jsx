@@ -1,12 +1,8 @@
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useContext, useEffect } from 'react';
-import { ItemsContext } from '../context/ItemsContext';
-import { useState } from 'react';
+
 import { Box, Grid, IconButton } from '@mui/material';
 import MediaCard from './MediaCard';
 import { Link } from 'react-router-dom';

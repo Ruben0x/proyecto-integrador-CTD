@@ -7,6 +7,7 @@ import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import { ItemsProvider } from './context/ItemsProvider.jsx';
 import { InstrumentCard } from './components/InstrumentCard.jsx';
+import { Toaster } from 'sonner';
 
 const theme = createTheme({
   palette: {

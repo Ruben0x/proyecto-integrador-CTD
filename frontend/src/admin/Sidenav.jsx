@@ -17,6 +17,7 @@ import logoWhite from '../assets/img/LogoWhite.png';
 import { Button, StyledEngineProvider, useTheme } from '@mui/material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 const drawerWidth = 240;
 
@@ -27,7 +28,7 @@ export const Sidenav = () => {
   return (
     <Box color='primary' sx={{ display: 'flex' }}>
       <CssBaseline />
-
+      <Toaster position='top-right' richColors />
       <Drawer
         sx={{
           width: drawerWidth,

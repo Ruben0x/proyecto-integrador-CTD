@@ -52,37 +52,6 @@ export const AddProductForm = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       postCreateItem(values);
-
-      // const formData = new FormData();
-      // for (const key in values) {
-      //   if (values.hasOwnProperty(key)) {
-      //     if (key === 'imagenes') {
-      //       for (let i = 0; i < values.imagenes.length; i++) {
-      //         formData.append(`imagenes`, values.imagenes[i]);
-      //       }
-      //     } else {
-      //       formData.append(key, values[key]);
-      //     }
-      //   }
-      // }
-      // console.log(formData);
-      // try {
-      //   const response = await fetch('http://localhost:3000/productos', {
-      //     method: 'POST',
-      //     body: formData,
-      //   });
-      //   if (response.ok) {
-      //     console.log('Producto creado exitosamente');
-      //   } else {
-      //     console.error('Error al crear producto');
-      //   }
-      // } catch (error) {
-      //   console.error('Error al crear producto:', error);
-      // }
-      // axios
-      //   .post('http://localhost:3000/productos', { body: formData })
-      //   .then((res) => console.log(res));
-      // postCreateItem(values);
     },
   });
   return (

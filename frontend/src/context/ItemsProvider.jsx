@@ -3,6 +3,7 @@ import { ItemsContext } from './ItemsContext';
 import { itemReducer } from './itemsReducer';
 import axios from 'axios';
 import { types } from './types';
+import { toast } from 'sonner';
 
 const initialState = {
   items: [],
@@ -41,9 +42,9 @@ export const ItemsProvider = ({ children }) => {
       });
       if (response.ok) {
         console.log('Producto creado exitosamente');
-        // getItemsRandoms();
+        toast.success('Producto creado exitosamente');
       } else {
-        console.log(response);
+        toast.error('Ya existe un producto con ese nombre');
       }
     } catch (error) {
       console.error('Error al crear producto', error);
