@@ -15,7 +15,7 @@ export const TiendaRouter = () => {
           <Route element={<ProductPage />} path='/instrumentos/:id' />
         </Routes>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

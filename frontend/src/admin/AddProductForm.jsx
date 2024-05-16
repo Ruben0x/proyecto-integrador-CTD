@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -14,7 +14,6 @@ import {
   TextField,
 } from '@mui/material';
 import { ItemsContext } from '../context/ItemsContext';
-import axios from 'axios';
 
 export const AddProductForm = () => {
   const { postCreateItem } = useContext(ItemsContext);
@@ -22,7 +21,7 @@ export const AddProductForm = () => {
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
       .min(2, 'Mínimo 2 caracteres')
-      .max(20, 'Máximo 20 caracteres')
+      .max(30, 'Máximo 30 caracteres')
       .required('Nombre es obligatorio'),
     marcaId: Yup.string('Ingrese la Marca del producto').required(
       'Marca es obligatorio'
