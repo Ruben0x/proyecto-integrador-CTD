@@ -21,7 +21,7 @@ export default function MediaCard({ imagen, categoria }) {
 
   return (
     <Card
-      sx={{ width: 300, height: 300, position: 'relative', margin: '10px' }}
+      sx={{ width: '300px', height: '300px', position: 'relative', margin: '10px' }}
     >
       {/* <Link to={`/products/${categoria}`}> */}
       <CardMedia
@@ -32,7 +32,7 @@ export default function MediaCard({ imagen, categoria }) {
       />
       <Box sx={stripStyles}>
         <Typography variant='h5' component='div' color={'#FFFFFF'}>
-          {categoria}
+          {categoria.toUpperCase()}
         </Typography>
       </Box>
       {/* </Link> */}

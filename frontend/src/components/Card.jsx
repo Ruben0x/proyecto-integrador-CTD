@@ -9,7 +9,6 @@ import { Box } from '@mui/material';
 
 
 export default function MediaCard({imagen, categoria}) {
-    
     //estilo para el 'strip' contenedor de texto
     const stripStyles = {
         position: "absolute",
@@ -25,7 +24,7 @@ export default function MediaCard({imagen, categoria}) {
 
     return (
         <Card sx={{ width: 300, height: 300, position: 'relative', margin:"10px"}}>
-            <Link to={`/products/${categoria}`}>
+      {/* <Link to={`/products/${categoria}`}> */}
                 <CardMedia
                 component='img'
                 image={imagen}
@@ -37,7 +36,7 @@ export default function MediaCard({imagen, categoria}) {
                     {categoria.toUpperCase()}
                     </Typography>
                 </Box>
-            </Link>
+      {/* </Link> */}
         </Card>
 
   );

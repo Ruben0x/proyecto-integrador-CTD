@@ -12,6 +12,7 @@ import { useContext } from 'react';
 import { InstrumentCard } from './InstrumentCard';
 import { GridInstrumentos } from './GridInstrumentos';
 
+
 //===HARDCODEO DE CATEGORIAS
 const arrayhardcode = [
   { imagen: '/images/cuerdas-categorias.png', categoria: 'cuerdas' },
@@ -32,22 +33,22 @@ const ResponsiveBody = () => {
   //const {state, dispatch} = useGlobalStates();
 
   return (
-    <div>
+    <>
       <Stack
-        spacing={2}
+        spacing={0}
         sx={{
-          backgroundColor: '#F9E9DE',
-          width: '100vw',
+          
+          maxWidth: '1920px',
+          minWidth: '380px',
         }}
       >
 {/*Seccion Buscador del Body*/}
         <Container
-          maxWidth='false'
+          maxWidth='100%'
           className='section-buscar'
           sx={{
             backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
             backgroundSize: 'cover',
-            width: '100vw',
             height: '300px',
             backgroundPosition: useMediaQuery('(max-width:900px)')
               ? 'calc(0% - 490px + 10%)'
@@ -67,7 +68,7 @@ const ResponsiveBody = () => {
               
             >
               {' '}
-              PORTAL SONORO!
+              PORTAL SONORO
             </Typography>
           </Typography>
 
@@ -82,17 +83,20 @@ const ResponsiveBody = () => {
           maxWidth='false'
           className='section-categorias'
           sx={{
-            width: '100vw',
+            backgroundColor: '#F9E9DE',
+            paddingTop:'50px',
+            paddingBottom:'100px',
+            textAlign: 'center',
           }}
         >
-          <Typography fontWeight='bold' fontSize={12}>
+          <Typography fontWeight='bold' fontSize={20}>
             Revisa las categorías - Reserva tus opciones
           </Typography>
-          <Typography fontSize={20}>
+          <Typography fontSize={40}>
             ENCUENTRA TU{' '}
             <Typography
               fontWeight='800'
-              fontSize={20}
+              fontSize={40}
               color={'#FF5500'}
               display={'inline'}
             >
@@ -106,10 +110,8 @@ const ResponsiveBody = () => {
              
               minWidth:'100%',
               display: 'flex',
-              justifyContent: useMediaQuery('(max-width:736px)')
-                ? 'center'
-                : 'space-between',
-              alignItems : 'center',
+              justifyContent:'space-around',
+
               flexWrap: 'wrap',
              }}
           >
@@ -125,17 +127,21 @@ const ResponsiveBody = () => {
 
 {/*Seccion recomendados del Body*/}
         <Container
-          maxWidth='false'
+
           className='section-recomendados'
           sx={{
-            width: '100vw',
-            height: '300px',
+            width: '100%',
+            minHeight: '300px',
+            height: '100%',
+            textAlign:'center',
+            padding: '30px'
           }}
         >
-          <Typography fontWeight='800' fontSize={20}>
+          
+          <Typography fontWeight='800' fontSize={40}>
             <Typography
               fontWeight='800'
-              fontSize={20}
+              fontSize={40}
               color={'#FF5500'}
               display={'inline'}
             >
@@ -143,21 +149,17 @@ const ResponsiveBody = () => {
             </Typography>
             RECOMENDADOS
           </Typography>
-          <Typography fontWeight='600' fontSize={12}>
+          <Typography fontWeight='600' fontSize={20}>
             Creemos que estas alternativas son perfectas para ti
           </Typography>
           <GridInstrumentos />
           {/* {productos.map((instrument) => (
             <InstrumentCard key={instrument.id} instrument={instrument} />
           ))} */}
-          [CARDS]
-
-
-
 {/*======================*/}                    
         </Container>
       </Stack>
-    </div>
+    </>
   );
 };
 export default ResponsiveBody;
