@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { instrumentos } from '../assets/utils';
 import { Box, Container } from '@mui/material';
 import { useContext } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
+import { ItemsContext } from '../context/ItemsContext';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },

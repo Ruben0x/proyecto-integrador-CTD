@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { App } from './App.jsx';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import { ItemsContext } from '../context/ItemsContext.jsx';
-import { ItemsProvider } from '../context/ItemsProvider.jsx';
+import { ItemsProvider } from './context/ItemsProvider.jsx';
+import { InstrumentCard } from './components/InstrumentCard.jsx';
 
 const theme = createTheme({
   palette: {

@@ -12,10 +12,10 @@ export const TiendaRouter = () => {
       <div>
         <Routes>
           <Route element={<HomePage />} path='/' />
-          <Route element={<ProductPage />} path='/product' />
+          <Route element={<ProductPage />} path='/instrumentos/:id' />
         </Routes>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
