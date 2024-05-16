@@ -1,14 +1,16 @@
 //import { Link } from 'react-router-dom';
-import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
-import { useMediaQuery } from '@mui/material';
+import { Card, useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import MediaCard from './Card';
-import { useItemsStates } from '../../context/ItemsProvider';
-import { useEffect, useState } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
+import MediaCard from './MediaCard';
+import { ItemsContext } from '../context/ItemsContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { InstrumentCard } from './InstrumentCard';
+import { GridInstrumentos } from './GridInstrumentos';
 
 //===HARDCODEO DE CATEGORIAS
 const arrayhardcode = [
@@ -19,7 +21,15 @@ const arrayhardcode = [
 ];
 
 const ResponsiveBody = () => {
+  const { itemState } = useContext(ItemsContext);
+  const [productos, setProductos] = useState([]);
 
+  useEffect(() => {
+    setProductos(itemState.items);
+  }, [itemState]);
+
+  // console.log(productos);
+  //const {state, dispatch} = useGlobalStates();
 
   return (
     <div>
@@ -136,9 +146,10 @@ const ResponsiveBody = () => {
           <Typography fontWeight='600' fontSize={12}>
             Creemos que estas alternativas son perfectas para ti
           </Typography>
-{/*======================*/}          
-          
-          
+          <GridInstrumentos />
+          {/* {productos.map((instrument) => (
+            <InstrumentCard key={instrument.id} instrument={instrument} />
+          ))} */}
           [CARDS]
 
 
