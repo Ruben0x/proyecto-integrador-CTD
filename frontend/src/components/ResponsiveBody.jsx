@@ -9,8 +9,8 @@ import { ItemsContext } from '../context/ItemsContext';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { InstrumentCard } from './InstrumentCard';
 import { GridInstrumentos } from './GridInstrumentos';
+
 
 //===HARDCODEO DE CATEGORIAS
 const arrayhardcode = [
@@ -28,21 +28,19 @@ const ResponsiveBody = () => {
     setProductos(itemState.items);
   }, [itemState]);
 
-  // console.log(productos);
-  //const {state, dispatch} = useGlobalStates();
-
   return (
-    <>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', maxWidth:'1920px'}}>
       <Stack
         spacing={0}
         sx={{
+          width:'100%',
           maxWidth: '1920px',
           minWidth: '380px',
         }}
       >
         {/*Seccion Buscador del Body*/}
         <Container
-          maxWidth='100%'
+          maxWidth='1920px'
           className='section-buscar'
           sx={{
             backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
@@ -130,6 +128,7 @@ const ResponsiveBody = () => {
             height: '100%',
             textAlign: 'center',
             padding: '30px',
+
           }}
         >
           <Typography fontWeight='800' fontSize={35}>
@@ -149,7 +148,7 @@ const ResponsiveBody = () => {
           <GridInstrumentos />
         </Container>
       </Stack>
-    </>
+    </div>
   );
 };
 export default ResponsiveBody;
