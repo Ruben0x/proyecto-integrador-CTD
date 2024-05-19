@@ -29,18 +29,22 @@ const ResponsiveBody = () => {
   }, [itemState]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', maxWidth:'1920px'}}>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'center',
+      
+      }}>
       <Stack
         spacing={0}
         sx={{
-          width:'100%',
-          maxWidth: '1920px',
-          minWidth: '380px',
+        width:'100%',
+        maxWidth:'1440px',          
         }}
       >
         {/*Seccion Buscador del Body*/}
         <Container
-          maxWidth='1920px'
+          maxWidth='1440px'
           className='section-buscar'
           sx={{
             backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
