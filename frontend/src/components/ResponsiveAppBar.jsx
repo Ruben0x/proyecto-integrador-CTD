@@ -79,19 +79,21 @@ function ResponsiveAppBar() {
               display: { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
-            <Button
-              variant='contained'
-              color='terceario'
-              sx={{
-                my: 2,
-                color: 'white',
-                display: 'block',
-                borderRadius: 70,
-                fontSize: '.5rem',
-              }}
-            >
-              Crear Cuenta
-            </Button>
+            <Link to={'/registro'}>
+              <Button
+                variant='contained'
+                color='terceario'
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  borderRadius: 70,
+                  fontSize: '.5rem',
+                }}
+              >
+                Crear Cuenta
+              </Button>
+            </Link>
             {/* </Link> */}
             {/* <Link to={'/createuser'} style={{ textDecoration: 'none' }}> */}
             <Button
