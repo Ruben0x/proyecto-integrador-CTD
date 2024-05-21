@@ -29,27 +29,21 @@ export const InstrumentCardResponsive = ({ instrument }) => {
     paddingLeft: '10px',
   };
   return (
-    <Box
+    <Card
       sx={{
         display: 'flex',
         backgroundColor: 'black',
         flexDirection: {
           xs: 'column', // Vertical en pantallas pequeñas
-          md: 'column', // Horizontal en pantallas medianas
-          lg: 'row', // Horizontal en pantallas medianas
-          // Horizontal en pantallas medianas
+          md: 'row', // Horizontal en pantallas medianas
         },
-        maxWidth: {
-          xs: 300, // Vertical en pantallas pequeñas
-          md: 300, // Horizontal en pantallas medianas
-          lg: 600, // Horizontal en pantallas medianas
-        },
+        textAlign: 'left',
       }}
     >
       <Box sx={{ position: 'relative' }}>
         <CardMedia
           component='img'
-          sx={{ width: 300, height: 250 }}
+          sx={{ width: '300px', height: '300px' }}
           image={urlImg[0]}
           alt='Live from space album cover'
         />
@@ -59,7 +53,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography
             component='div'
@@ -88,6 +82,6 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           <Link to={'/instrumentos/' + id}>Ver mas...</Link>
         </Typography>
       </Box>
-    </Box>
+    </Card>
   );
 };
