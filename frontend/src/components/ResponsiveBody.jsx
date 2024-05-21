@@ -2,7 +2,7 @@
 import Stack from '@mui/material/Stack';
 import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
-import { Card, useMediaQuery } from '@mui/material';
+import { Box, Card, useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
 import { ItemsContext } from '../context/ItemsContext';
@@ -39,13 +39,13 @@ const ResponsiveBody = () => {
         spacing={0}
         sx={{
         width:'100%',
-        maxWidth:'1440px',          
         }}
       >
         {/*Seccion Buscador del Body*/}
-        <Container
-          maxWidth='1440px'
+        <Container 
+          maxWidth='100%'
           className='section-buscar'
+
           sx={{
             backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
             backgroundSize: 'cover',
@@ -53,29 +53,32 @@ const ResponsiveBody = () => {
             backgroundPosition: useMediaQuery('(max-width:900px)')
               ? 'calc(0% - 490px + 10%)'
               : 'right',
+              display: 'flex', 
+              justifyContent:'center'
           }}
         >
-          <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
+          <Box maxWidth={'1440px'} width={'100%'}>
+            <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
             Bienvenido a
-            <Typography
+              <Typography
               variant='body1'
               sx={{
-                fontWeight: '800',
-                color: '#FF5500',
-                display: 'inline',
-                fontSize: 32,
+              fontWeight: '800',
+              color: '#FF5500',
+              display: 'inline',
+              fontSize: 32,
               }}
-            >
-              {' '}
-              PORTAL SONORO
+              >
+                {' '}PORTAL SONORO
+              </Typography>
             </Typography>
-          </Typography>
 
-          <Typography color={'#FFFFFF'} fontSize={20}>
-            Encuentra el equipamiento perfecto para ti
-          </Typography>
-          <SearchBar maxWidth='733px' />
-        </Container>
+            <Typography color={'#FFFFFF'} fontSize={20}>
+              Encuentra el equipamiento perfecto para ti
+            </Typography>
+            <SearchBar maxWidth='733px' />
+          </Box>
+          </Container>
 
         {/*Seccion categorias del Body*/}
         <Container
@@ -85,9 +88,11 @@ const ResponsiveBody = () => {
             backgroundColor: '#F9E9DE',
             paddingTop: '50px',
             paddingBottom: '100px',
-            textAlign: 'center',
+            display:'flex',
+            justifyContent:'center'
           }}
         >
+        <Box maxWidth={'1440px'} width={'100%'}>
           <Typography fontWeight='bold' fontSize={20}>
             Revisa las categorías - Reserva tus opciones
           </Typography>
@@ -121,6 +126,7 @@ const ResponsiveBody = () => {
               />
             ))}
           </Container>
+          </Box>
         </Container>
 
         {/*Seccion recomendados del Body*/}

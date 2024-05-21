@@ -38,7 +38,6 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           md: 'row', // Horizontal en pantallas medianas
         },
         textAlign: 'left',
-        
       }}
     >
       <Box sx={{ position: 'relative' }}>
@@ -54,7 +53,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', width:'300px' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography
             component='div'
@@ -73,7 +72,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
             component='div'
             sx={{ display: 'flex', alignItems: 'center' }}
           >
-            ${precio} <Typography color='white' > /diario</Typography>
+            ${precio} <Typography color='white'> /diario</Typography>
           </Typography>
           <Typography color='white' pt={1} variant='subtitle2'>
             {descripcion}
