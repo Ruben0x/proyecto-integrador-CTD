@@ -20,7 +20,7 @@ export const AuthLayout = ({ children, title = '', subtitle = '' }) => {
               }}
             >
               <WestIcon fontSize='large' sx={{ paddingRight: 2 }} />
-              {title}
+              {'Volver'}
             </Typography>
           </Link>
         </Box>
