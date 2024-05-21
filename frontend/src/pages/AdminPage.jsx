@@ -1,6 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Sidenav } from '../admin/Sidenav';
+import { Error404 } from './Error404';
 
 export const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(
@@ -23,13 +24,14 @@ export const AdminPage = () => {
   return (
     <>
       {isMobile ? (
-        <Container>
-          <Typography align='center'>
-            Lo sentimos, el panel de Adminitracion no está disponible en
-            dispositivos móviles.
-          </Typography>
-        </Container>
+        <Error404 />
       ) : (
+        // <Container>
+        //   <Typography align='center'>
+        //     Lo sentimos, el panel de Adminitracion no está disponible en
+        //     dispositivos móviles.
+        //   </Typography>
+        // </Container>
         <>
           <Sidenav />
         </>

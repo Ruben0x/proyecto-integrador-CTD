@@ -29,15 +29,21 @@ export const InstrumentCardResponsive = ({ instrument }) => {
     paddingLeft: '10px',
   };
   return (
-    <Card
+    <Box
       sx={{
         display: 'flex',
         backgroundColor: 'black',
         flexDirection: {
           xs: 'column', // Vertical en pantallas pequeñas
-          md: 'row', // Horizontal en pantallas medianas
+          md: 'column', // Horizontal en pantallas medianas
+          lg: 'row', // Horizontal en pantallas medianas
+          // Horizontal en pantallas medianas
         },
-        textAlign: 'left',
+        maxWidth: {
+          xs: 300, // Vertical en pantallas pequeñas
+          md: 300, // Horizontal en pantallas medianas
+          lg: 600, // Horizontal en pantallas medianas
+        },
       }}
     >
       <Box sx={{ position: 'relative' }}>
@@ -53,7 +59,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography
             component='div'
@@ -82,6 +88,6 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           <Link to={'/instrumentos/' + id}>Ver mas...</Link>
         </Typography>
       </Box>
-    </Card>
+    </Box>
   );
 };
