@@ -10,11 +10,16 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-import { Divider } from '@mui/material';
+import { Avatar, Divider } from '@mui/material';
 import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logomobile from '../assets/img/logomobile.png';
 
-const pages = ['Crear Cuenta', 'Iniciar Sesión'];
+const pages = ['Crear Cuenta','Iniciar Sesión']
+const pagesSites = [{title:'Crear Cuenta', site:'/registro'},{title:'Iniciar Sesión', site:'/auth/login'}];
+
+//iniciales debe extraerse del back, una vez logeado
+const iniciales=['P','S'];
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -72,6 +77,22 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           ></Typography>
+          {/*Este BOX debe mostrarse cuando el usuario está Loggeado
+          Reemplaza los botones Crear Cuenta, Iniciar Sesión y Hamburguesa*/}
+          <Box
+            sx={{
+              padding: '1rem',
+              flexGrow: 1,
+              display: { md: '', justifyContent: 'flex-end' },
+            }}>
+            <Avatar 
+            sx={{ 
+              bgcolor: 'primary.main',
+              width:48,
+              height:48 }}>{`${iniciales[0]}${iniciales[1]}`}</Avatar>
+          </Box>
+
+
           <Box
             sx={{
               padding: '1rem',
@@ -95,22 +116,22 @@ function ResponsiveAppBar() {
               </Button>
             </Link>
             {/* </Link> */}
-            {/* <Link to={'/createuser'} style={{ textDecoration: 'none' }}> */}
-            <Button
-              variant='contained'
-              color='terceario'
-              sx={{
-                my: 2,
-                color: 'white',
-                display: 'block',
-                borderRadius: 70,
-                fontSize: '.5rem',
-                marginLeft: '0.5rem',
-              }}
-            >
-              Iniciar Sesión
-            </Button>
-            {/* </Link> */}
+            <Link to={'/auth/login'} style={{ textDecoration: 'none' }}>
+              <Button
+                variant='contained'
+                color='terceario'
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  borderRadius: 70,
+                  fontSize: '.5rem',
+                  marginLeft: '0.5rem',
+                }}
+              >
+                Iniciar Sesión
+              </Button>
+            </Link>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             {/*Menu Hamburguesa*/}
@@ -122,6 +143,7 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color='inherit'
             ></IconButton>
+            
             <Menu
               id='menu-appbar'
               anchorEl={anchorElNav}
@@ -140,12 +162,15 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
+              
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign='center'>{page}</Typography>
                 </MenuItem>
               ))}
+              
             </Menu>
+            
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -176,10 +201,12 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
+              {pagesSites.map((page, index) => (
+                <Link to={page.site} style={{ textDecoration: 'none' }} key={index}>
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Typography textAlign='center' color={'black'}>{page.title}</Typography>
                 </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
