@@ -1,9 +1,8 @@
 import { Box, Container, Typography } from '@mui/material';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GridImagenes } from '../components/GridImagenes';
 import WestIcon from '@mui/icons-material/West';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ItemsContext } from '../context/ItemsContext';
 import axios from 'axios';
 
 export const ProductPage = () => {

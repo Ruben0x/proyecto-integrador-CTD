@@ -1,6 +1,7 @@
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { AuthLayout } from './AuthLayout';
+import { RegisterForm } from './RegisterForm';
 
 export const RegisterPage = () => {
   return (
@@ -30,7 +31,8 @@ export const RegisterPage = () => {
           >
             Registrar nuevo usuario
           </Typography>
-          <form>
+          <RegisterForm />
+          {/* <form>
             <Grid container>
               <Grid item xs={6} sx={{ mt: 2, pr: 1 }}>
                 <TextField
@@ -78,7 +80,7 @@ export const RegisterPage = () => {
                 </Link>
               </Grid>
             </Grid>
-          </form>
+          </form> */}
         </Grid>
       </Grid>
     </AuthLayout>
