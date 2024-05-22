@@ -1,10 +1,12 @@
 import { Box, Container, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import WestIcon from '@mui/icons-material/West';
+import { Toaster } from 'sonner';
 
 export const AuthLayout = ({ children, title = '', subtitle = '' }) => {
   return (
     <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
+      <Toaster position='top-right' richColors />
       <Box sx={{ margin: 2 }}>
         <Box paddingY={2}>
           <Link
