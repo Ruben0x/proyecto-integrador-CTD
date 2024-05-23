@@ -14,8 +14,8 @@ export const TiendaRouter = () => {
       <div>
         <Routes>
           <Route element={<HomePage />} path='/' />
-          <Route element={<RegisterPage />} path='/registro' />
-          <Route element={<LogInPage />} path='/auth/login'/>
+          <Route element={<RegisterPage />} path='/auth/registro' />
+          <Route element={<LogInPage />} path='/auth/login' />
           <Route element={<ProductPage />} path='/instrumentos/:id' />
         </Routes>
       </div>

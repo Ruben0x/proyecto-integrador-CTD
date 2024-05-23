@@ -6,7 +6,7 @@ import { Toaster } from 'sonner';
 export const AuthLayout = ({ children, title = '', subtitle = '' }) => {
   return (
     <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
-      <Toaster position='top-right' richColors />
+      <Toaster position='bottom-right' richColors closeButton />
       <Box sx={{ margin: 2 }}>
         <Box paddingY={2}>
           <Link

@@ -19,7 +19,21 @@ export const ItemsProvider = ({ children }) => {
         .then((res) => dispatch({ type: types.getItems, payload: res.data }));
     }, []);
   };
-  //ESTE NO ESTA TERMINADO ****************
+
+  const deleteProductbyId = (id) => {
+    console.log(id);
+
+    fetch(`http://localhost:3000/productos/${id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res));
+    // axios
+    //   .delete(`http://localhost:3000/productos/${id}`)
+    //   .then((res) => console.log(res))
+    //   .catch((res) => console.log(res));
+  };
+
   const postCreateItem = async (values) => {
     const formData = new FormData();
 
@@ -54,10 +68,11 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
-  //ESTE NO ESTA TERMINADO ****************
   getItemsRandoms();
   return (
-    <ItemsContext.Provider value={{ itemState, dispatch, postCreateItem }}>
+    <ItemsContext.Provider
+      value={{ itemState, dispatch, postCreateItem, deleteProductbyId }}
+    >
       {children}
     </ItemsContext.Provider>
   );
