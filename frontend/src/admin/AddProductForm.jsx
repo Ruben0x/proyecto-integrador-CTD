@@ -15,8 +15,9 @@ import {
 } from '@mui/material';
 import { ItemsContext } from '../context/ItemsContext';
 
-export const AddProductForm = ({ item = {} }) => {
+export const AddProductForm = ({ item = '' }) => {
   const { postCreateItem } = useContext(ItemsContext);
+  // console.log(item);
 
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
@@ -41,16 +42,17 @@ export const AddProductForm = ({ item = {} }) => {
 
   const formik = useFormik({
     initialValues: {
-      nombre: '',
-      descripcion: '',
-      marcaId: '',
-      categoriaId: '',
-      precio: '',
-      imagenes: [],
+      nombre: item.nombre,
+      descripcion: item.descripcion,
+      marcaId: item.marcaId,
+      categoriaId: item.categoriaId,
+      precio: item.precio,
+      imagenes: item.urlImg,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      postCreateItem(values);
+      console.log(values);
+      // postCreateItem(values);
     },
   });
   return (
@@ -127,10 +129,10 @@ export const AddProductForm = ({ item = {} }) => {
               formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
             }
           >
-            <MenuItem value={'1'}>Cuerdas</MenuItem>
-            <MenuItem value={'2'}>Percusiones</MenuItem>
-            <MenuItem value={'3'}>Teclas</MenuItem>
-            <MenuItem value={'4'}>Vientos</MenuItem>
+            <MenuItem value={1}>Cuerdas</MenuItem>
+            <MenuItem value={2}>Percusiones</MenuItem>
+            <MenuItem value={3}>Teclas</MenuItem>
+            <MenuItem value={4}>Vientos</MenuItem>
           </Select>
           {!!formik.errors.categoriaId && (
             <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
@@ -165,18 +167,21 @@ export const AddProductForm = ({ item = {} }) => {
         </FormControl>
 
         {/* UPLOAD IMAGE */}
-        <FormControl>
-          <input
-            type='file'
-            multiple
-            id='imagenes'
-            name='imagenes'
-            accept='image/*'
-            onBlur={formik.handleBlur}
-            onChange={(e) => formik.setFieldValue('imagenes', e.target.files)}
-          />
-        </FormControl>
+        {!item && (
+          <FormControl>
+            <input
+              type='file'
+              multiple
+              id='imagenes'
+              name='imagenes'
+              accept='image/*'
+              onBlur={formik.handleBlur}
+              onChange={(e) => formik.setFieldValue('imagenes', e.target.files)}
+            />
+          </FormControl>
+        )}
         {/* UPLOAD IMAGE */}
+
         <Button color='primary' variant='contained' fullWidth type='submit'>
           Crear Producto
         </Button>
