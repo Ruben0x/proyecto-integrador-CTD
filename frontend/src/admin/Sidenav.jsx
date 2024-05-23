@@ -61,7 +61,7 @@ export const Sidenav = () => {
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
-              <ListItemText primary='Listar' />
+              <ListItemText primary='Listar Productos' />
             </ListItemButton>
           </ListItem>
         </List>

@@ -1,34 +1,50 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Container } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import { useContext } from 'react';
 import { ItemsContext } from '../context/ItemsContext';
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'nombre', headerName: 'Nombre', width: 180 },
-  { field: 'descripcion', headerName: 'Descripcion', width: 180 },
-  { field: 'acciones', headerName: 'Acciones', width: 130 },
-];
+import axios from 'axios';
+import { useState } from 'react';
 
 export const AdminProductList = ({}) => {
-  const { itemState } = useContext(ItemsContext);
+  const { itemState, deleteProductbyId } = useContext(ItemsContext);
 
-  console.log(itemState);
+  const editProduct = (param) => {
+    console.log(param.row);
+  };
 
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Box sx={{ width: '90%' }}>
         <DataGrid
           rows={itemState.items}
-          columns={columns}
+          columns={[
+            { field: 'id', headerName: 'ID', width: 70 },
+            { field: 'nombre', headerName: 'Nombre', width: 180 },
+            { field: 'descripcion', headerName: 'Descripcion', width: 200 },
+            {
+              field: 'acciones',
+              headerName: 'Acciones',
+              width: 250,
+              renderCell: (params) => {
+                return (
+                  <>
+                    <Button onClick={() => deleteProductbyId(params.id)}>
+                      Eliminar
+                    </Button>
+                    <Button onClick={() => editProduct(params)}>Editar</Button>
+                  </>
+                );
+              },
+            },
+          ]}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
           pageSizeOptions={[5, 10]}
-          checkboxSelection
+          // checkboxSelection
         />
       </Box>
     </Container>

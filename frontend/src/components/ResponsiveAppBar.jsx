@@ -113,7 +113,6 @@ function ResponsiveAppBar() {
             </Button>
           </Box>
 
-
           <Box
             sx={{
               padding: '1rem',
@@ -121,7 +120,7 @@ function ResponsiveAppBar() {
               display: isLogged ? 'none' : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
-            <Link to={'/registro'}>
+            <Link to={'/auth/registro'} style={{ textDecoration: 'none' }}>
               <Button
                 variant='contained'
                 color='terceario'
@@ -191,10 +190,16 @@ function ResponsiveAppBar() {
               }}
             >
               {pagesSites.map((page, index) => (
-                <Link to={page.site} style={{ textDecoration: 'none' }} key={index}>
-                <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center' color={'black'}>{page.title}</Typography>
-                </MenuItem>
+                <Link
+                  to={page.site}
+                  style={{ textDecoration: 'none' }}
+                  key={index}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign='center' color={'black'}>
+                      {page.title}
+                    </Typography>
+                  </MenuItem>
                 </Link>
               ))}
             </Menu>
