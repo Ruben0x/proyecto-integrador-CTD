@@ -6,9 +6,8 @@ import { Box, Card, useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
 import { ItemsContext } from '../context/ItemsContext';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
 import { GridInstrumentos } from './GridInstrumentos';
 
 

@@ -13,15 +13,15 @@ import { Link } from 'react-router-dom';
 import { Avatar, Divider } from '@mui/material';
 import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logomobile from '../assets/img/logomobile.png';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-const pages = ['Crear Cuenta', 'Iniciar Sesión'];
-const pagesSites = [
-  { title: 'Crear Cuenta', site: '/registro' },
-  { title: 'Iniciar Sesión', site: '/auth/login' },
-];
+//const pages = ['Crear Cuenta','Iniciar Sesión'] <- se reemplaza opr pagesSites
+const pagesSites = [{title:'Crear Cuenta', site:'/registro'},{title:'Iniciar Sesión', site:'/auth/login'}];
 
 //iniciales debe extraerse del back, una vez logeado
-const iniciales = ['P', 'S'];
+const iniciales=['P','S'];
+const isLogged=true;
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -85,23 +85,39 @@ function ResponsiveAppBar() {
             sx={{
               padding: '1rem',
               flexGrow: 1,
-              display: { md: '', justifyContent: 'flex-end' },
-            }}
-          >
-            <Avatar
-              sx={{
-                bgcolor: 'primary.main',
-                width: 48,
-                height: 48,
-              }}
-            >{`${iniciales[0]}${iniciales[1]}`}</Avatar>
+              display: isLogged ? 'flex' : 'none',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+            }}>
+            <Avatar 
+            sx={{ 
+              bgcolor: 'primary.main',
+              width:48,
+              height:48 
+              }}>
+                {`${iniciales[0]}${iniciales[1]}`}
+            </Avatar>
+              
+            <Button
+                variant='contained'
+                color='terceario'
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  borderRadius: 70,
+                  fontSize: '.5rem',
+                  marginLeft: '0.5rem',
+                }}>
+               <LogoutIcon/>
+            </Button>
           </Box>
 
           <Box
             sx={{
               padding: '1rem',
               flexGrow: 1,
-              display: { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
+              display: isLogged ? 'none' : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
             <Link to={'/auth/registro'} style={{ textDecoration: 'none' }}>
@@ -138,42 +154,13 @@ function ResponsiveAppBar() {
             </Link>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
-            {/*Menu Hamburguesa*/}
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            ></IconButton>
-
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          {/*Menu Hamburguesa*/}
+            
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ 
+            flexGrow: 0,
+            display: isLogged ? 'none' : { xs: 'flex', md: 'none' }
+            }}>
             <IconButton
               size='large'
               aria-label='account of current user'
@@ -217,36 +204,6 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-
-          {/* <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
