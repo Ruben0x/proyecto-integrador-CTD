@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { ItemsContext } from '../context/ItemsContext';
 
-export const AddProductForm = () => {
+export const AddProductForm = ({ item = {} }) => {
   const { postCreateItem } = useContext(ItemsContext);
 
   const validationSchema = Yup.object({

@@ -5,8 +5,6 @@ import * as Yup from 'yup';
 import { createUser } from './createUser';
 
 export const RegisterForm = () => {
-  const navigate = useNavigate();
-
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese su Nombre')
       .min(2, 'Mínimo 2 caracteres')

@@ -25,12 +25,6 @@ export const AdminPage = () => {
       {isMobile ? (
         <Error404 />
       ) : (
-        // <Container>
-        //   <Typography align='center'>
-        //     Lo sentimos, el panel de Adminitracion no está disponible en
-        //     dispositivos móviles.
-        //   </Typography>
-        // </Container>
         <>
           <Sidenav />
         </>
