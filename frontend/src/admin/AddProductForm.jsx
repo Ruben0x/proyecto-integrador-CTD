@@ -18,7 +18,7 @@ import { SimpleDialog } from './components/SelectorCategorias';
 import { arrayCategorias } from '../components/ResponsiveBody';
 
 
-export const AddProductForm = ({ item = {} }) => {
+export const AddProductForm = ({ item = '' }) => {
 
 //Para emergente de categorías===========
 const [open, setOpen] = React.useState(false);
@@ -41,6 +41,7 @@ const handleClose = (value, id) => {
 
 
   const { postCreateItem } = useContext(ItemsContext);
+  // console.log(item);
 
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
@@ -65,17 +66,17 @@ const handleClose = (value, id) => {
 
   const formik = useFormik({
     initialValues: {
-      nombre: '',
-      descripcion: '',
-      marcaId: '',
-      categoriaId: '',
-      precio: '',
-      imagenes: [],
+      nombre: item.nombre,
+      descripcion: item.descripcion,
+      marcaId: item.marcaId,
+      categoriaId: item.categoriaId,
+      precio: item.precio,
+      imagenes: item.urlImg,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      postCreateItem(values);
-      
+      console.log(values);
+      // postCreateItem(values);
     },
   });
   return (
@@ -191,18 +192,21 @@ const handleClose = (value, id) => {
         </FormControl>
 
         {/* UPLOAD IMAGE */}
-        <FormControl>
-          <input
-            type='file'
-            multiple
-            id='imagenes'
-            name='imagenes'
-            accept='image/*'
-            onBlur={formik.handleBlur}
-            onChange={(e) => formik.setFieldValue('imagenes', e.target.files)}
-          />
-        </FormControl>
+        {!item && (
+          <FormControl>
+            <input
+              type='file'
+              multiple
+              id='imagenes'
+              name='imagenes'
+              accept='image/*'
+              onBlur={formik.handleBlur}
+              onChange={(e) => formik.setFieldValue('imagenes', e.target.files)}
+            />
+          </FormControl>
+        )}
         {/* UPLOAD IMAGE */}
+
         <Button color='primary' variant='contained' fullWidth type='submit'>
           Crear Producto
         </Button>
