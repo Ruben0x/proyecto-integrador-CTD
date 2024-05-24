@@ -20,7 +20,7 @@ const pagesSites = [{title:'Crear Cuenta', site:'/registro'},{title:'Iniciar Ses
 
 //iniciales debe extraerse del back, una vez logeado
 const iniciales=['P','S'];
-const isLogged=true;
+const isLogged=false;
 
 
 function ResponsiveAppBar() {

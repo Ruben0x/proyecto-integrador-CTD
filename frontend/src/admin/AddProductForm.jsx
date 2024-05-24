@@ -14,8 +14,32 @@ import {
   TextField,
 } from '@mui/material';
 import { ItemsContext } from '../context/ItemsContext';
+import { SimpleDialog } from './components/SelectorCategorias';
+import { arrayCategorias } from '../components/ResponsiveBody';
+
 
 export const AddProductForm = ({ item = {} }) => {
+
+//Para emergente de categorías===========
+const [open, setOpen] = React.useState(false);
+const [selectedValue, setSelectedValue] = React.useState(arrayCategorias[0].nombre);
+const [selectedId, setSelectedId] = React.useState(arrayCategorias[0].id);
+
+const handleClickOpen = () => {
+  setOpen(true);
+};
+
+const handleClose = (value, id) => {
+  setOpen(false);
+  setSelectedValue(value);
+  setSelectedId(id);
+};
+//=================================
+
+
+
+
+
   const { postCreateItem } = useContext(ItemsContext);
 
   const validationSchema = Yup.object({
@@ -51,6 +75,7 @@ export const AddProductForm = ({ item = {} }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       postCreateItem(values);
+      
     },
   });
   return (
@@ -115,29 +140,30 @@ export const AddProductForm = ({ item = {} }) => {
           )}
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel>Categoría</InputLabel>
-          <Select
-            id='categoriaId'
-            name='categoriaId'
-            label='categoriaId'
-            value={formik.values.categoriaId}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
-            }
-          >
-            <MenuItem value={'1'}>Cuerdas</MenuItem>
-            <MenuItem value={'2'}>Percusiones</MenuItem>
-            <MenuItem value={'3'}>Teclas</MenuItem>
-            <MenuItem value={'4'}>Vientos</MenuItem>
-          </Select>
-          {!!formik.errors.categoriaId && (
-            <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
-              {formik.touched.categoriaId && formik.errors.categoriaId}
+          
+{/**Despliega ventana de categorias */}
+
+      <SimpleDialog
+        selectedValue={selectedValue}
+        selectedId={selectedId}
+        open={open}
+        onClose={handleClose}
+      />
+      <TextField fullWidth label="Categoría" onClick={handleClickOpen} value={selectedValue.toUpperCase()}
+               id='nombreCategoria'
+               name='nombreCategoria'
+               onChange={formik.handleChange}
+               onBlur={formik.handleBlur}
+               error={formik.touched.nombreCategoria && Boolean(formik.errors.nombreCategoria)}
+               helperText={formik.touched.nombreCategoria && formik.errors.nombreCategoria}/>
+          {!!formik.errors.npmbreCategoria && (
+            <FormHelperText id='nombreCategoria' sx={{ color: 'red' }}>
+              {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
+        <input type="hidden" value={selectedId} id='categoriaId' name='categoriaId' readOnly/>
         </FormControl>
+  
 
         <FormControl>
           <InputLabel

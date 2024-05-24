@@ -7,16 +7,15 @@ import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
 import { ItemsContext } from '../context/ItemsContext';
 import { useState, useEffect, useContext } from 'react';
-
 import { GridInstrumentos } from './GridInstrumentos';
 
 
 //===HARDCODEO DE CATEGORIAS
-const arrayhardcode = [
-  { imagen: '/images/cuerdas-categorias.png', categoria: 'cuerdas' },
-  { imagen: '/images/percusiones-categorias.png', categoria: 'percusiones' },
-  { imagen: '/images/teclas-categorias.png', categoria: 'teclas' },
-  { imagen: '/images/vientos-categoria.png', categoria: 'vientos' },
+export  const arrayCategorias = [
+  {  id:1, nombre: 'cuerdas', img: '/images/cuerdas-categorias.png' },
+  {  id:2, nombre: 'percusiones', img: '/images/percusiones-categorias.png' },
+  {  id:3, nombre: 'teclas', img: '/images/teclas-categorias.png' },
+  {  id:4, nombre: 'vientos', img: '/images/vientos-categoria.png' },
 ];
 
 const ResponsiveBody = () => {
@@ -117,11 +116,11 @@ const ResponsiveBody = () => {
               flexWrap: 'wrap',
             }}
           >
-            {arrayhardcode.map((item, index) => (
+            {arrayCategorias.map((item) => (
               <MediaCard
-                imagen={item.imagen}
-                categoria={item.categoria}
-                key={index}
+                imagen={item.img}
+                categoria={item.nombre}
+                key={item.id}
               />
             ))}
           </Container>
@@ -154,6 +153,7 @@ const ResponsiveBody = () => {
           <Typography fontWeight='600' fontSize={20}>
             Creemos que estas alternativas son perfectas para ti
           </Typography>
+
           <GridInstrumentos />
         </Container>
       </Stack>
