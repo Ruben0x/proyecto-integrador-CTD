@@ -6,6 +6,7 @@ import {
   Container,
   FormControl,
   FormHelperText,
+  Input,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -140,9 +141,10 @@ const handleClose = (value, id) => {
             </FormHelperText>
           )}
         </FormControl>
+
         <FormControl fullWidth>
           
-{/**Despliega ventana de categorias */}
+{/**Despliega ventana de categorias*/}
 
       <SimpleDialog
         selectedValue={selectedValue}
@@ -162,9 +164,9 @@ const handleClose = (value, id) => {
               {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
-        <input type="hidden" value={selectedId} id='categoriaId' name='categoriaId' readOnly/>
+        <TextField  value={selectedId} id='categoriaId' name='categoriaId' />
         </FormControl>
-  
+
 
         <FormControl>
           <InputLabel
