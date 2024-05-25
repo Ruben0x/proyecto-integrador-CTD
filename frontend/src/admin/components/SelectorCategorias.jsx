@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,15 +9,13 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import AddIcon from '@mui/icons-material/Add';
-import {arrayCategorias} from '../../components/ResponsiveBody';
-
+import { arrayCategorias } from '../../components/ResponsiveBody';
 
 export function SimpleDialog(props) {
   const { onClose, selectedValue, selectedId, open } = props;
 
   const handleClose = () => {
     onClose(selectedValue, selectedId);
-    
   };
 
   const handleListItemClick = (value, id) => {
@@ -31,19 +28,23 @@ export function SimpleDialog(props) {
       <List sx={{ pt: 0 }}>
         {arrayCategorias.map((item) => (
           <ListItem disableGutters key={item.id}>
-            <ListItemButton onClick={() => handleListItemClick(item.nombre, item.id )}>
+            <ListItemButton
+              onClick={() => handleListItemClick(item.nombre, item.id)}
+            >
               <ListItemAvatar>
-                <Avatar 
-                src={item.img} 
-                sx={{width:70, height:70, '& img': {
-                    width: '150%',
-                    height: '150%',
-                    
-                  },
-                  }}>
-                </Avatar>
+                <Avatar
+                  src={item.img}
+                  sx={{
+                    width: 70,
+                    height: 70,
+                    '& img': {
+                      width: '150%',
+                      height: '150%',
+                    },
+                  }}
+                ></Avatar>
               </ListItemAvatar>
-              <ListItemText primary={item.nombre.toUpperCase()}/>
+              <ListItemText primary={item.nombre.toUpperCase()} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -57,7 +58,7 @@ export function SimpleDialog(props) {
                 <AddIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Agregar ..." />
+            <ListItemText primary='Agregar ...' />
           </ListItemButton>
         </ListItem>
       </List>

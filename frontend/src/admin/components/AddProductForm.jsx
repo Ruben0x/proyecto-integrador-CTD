@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { ItemsContext } from '../../context/ItemsContext';
+import { SimpleDialog } from './SelectorCategorias';
+import { arrayCategorias } from '../../components/ResponsiveBody';
 import {
   Button,
   Container,
   FormControl,
   FormHelperText,
-  Input,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -14,32 +16,23 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { ItemsContext } from '../context/ItemsContext';
-import { SimpleDialog } from './components/SelectorCategorias';
-import { arrayCategorias } from '../components/ResponsiveBody';
-
 
 export const AddProductForm = ({ item = '' }) => {
+  //Para emergente de categorías===========
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(arrayCategorias[0].nombre);
+  const [selectedId, setSelectedId] = useState(arrayCategorias[0].id);
 
-//Para emergente de categorías===========
-const [open, setOpen] = React.useState(false);
-const [selectedValue, setSelectedValue] = React.useState(arrayCategorias[0].nombre);
-const [selectedId, setSelectedId] = React.useState(arrayCategorias[0].id);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-const handleClickOpen = () => {
-  setOpen(true);
-};
-
-const handleClose = (value, id) => {
-  setOpen(false);
-  setSelectedValue(value);
-  setSelectedId(id);
-};
-//=================================
-
-
-
-
+  const handleClose = (value, id) => {
+    setOpen(false);
+    setSelectedValue(value);
+    setSelectedId(id);
+  };
+  //=================================
 
   const { postCreateItem } = useContext(ItemsContext);
   // console.log(item);
@@ -67,12 +60,12 @@ const handleClose = (value, id) => {
 
   const formik = useFormik({
     initialValues: {
-      nombre: item.nombre,
-      descripcion: item.descripcion,
-      marcaId: item.marcaId,
-      categoriaId: item.categoriaId,
-      precio: item.precio,
-      imagenes: item.urlImg,
+      nombre: item.nombre || '',
+      descripcion: item.descripcion || '',
+      marcaId: item.marcaId || '',
+      categoriaId: item.categoriaId || '',
+      precio: item.precio || '',
+      imagenes: item.urlImg || [],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -143,30 +136,67 @@ const handleClose = (value, id) => {
         </FormControl>
 
         <FormControl fullWidth>
-          
-{/**Despliega ventana de categorias*/}
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            id='categoriaId'
+            name='categoriaId'
+            label='categoriaId'
+            value={formik.values.categoriaId}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
+            }
+          >
+            <MenuItem value={'1'}>Cuerdas</MenuItem>
+            <MenuItem value={'2'}>Percusiones</MenuItem>
+            <MenuItem value={'3'}>Teclas</MenuItem>
+            <MenuItem value={'4'}>Vientos</MenuItem>
+          </Select>
+          {!!formik.errors.categoriaId && (
+            <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
+              {formik.touched.categoriaId && formik.errors.categoriaId}
+            </FormHelperText>
+          )}
 
-      <SimpleDialog
-        selectedValue={selectedValue}
-        selectedId={selectedId}
-        open={open}
-        onClose={handleClose}
-      />
-      <TextField fullWidth label="Categoría" onClick={handleClickOpen} value={selectedValue.toUpperCase()}
-               id='nombreCategoria'
-               name='nombreCategoria'
-               onChange={formik.handleChange}
-               onBlur={formik.handleBlur}
-               error={formik.touched.nombreCategoria && Boolean(formik.errors.nombreCategoria)}
-               helperText={formik.touched.nombreCategoria && formik.errors.nombreCategoria}/>
-          {!!formik.errors.npmbreCategoria && (
+          {/**Despliega ventana de categorias*/}
+
+          {/* <SimpleDialog
+            selectedValue={selectedValue}
+            selectedId={selectedId}
+            open={open}
+            onClose={handleClose}
+          />
+          <TextField
+            fullWidth
+            label='Categoría'
+            onClick={handleClickOpen}
+            value={selectedValue.toUpperCase()}
+            id='nombreCategoria'
+            name='nombreCategoria'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.nombreCategoria &&
+              Boolean(formik.errors.nombreCategoria)
+            }
+            helperText={
+              formik.touched.nombreCategoria && formik.errors.nombreCategoria
+            }
+          />
+          {!!formik.errors.nombreCategoria && (
             <FormHelperText id='nombreCategoria' sx={{ color: 'red' }}>
               {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
-        <TextField  value={selectedId} id='categoriaId' name='categoriaId' />
+          <input
+            type='hidden'
+            value={selectedId}
+            id='categoriaId'
+            name='categoriaId'
+            readOnly
+          /> */}
         </FormControl>
-
 
         <FormControl>
           <InputLabel
@@ -194,24 +224,31 @@ const handleClose = (value, id) => {
         </FormControl>
 
         {/* UPLOAD IMAGE */}
-        {!item && (
-          <FormControl>
-            <input
-              type='file'
-              multiple
-              id='imagenes'
-              name='imagenes'
-              accept='image/*'
-              onBlur={formik.handleBlur}
-              onChange={(e) => formik.setFieldValue('imagenes', e.target.files)}
-            />
-          </FormControl>
+        {!item ? (
+          <>
+            <FormControl>
+              <input
+                type='file'
+                multiple
+                id='imagenes'
+                name='imagenes'
+                accept='image/*'
+                onBlur={formik.handleBlur}
+                onChange={(e) =>
+                  formik.setFieldValue('imagenes', e.target.files)
+                }
+              />
+            </FormControl>
+            <Button color='primary' variant='contained' fullWidth type='submit'>
+              Crear Producto
+            </Button>
+          </>
+        ) : (
+          <Button color='primary' variant='contained' fullWidth type='submit'>
+            Editar
+          </Button>
         )}
         {/* UPLOAD IMAGE */}
-
-        <Button color='primary' variant='contained' fullWidth type='submit'>
-          Crear Producto
-        </Button>
       </Container>
     </form>
   );

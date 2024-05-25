@@ -1,6 +1,6 @@
 import React from 'react';
-import { AddProductForm } from './AddProductForm';
 import { Container, Typography } from '@mui/material';
+import { AddProductForm } from './components/AddProductForm';
 
 export const AddProductPage = () => {
   return (

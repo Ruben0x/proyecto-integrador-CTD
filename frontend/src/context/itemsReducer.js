@@ -7,6 +7,11 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         items: action.payload,
       };
+    case types.getRandoms:
+      return {
+        ...state,
+        itemsRandoms: action.payload,
+      };
     case types.postItem:
       return {
         ...state,

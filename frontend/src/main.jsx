@@ -23,6 +23,12 @@ const theme = createTheme({
     neutralColor: {
       main: '#ffffff', // white
     },
+    buttonGreen: {
+      main: '#50A020', // green
+    },
+    buttonRed: {
+      main: '#CF2222', // red
+    },
   },
 });
 ReactDOM.createRoot(document.getElementById('root')).render(
