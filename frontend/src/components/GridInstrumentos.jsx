@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ItemsContext } from '../context/ItemsContext';
 import { Box, Grid } from '@mui/material';
-import { InstrumentCard } from './InstrumentCard';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';
 
 export const GridInstrumentos = () => {
@@ -9,7 +8,9 @@ export const GridInstrumentos = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    setProductos(itemState.items);
+    if (itemState.itemsRandoms) {
+      setProductos(itemState.itemsRandoms);
+    }
   }, [itemState]);
   return (
     <Box
@@ -24,8 +25,8 @@ export const GridInstrumentos = () => {
         columns={{ xs: 4, sm: 8, md: 12 }}
         justifyContent={'center'}
       >
-        {productos.map((instrument, index) => (
-          <Grid item xs={4} sm={6} md={6} key={index}>
+        {productos.map((instrument) => (
+          <Grid item xs={4} sm={6} md={6} key={instrument.id}>
             <InstrumentCardResponsive
               key={instrument.id}
               instrument={instrument}

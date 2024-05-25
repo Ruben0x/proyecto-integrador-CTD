@@ -7,7 +7,9 @@ export const createUser = (user) => {
     .then((res) => {
       if (res.status === 201) {
         toast.success('Producto creado exitosamente');
-        window.location.replace('/');
+        setTimeout(() => {
+          window.location.replace('/');
+        }, 1000);
       }
     })
     .catch((error) => {

@@ -11,13 +11,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AddProductPage } from './AddProductPage';
 import AddIcon from '@mui/icons-material/Add';
-import { AdminProductList } from './AdminProductList';
-import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logoWhite from '../assets/img/LogoWhite.png';
-import { Button, StyledEngineProvider, useTheme } from '@mui/material';
+import { Button } from '@mui/material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { ListAllProducts } from './components/ListAllProducts';
 
 const drawerWidth = 240;
 
@@ -77,7 +76,7 @@ export const Sidenav = () => {
       <Box component='main' sx={{ flexGrow: 1 }}>
         <Toolbar />
         {menuData == 'Agregar' && <AddProductPage />}
-        {menuData == 'Listar' && <AdminProductList />}
+        {menuData == 'Listar' && <ListAllProducts />}
       </Box>
     </Box>
   );
