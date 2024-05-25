@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 
 const initialState = {
   items: [],
+  usuarios: [],
 };
 
 export const ItemsProvider = ({ children }) => {
@@ -16,6 +17,12 @@ export const ItemsProvider = ({ children }) => {
     axios
       .get('http://localhost:3000/productos')
       .then((res) => dispatch({ type: types.getItems, payload: res.data }));
+  }, []);
+  const getAllUsuarios = useCallback(() => {
+    axios.get('http://localhost:3000/usuarios').then((res) =>
+      // console.log(res.data)
+      dispatch({ type: types.getUsuarios, payload: res.data })
+    );
   }, []);
 
   const getItemsRandoms = () => {
@@ -88,6 +95,7 @@ export const ItemsProvider = ({ children }) => {
         postCreateItem,
         deleteProductbyId,
         getAllItems,
+        getAllUsuarios,
       }}
     >
       {children}

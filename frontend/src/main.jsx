@@ -29,6 +29,9 @@ const theme = createTheme({
     buttonRed: {
       main: '#CF2222', // red
     },
+    background: {
+      main: '#F9E9DE',
+    },
   },
 });
 ReactDOM.createRoot(document.getElementById('root')).render(

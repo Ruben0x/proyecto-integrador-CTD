@@ -1,9 +1,10 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Link, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { GridImagenes } from '../components/GridImagenes';
 import WestIcon from '@mui/icons-material/West';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Characteristics } from '../products/components/Characteristics';
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -24,10 +25,14 @@ export const ProductPage = () => {
   // console.log(instrumento);
 
   return (
-    <Container>
+    <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
       <Box sx={{ margin: 2 }}>
         <Box paddingY={2}>
-          <Link style={{ textDecoration: 'none' }} to={'/'}>
+          <Link
+            component={RouterLink}
+            style={{ textDecoration: 'none' }}
+            to={'/'}
+          >
             <Typography sx={{ display: 'flex', alignItems: 'center' }}>
               <WestIcon fontSize='large' sx={{ paddingRight: 2 }} />
               VOLVER AL HOME
@@ -62,6 +67,7 @@ export const ProductPage = () => {
             <span style={{ color: 'white' }}>/diario</span>
           </Typography>
         </Box>
+        <Characteristics />
       </Box>
     </Container>
   );
