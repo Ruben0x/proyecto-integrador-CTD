@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Button,
   Grid,
@@ -11,14 +11,19 @@ import { Link as RouterLink } from 'react-router-dom';
 import { AuthLayout } from './layout/AuthLayout';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import handleSubmit from './helpers/login';
+import { login } from './helpers/login';
+import { GlobalUserDataContext } from './helpers/globalUserData';
+
+
 
 /*Data para POST:
 'Checkbox recuerdame' :[booleano]
 */
 const label = { inputProps: { 'aria-label': 'Checkbox recuerdame' } };
 
+
 export const LogInPage = () => {
+  const { setIsLogged, setGlobalUserData } = useContext(GlobalUserDataContext);
   const validationSchema = Yup.object({
     email: Yup.string('Ingrese su correo')
       .email('Correo Invalido')
@@ -32,11 +37,11 @@ export const LogInPage = () => {
     initialValues: {
       email: '',
       password: '',
-      rememberme:'',
+      rememberme:false,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      login(values);
+      login(values, setIsLogged, setGlobalUserData);
     },
   });
   return (
@@ -67,10 +72,7 @@ export const LogInPage = () => {
           >
             Ingresa
           </Typography>
-          <form onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit(formik.values);
-            }}>
+          <form onSubmit={formik.handleSubmit}>
             <Grid container>
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <TextField
