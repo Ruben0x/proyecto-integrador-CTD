@@ -1,5 +1,4 @@
 import React from 'react';
-import { Grid, Typography } from '@mui/material';
 import { AddProductForm } from './components/AddProductForm';
 import { AdminLayout } from './layout/AdminLayout';
 

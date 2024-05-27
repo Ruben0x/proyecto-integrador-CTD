@@ -20,8 +20,14 @@ import {
 export const AddProductForm = ({ item = '' }) => {
   //Para emergente de categorías===========
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(arrayCategorias[0].nombre);
-  const [selectedId, setSelectedId] = useState(arrayCategorias[0].id);
+  // const [selectedValue, setSelectedValue] = useState(arrayCategorias[0].nombre);
+  // const [selectedId, setSelectedId] = useState(arrayCategorias[0].id);
+  const [selectedValue, setSelectedValue] = useState(
+    item.nombreCategoria ? item.nombreCategoria : arrayCategorias[0].nombre
+  );
+  const [selectedId, setSelectedId] = useState(
+    item.categoriaId ? item.categoriaId : arrayCategorias[0].id
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,8 +40,7 @@ export const AddProductForm = ({ item = '' }) => {
   };
   //FIN EMERGENTE CATEGORIAS=================================
 
-  const { postCreateItem } = useContext(ItemsContext);
-  // console.log(item);
+  const { postCreateItem, postEditItem } = useContext(ItemsContext);
 
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
@@ -69,8 +74,10 @@ export const AddProductForm = ({ item = '' }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-      // postCreateItem(values);
+      if (!item) {
+        postCreateItem(values);
+      }
+      postEditItem(values, item.id);
     },
   });
 

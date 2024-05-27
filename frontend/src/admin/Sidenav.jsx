@@ -50,7 +50,16 @@ export const Sidenav = () => {
         <Divider />
         <List>
           <ListItem disablePadding onClick={() => setMenuData('Agregar')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+            <ListItemButton
+              selected={menuData === 'Agregar'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
@@ -58,7 +67,16 @@ export const Sidenav = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding onClick={() => setMenuData('Listar')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+            <ListItemButton
+              selected={menuData === 'Listar'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
@@ -66,7 +84,16 @@ export const Sidenav = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding onClick={() => setMenuData('TodosUsuarios')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+            <ListItemButton
+              selected={menuData === 'TodosUsuarios'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <RecentActorsIcon />
               </ListItemIcon>

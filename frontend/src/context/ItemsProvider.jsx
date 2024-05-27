@@ -86,6 +86,40 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
+  const postEditItem = async (values, id) => {
+    const formData = new FormData();
+
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        if (key === 'imagenes') {
+          for (let i = 0; i < values.imagenes.length; i++) {
+            formData.append(`imagenes`, values.imagenes[i]);
+          }
+        } else {
+          formData.append(key, values[key]);
+        }
+      }
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/productos/' + id, {
+        method: 'PATCH',
+        body: formData,
+      });
+      if (response.ok) {
+        console.log('Producto editado exitosamente');
+        toast.success('Producto editado exitosamente');
+        setTimeout(() => {
+          location.reload();
+        }, 300);
+      } else {
+        toast.error('Ya existe un producto con ese nombre');
+      }
+    } catch (error) {
+      console.error('Error al crear producto', error);
+    }
+  };
+
   getItemsRandoms();
   return (
     <ItemsContext.Provider
@@ -96,6 +130,7 @@ export const ItemsProvider = ({ children }) => {
         deleteProductbyId,
         getAllItems,
         getAllUsuarios,
+        postEditItem,
       }}
     >
       {children}

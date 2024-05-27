@@ -12,11 +12,15 @@ export const ProductPage = () => {
   const [listaImagenes, setListaImagenes] = useState([]);
 
   useEffect(() => {
-    axios('http://localhost:3000/productos/' + id).then((res) => {
-      setInstrumento(res.data);
-      setListaImagenes(res.data.urlImg);
-    });
-  }, []);
+    axios('http://localhost:3000/productos/' + id)
+      .then((res) => {
+        setInstrumento(res.data);
+        setListaImagenes(res.data.imagenes || []);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   if (!instrumento) {
     return <Navigate to={'/'} />;
