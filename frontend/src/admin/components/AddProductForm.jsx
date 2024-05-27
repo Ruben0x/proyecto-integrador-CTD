@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ItemsContext } from '../../context/ItemsContext';
@@ -32,7 +32,7 @@ export const AddProductForm = ({ item = '' }) => {
     setSelectedValue(value);
     setSelectedId(id);
   };
-  //=================================
+  //FIN EMERGENTE CATEGORIAS=================================
 
   const { postCreateItem } = useContext(ItemsContext);
   // console.log(item);
@@ -73,6 +73,11 @@ export const AddProductForm = ({ item = '' }) => {
       // postCreateItem(values);
     },
   });
+
+  useEffect(() => {
+    formik.setFieldValue('categoriaId', selectedId);
+  }, [selectedId]);
+
   return (
     <Container sx={{ width: '60%' }}>
       <form onSubmit={formik.handleSubmit}>
@@ -136,33 +141,33 @@ export const AddProductForm = ({ item = '' }) => {
             )}
           </FormControl>
 
-          <FormControl fullWidth>
-            <InputLabel>Categoría</InputLabel>
-            <Select
-              id='categoriaId'
-              name='categoriaId'
-              label='categoriaId'
-              value={formik.values.categoriaId}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
-              }
-            >
-              <MenuItem value={'1'}>Cuerdas</MenuItem>
-              <MenuItem value={'2'}>Percusiones</MenuItem>
-              <MenuItem value={'3'}>Teclas</MenuItem>
-              <MenuItem value={'4'}>Vientos</MenuItem>
-            </Select>
-            {!!formik.errors.categoriaId && (
-              <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
-                {formik.touched.categoriaId && formik.errors.categoriaId}
-              </FormHelperText>
-            )}
+          {/*
+          <InputLabel>Categoría</InputLabel>
+          <Select
+            id='categoriaId'
+            name='categoriaId'
+            label='categoriaId'
+            value={formik.values.categoriaId}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
+            }
+          >
+            <MenuItem value={'1'}>Cuerdas</MenuItem>
+            <MenuItem value={'2'}>Percusiones</MenuItem>
+            <MenuItem value={'3'}>Teclas</MenuItem>
+            <MenuItem value={'4'}>Vientos</MenuItem>
+          </Select>
+          {!!formik.errors.categoriaId && (
+            <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
+              {formik.touched.categoriaId && formik.errors.categoriaId}
+            </FormHelperText>
+          )}
+        */}
+          {/**Despliega ventana de categorias*/}
 
-            {/**Despliega ventana de categorias*/}
-
-            {/* <SimpleDialog
+          <SimpleDialog
             selectedValue={selectedValue}
             selectedId={selectedId}
             open={open}
@@ -190,13 +195,14 @@ export const AddProductForm = ({ item = '' }) => {
               {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
-          <input
-            type='hidden'
-            value={selectedId}
-            id='categoriaId'
-            name='categoriaId'
-            readOnly
-          /> */}
+          <FormControl fullWidth>
+            <TextField
+              value={formik.values.categoriaId}
+              id='categoriaId'
+              name='categoriaId'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
           </FormControl>
 
           <FormControl>

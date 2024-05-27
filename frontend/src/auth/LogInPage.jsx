@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Button,
   Grid,
@@ -9,15 +9,44 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { AuthLayout } from './layout/AuthLayout';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { login } from './helpers/login';
+import { GlobalUserDataContext } from './helpers/globalUserData';
+
+
 
 /*Data para POST:
 'Checkbox recuerdame' :[booleano]
 */
 const label = { inputProps: { 'aria-label': 'Checkbox recuerdame' } };
 
+
 export const LogInPage = () => {
+  const { setIsLogged, setGlobalUserData } = useContext(GlobalUserDataContext);
+  const validationSchema = Yup.object({
+    email: Yup.string('Ingrese su correo')
+      .email('Correo Invalido')
+      .required('Correo es obligatorio'),
+    password: Yup.string('Ingrese su contraseña').required(
+      'Debe ingresar una contraseña'
+    ),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      rememberme:false,
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      login(values, setIsLogged, setGlobalUserData);
+    },
+  });
   return (
     <AuthLayout title='Bienvenid@' subtitle=' ingresa al sitio'>
+
       <Grid
         container
         spacing={0}
@@ -43,41 +72,60 @@ export const LogInPage = () => {
           >
             Ingresa
           </Typography>
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <Grid container>
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <TextField
+                  id='email'
+                  name='email'
                   label='Correo'
                   type='email'
                   placeholder='correo@google.com'
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                   fullWidth
                 />
               </Grid>
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <TextField
+                  id='password'
+                  name='password'
                   label='Contraseña'
                   type='password'
                   placeholder='Contraseña'
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
                   fullWidth
                 />
               </Grid>
               <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
                 <Grid item xs={12}>
-                  <Typography
+                  <Typography 
                     fontWeight={600}
                     sx={{ mr: 1, paddingBottom: '15px' }}
                   >
-                    <Checkbox {...label} />
-                    Recuérdame
+                    <Checkbox {...label} 
+                    id='rememberme'
+                    name='rememberme'
+                    value={formik.values.rememberme}
+                    onChange={formik.handleChange}
+                    />
+                    Recuerdame
                   </Typography>
-                  <Button variant='contained' fullWidth color='secondary'>
+                  <Button type='submit' variant='contained' fullWidth color='secondary'>
                     INGRESA
                   </Button>
                 </Grid>
               </Grid>
               <Grid container direction='row' justifyContent='end'>
                 <Typography sx={{ mr: 1 }}>¿No tienes cuenta?</Typography>
-                <Link component={RouterLink} color='inherit' to='/registro'>
+                <Link component={RouterLink} color='inherit' to='/auth/registro'>
                   Regístrate aquí
                 </Link>
               </Grid>
@@ -85,6 +133,7 @@ export const LogInPage = () => {
           </form>
         </Grid>
       </Grid>
+
     </AuthLayout>
   );
 };

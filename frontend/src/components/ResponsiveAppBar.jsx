@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,8 @@ import { Avatar, Divider } from '@mui/material';
 import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logomobile from '../assets/img/logomobile.png';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
+import { logout } from '../auth/helpers/login';
 
 //const pages = ['Crear Cuenta','Iniciar Sesión'] <- se reemplaza opr pagesSites
 const pagesSites = [
@@ -22,10 +25,16 @@ const pagesSites = [
 ];
 
 //iniciales debe extraerse del back, una vez logeado
-const iniciales = ['P', 'S'];
-const isLogged = false;
+const iniciales = ['N', 'N'];
 
 function ResponsiveAppBar() {
+  const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
+
+  const iniciales = [
+    globalUserData.nombre.charAt(0),
+    globalUserData.apellido.charAt(0),
+  ];
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -105,6 +114,7 @@ function ResponsiveAppBar() {
             <Button
               variant='contained'
               color='terceario'
+              onClick={logout}
               sx={{
                 my: 2,
                 color: 'white',
