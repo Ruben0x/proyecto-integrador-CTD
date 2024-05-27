@@ -1,14 +1,11 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
 import { AddProductForm } from './components/AddProductForm';
+import { AdminLayout } from './layout/AdminLayout';
 
 export const AddProductPage = () => {
   return (
-    <Container>
-      <Typography variant='h4' sx={{ pb: 3 }}>
-        Agregar Producto
-      </Typography>
+    <AdminLayout title={'Agregar Producto'}>
       <AddProductForm />
-    </Container>
+    </AdminLayout>
   );
 };

@@ -19,20 +19,21 @@ import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { logout } from '../auth/helpers/login';
 
 //const pages = ['Crear Cuenta','Iniciar Sesión'] <- se reemplaza opr pagesSites
-const pagesSites = [{title:'Crear Cuenta', site:'/registro'},{title:'Iniciar Sesión', site:'/auth/login'}];
+const pagesSites = [
+  { title: 'Crear Cuenta', site: '/auth/registro' },
+  { title: 'Iniciar Sesión', site: '/auth/login' },
+];
 
 //iniciales debe extraerse del back, una vez logeado
-const iniciales = ['N','N']
+const iniciales = ['N', 'N'];
 
 function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
 
-  
-const iniciales = [
-  globalUserData.nombre.charAt(0),
-  globalUserData.apellido.charAt(0),
-];
-
+  const iniciales = [
+    globalUserData.nombre.charAt(0),
+    globalUserData.apellido.charAt(0),
+  ];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -98,29 +99,32 @@ const iniciales = [
               display: isLogged ? 'flex' : 'none',
               justifyContent: 'flex-end',
               alignItems: 'center',
-            }}>
-            <Avatar 
-            sx={{ 
-              bgcolor: 'primary.main',
-              width:48,
-              height:48 
-              }}>
-                {`${iniciales[0]}${iniciales[1]}`}
+            }}
+          >
+            <Avatar
+              sx={{
+                bgcolor: 'primary.main',
+                width: 48,
+                height: 48,
+              }}
+            >
+              {`${iniciales[0]}${iniciales[1]}`}
             </Avatar>
-              
+
             <Button
-                variant='contained'
-                color='terceario'
-                onClick={logout}
-                sx={{
-                  my: 2,
-                  color: 'white',
-                  display: 'block',
-                  borderRadius: 70,
-                  fontSize: '.5rem',
-                  marginLeft: '0.5rem',
-                }}>
-               <LogoutIcon/>
+              variant='contained'
+              color='terceario'
+              onClick={logout}
+              sx={{
+                my: 2,
+                color: 'white',
+                display: 'block',
+                borderRadius: 70,
+                fontSize: '.5rem',
+                marginLeft: '0.5rem',
+              }}
+            >
+              <LogoutIcon />
             </Button>
           </Box>
 
@@ -128,7 +132,9 @@ const iniciales = [
             sx={{
               padding: '1rem',
               flexGrow: 1,
-              display: isLogged ? 'none' : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
+              display: isLogged
+                ? 'none'
+                : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
             <Link to={'/auth/registro'} style={{ textDecoration: 'none' }}>
@@ -165,13 +171,14 @@ const iniciales = [
             </Link>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
-          {/*Menu Hamburguesa*/}
-            
+            {/*Menu Hamburguesa*/}
           </Box>
-          <Box sx={{ 
-            flexGrow: 0,
-            display: isLogged ? 'none' : { xs: 'flex', md: 'none' }
-            }}>
+          <Box
+            sx={{
+              flexGrow: 0,
+              display: isLogged ? 'none' : { xs: 'flex', md: 'none' },
+            }}
+          >
             <IconButton
               size='large'
               aria-label='account of current user'

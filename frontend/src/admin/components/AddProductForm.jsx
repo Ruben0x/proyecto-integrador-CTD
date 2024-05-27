@@ -20,8 +20,14 @@ import {
 export const AddProductForm = ({ item = '' }) => {
   //Para emergente de categorías===========
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(arrayCategorias[0].nombre);
-  const [selectedId, setSelectedId] = useState(arrayCategorias[0].id);
+  // const [selectedValue, setSelectedValue] = useState(arrayCategorias[0].nombre);
+  // const [selectedId, setSelectedId] = useState(arrayCategorias[0].id);
+  const [selectedValue, setSelectedValue] = useState(
+    item.nombreCategoria ? item.nombreCategoria : arrayCategorias[0].nombre
+  );
+  const [selectedId, setSelectedId] = useState(
+    item.categoriaId ? item.categoriaId : arrayCategorias[0].id
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,8 +40,7 @@ export const AddProductForm = ({ item = '' }) => {
   };
   //FIN EMERGENTE CATEGORIAS=================================
 
-  const { postCreateItem } = useContext(ItemsContext);
-  // console.log(item);
+  const { postCreateItem, postEditItem } = useContext(ItemsContext);
 
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
@@ -69,79 +74,79 @@ export const AddProductForm = ({ item = '' }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-      // postCreateItem(values);
+      if (!item) {
+        postCreateItem(values);
+      }
+      postEditItem(values, item.id);
     },
-
-    
   });
-  
+
   useEffect(() => {
     formik.setFieldValue('categoriaId', selectedId);
-    }, [selectedId]);
+  }, [selectedId]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-          flexWrap: 'wrap',
-        }}
-      >
-        <TextField
-          id='nombre'
-          name='nombre'
-          label='Nombre Producto'
-          value={formik.values.nombre}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-          helperText={formik.touched.nombre && formik.errors.nombre}
-        />
-        <TextField
-          id='descripcion'
-          name='descripcion'
-          label='Descripción'
-          value={formik.values.descripcion}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.descripcion && Boolean(formik.errors.descripcion)
-          }
-          helperText={formik.touched.descripcion && formik.errors.descripcion}
-        />
-
-        <FormControl fullWidth>
-          <InputLabel>Marca</InputLabel>
-          <Select
-            id='marcaId'
-            name='marcaId'
-            label='marcaId'
-            value={formik.values.marcaId}
+    <Container sx={{ width: '60%' }}>
+      <form onSubmit={formik.handleSubmit}>
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            flexWrap: 'wrap',
+          }}
+        >
+          <TextField
+            id='nombre'
+            name='nombre'
+            label='Nombre Producto'
+            value={formik.values.nombre}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.marcaId && Boolean(formik.errors.marcaId)}
-          >
-            <MenuItem value={1}>Casio</MenuItem>
-            <MenuItem value={2}>Yamaha</MenuItem>
-            <MenuItem value={3}>Fender</MenuItem>
-            <MenuItem value={4}>Zildjian</MenuItem>
-            <MenuItem value={5}>Jackson</MenuItem>
-            <MenuItem value={6}>Gretsch</MenuItem>
-            <MenuItem value={7}>Hohner</MenuItem>
-            <MenuItem value={8}>DAddario</MenuItem>
-            <MenuItem value={9}>Gibraltar</MenuItem>
-            <MenuItem value={10}>Pearl</MenuItem>
-          </Select>
-          {!!formik.errors.marcaId && (
-            <FormHelperText id='marcaId' sx={{ color: 'red' }}>
-              {formik.touched.marcaId && formik.errors.marcaId}
-            </FormHelperText>
-          )}
-        </FormControl>
+            error={formik.touched.nombre && Boolean(formik.errors.nombre)}
+            helperText={formik.touched.nombre && formik.errors.nombre}
+          />
+          <TextField
+            id='descripcion'
+            name='descripcion'
+            label='Descripción'
+            value={formik.values.descripcion}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.descripcion && Boolean(formik.errors.descripcion)
+            }
+            helperText={formik.touched.descripcion && formik.errors.descripcion}
+          />
 
+          <FormControl fullWidth>
+            <InputLabel>Marca</InputLabel>
+            <Select
+              id='marcaId'
+              name='marcaId'
+              label='marcaId'
+              value={formik.values.marcaId}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.marcaId && Boolean(formik.errors.marcaId)}
+            >
+              <MenuItem value={1}>Casio</MenuItem>
+              <MenuItem value={2}>Yamaha</MenuItem>
+              <MenuItem value={3}>Fender</MenuItem>
+              <MenuItem value={4}>Zildjian</MenuItem>
+              <MenuItem value={5}>Jackson</MenuItem>
+              <MenuItem value={6}>Gretsch</MenuItem>
+              <MenuItem value={7}>Hohner</MenuItem>
+              <MenuItem value={8}>DAddario</MenuItem>
+              <MenuItem value={9}>Gibraltar</MenuItem>
+              <MenuItem value={10}>Pearl</MenuItem>
+            </Select>
+            {!!formik.errors.marcaId && (
+              <FormHelperText id='marcaId' sx={{ color: 'red' }}>
+                {formik.touched.marcaId && formik.errors.marcaId}
+              </FormHelperText>
+            )}
+          </FormControl>
 
           {/*
           <InputLabel>Categoría</InputLabel>
@@ -197,70 +202,76 @@ export const AddProductForm = ({ item = '' }) => {
               {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
-        <FormControl fullWidth>
-          <TextField
-            
-            value={formik.values.categoriaId}
-            id='categoriaId'
-            name='categoriaId'
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
+          <FormControl fullWidth>
+            <TextField
+              value={formik.values.categoriaId}
+              id='categoriaId'
+              name='categoriaId'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </FormControl>
 
-        </FormControl>
+          <FormControl>
+            <InputLabel
+              htmlFor='outlined-adornment-amount'
+              // sx={formik.errors.precio ? { color: 'red' } : ''}
+              sx={{ ...(formik.errors.precio && { color: 'red' }) }}
+            >
+              Precio
+            </InputLabel>
+            <OutlinedInput
+              id='precio'
+              name='precio'
+              label='Precio'
+              value={formik.values.precio}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.precio && Boolean(formik.errors.precio)}
+              startAdornment={
+                <InputAdornment position='start'>$</InputAdornment>
+              }
+            />
+            {!!formik.errors.precio && (
+              <FormHelperText id='precio-error' sx={{ color: 'red' }}>
+                {formik.touched.precio && formik.errors.precio}
+              </FormHelperText>
+            )}
+          </FormControl>
 
-        <FormControl>
-          <InputLabel
-            htmlFor='outlined-adornment-amount'
-            // sx={formik.errors.precio ? { color: 'red' } : ''}
-            sx={{ ...(formik.errors.precio && { color: 'red' }) }}
-          >
-            Precio
-          </InputLabel>
-          <OutlinedInput
-            id='precio'
-            name='precio'
-            label='Precio'
-            value={formik.values.precio}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.precio && Boolean(formik.errors.precio)}
-            startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-          />
-          {!!formik.errors.precio && (
-            <FormHelperText id='precio-error' sx={{ color: 'red' }}>
-              {formik.touched.precio && formik.errors.precio}
-            </FormHelperText>
-          )}
-        </FormControl>
-
-        {/* UPLOAD IMAGE */}
-        {!item ? (
-          <>
-            <FormControl>
-              <input
-                type='file'
-                multiple
-                id='imagenes'
-                name='imagenes'
-                accept='image/*'
-                onBlur={formik.handleBlur}
-                onChange={(e) =>
-                  formik.setFieldValue('imagenes', e.target.files)
-                }
-              />
-            </FormControl>
+          {/* UPLOAD IMAGE */}
+          {!item ? (
+            <>
+              <FormControl>
+                <input
+                  type='file'
+                  multiple
+                  id='imagenes'
+                  name='imagenes'
+                  accept='image/*'
+                  onBlur={formik.handleBlur}
+                  onChange={(e) =>
+                    formik.setFieldValue('imagenes', e.target.files)
+                  }
+                />
+              </FormControl>
+              <Button
+                color='primary'
+                variant='contained'
+                fullWidth
+                type='submit'
+              >
+                Crear Producto
+              </Button>
+            </>
+          ) : (
             <Button color='primary' variant='contained' fullWidth type='submit'>
-              Crear Producto
+              Editar
             </Button>
-          </>
-        ) : (
-          <Button color='primary' variant='contained' fullWidth type='submit'>
-            Editar
-          </Button>
-        )}
-        {/* UPLOAD IMAGE */}
-      </Container>
-    </form>
+          )}
+          {/* UPLOAD IMAGE */}
+        </Container>
+      </form>
+    </Container>
   );
 };

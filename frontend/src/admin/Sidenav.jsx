@@ -17,6 +17,8 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { ListAllProducts } from './components/ListAllProducts';
+import { ListAllUsuarios } from './components/ListAllUsuarios';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
 
 const drawerWidth = 240;
 
@@ -48,7 +50,16 @@ export const Sidenav = () => {
         <Divider />
         <List>
           <ListItem disablePadding onClick={() => setMenuData('Agregar')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+            <ListItemButton
+              selected={menuData === 'Agregar'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
@@ -56,11 +67,37 @@ export const Sidenav = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding onClick={() => setMenuData('Listar')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+            <ListItemButton
+              selected={menuData === 'Listar'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
               <ListItemText primary='Listar Productos' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding onClick={() => setMenuData('TodosUsuarios')}>
+            <ListItemButton
+              selected={menuData === 'TodosUsuarios'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <RecentActorsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Listar Usuarios' />
             </ListItemButton>
           </ListItem>
         </List>
@@ -73,10 +110,18 @@ export const Sidenav = () => {
           Salir
         </Button>
       </Drawer>
-      <Box component='main' sx={{ flexGrow: 1 }}>
+      <Box
+        component='main'
+        sx={{
+          flexGrow: 1,
+          backgroundColor: 'background.main',
+          height: '100vh',
+        }}
+      >
         <Toolbar />
         {menuData == 'Agregar' && <AddProductPage />}
         {menuData == 'Listar' && <ListAllProducts />}
+        {menuData == 'TodosUsuarios' && <ListAllUsuarios />}
       </Box>
     </Box>
   );

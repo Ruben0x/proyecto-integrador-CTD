@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  dividerClasses,
 } from '@mui/material';
 import { useContext } from 'react';
 import { ItemsContext } from '../../context/ItemsContext';
@@ -18,6 +17,8 @@ import { AddProductForm } from './AddProductForm';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { toast } from 'sonner';
 import { useEffect } from 'react';
+import { AdminLayout } from '../layout/AdminLayout';
+import WestIcon from '@mui/icons-material/West';
 
 export const ListAllProducts = ({}) => {
   const { itemState, deleteProductbyId, getAllItems } =
@@ -77,7 +78,7 @@ export const ListAllProducts = ({}) => {
   };
 
   return (
-    <>
+    <AdminLayout title={'Todos los productos'}>
       {!editView ? (
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ width: '90%' }}>
@@ -86,6 +87,16 @@ export const ListAllProducts = ({}) => {
               columns={[
                 { field: 'id', headerName: 'ID', width: 70 },
                 { field: 'nombre', headerName: 'Nombre', width: 180 },
+                {
+                  field: 'nombreMarca',
+                  headerName: 'Marca',
+                  width: 100,
+                },
+                {
+                  field: 'nombreCategoria',
+                  headerName: 'Categoría',
+                  width: 100,
+                },
                 { field: 'descripcion', headerName: 'Descripcion', width: 200 },
                 {
                   field: 'acciones',
@@ -106,8 +117,12 @@ export const ListAllProducts = ({}) => {
         </Container>
       ) : (
         <>
-          <Button sx={{ marginBottom: 5 }} onClick={() => setEditView(false)}>
-            Cancelar
+          <Button
+            startIcon={<WestIcon />}
+            sx={{ marginBottom: 5 }}
+            onClick={() => setEditView(false)}
+          >
+            Volver al listado de productos
           </Button>
           <AddProductForm item={item} />
         </>
@@ -150,6 +165,6 @@ export const ListAllProducts = ({}) => {
           </DialogActions>
         </Dialog>
       )}
-    </>
+    </AdminLayout>
   );
 };
