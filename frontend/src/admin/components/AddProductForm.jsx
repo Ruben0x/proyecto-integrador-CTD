@@ -202,13 +202,14 @@ export const AddProductForm = ({ item = '' }) => {
               {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
-          <FormControl fullWidth>
+          <FormControl fullWidth >
             <TextField
               value={formik.values.categoriaId}
               id='categoriaId'
               name='categoriaId'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              sx={{display:'none'}}
             />
           </FormControl>
 

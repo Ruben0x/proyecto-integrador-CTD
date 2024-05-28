@@ -10,7 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { Avatar, Divider } from '@mui/material';
 import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logomobile from '../assets/img/logomobile.png';
@@ -49,7 +50,7 @@ function ResponsiveAppBar() {
     <AppBar position='sticky' color='neutralColor'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
+          <Link component={RouterLink} to={'/'} style={{ textDecoration: 'none' }}>
             <Divider sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
               <img src={logoportalsonoroprincipal} alt='' />
             </Divider>
@@ -69,7 +70,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           ></Typography>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
+          <Link component={RouterLink} to={'/'} style={{ textDecoration: 'none' }}>
             <Divider sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
               <img src={logomobile} alt='' />
             </Divider>
@@ -101,7 +102,8 @@ function ResponsiveAppBar() {
               alignItems: 'center',
             }}
           >
-            <Avatar
+            <Link component={RouterLink} to={'/auth/user'} style={{ textDecoration: 'none' }}>
+            <Avatar 
               sx={{
                 bgcolor: 'primary.main',
                 width: 48,
@@ -110,7 +112,7 @@ function ResponsiveAppBar() {
             >
               {`${iniciales[0]}${iniciales[1]}`}
             </Avatar>
-
+            </Link>
             <Button
               variant='contained'
               color='terceario'
@@ -137,7 +139,7 @@ function ResponsiveAppBar() {
                 : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
             }}
           >
-            <Link to={'/auth/registro'} style={{ textDecoration: 'none' }}>
+            <Link component={RouterLink} to={'/auth/registro'} style={{ textDecoration: 'none' }}>
               <Button
                 variant='contained'
                 color='terceario'
@@ -153,7 +155,7 @@ function ResponsiveAppBar() {
               </Button>
             </Link>
             {/* </Link> */}
-            <Link to={'/auth/login'} style={{ textDecoration: 'none' }}>
+            <Link component={RouterLink} to={'/auth/login'} style={{ textDecoration: 'none' }}>
               <Button
                 variant='contained'
                 color='terceario'
@@ -208,7 +210,7 @@ function ResponsiveAppBar() {
               }}
             >
               {pagesSites.map((page, index) => (
-                <Link
+                <Link component={RouterLink}
                   to={page.site}
                   style={{ textDecoration: 'none' }}
                   key={index}
