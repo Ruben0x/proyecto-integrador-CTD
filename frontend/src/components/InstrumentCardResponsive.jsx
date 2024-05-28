@@ -79,7 +79,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           </Typography>
         </CardContent>
         <Typography color='white' variant='subtitle2' alignSelf='end' p={3}>
-          <Link to={'/instrumentos/' + id}>Ver mas...</Link>
+          <Link to={'/instrumentos/' + id}>Ver más...</Link>
         </Typography>
       </Box>
     </Card>

@@ -10,7 +10,6 @@ import { InstrumentCard } from './components/InstrumentCard.jsx';
 import { Toaster } from 'sonner';
 import { GlobalUserDataProvider } from './auth/helpers/globalUserData.jsx';
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -34,16 +33,19 @@ const theme = createTheme({
     background: {
       main: '#F9E9DE',
     },
+    userBg: {
+      main: '#FCFBF7',
+    },
   },
 });
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-  <GlobalUserDataProvider>
-    <ItemsProvider>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </ItemsProvider>
-  </GlobalUserDataProvider>
+    <GlobalUserDataProvider>
+      <ItemsProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </ItemsProvider>
+    </GlobalUserDataProvider>
   </BrowserRouter>
 );

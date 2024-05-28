@@ -31,8 +31,8 @@ function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
 
   const iniciales = [
-    globalUserData.nombre.charAt(0),
-    globalUserData.apellido.charAt(0),
+    globalUserData.nombre.charAt(0).toUpperCase(),
+    globalUserData.apellido.charAt(0).toUpperCase(),
   ];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);

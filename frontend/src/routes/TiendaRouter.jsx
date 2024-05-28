@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer';
 import { ProductPage } from '../pages/ProductPage';
 import { RegisterPage } from '../auth/RegisterPage';
 import { LogInPage } from '../auth/LogInPage';
+import { UserInfoPage } from '../auth/UserInfoPage';
 
 export const TiendaRouter = () => {
   return (
@@ -15,6 +16,7 @@ export const TiendaRouter = () => {
         <Routes>
           <Route element={<HomePage />} path='/' />
           <Route element={<RegisterPage />} path='/auth/registro' />
+          <Route element={<UserInfoPage />} path='/auth/user' />
           <Route element={<LogInPage />} path='/auth/login' />
           <Route element={<ProductPage />} path='/instrumentos/:id' />
         </Routes>

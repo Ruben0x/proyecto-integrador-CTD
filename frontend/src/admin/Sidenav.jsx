@@ -20,7 +20,7 @@ import { ListAllProducts } from './components/ListAllProducts';
 import { ListAllUsuarios } from './components/ListAllUsuarios';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 
-const drawerWidth = 240;
+const drawerWidth = '25%';
 
 export const Sidenav = () => {
   const [menuData, setMenuData] = useState('Agregar');
@@ -49,7 +49,7 @@ export const Sidenav = () => {
         <Toolbar />
         <Divider />
         <List>
-          <ListItem disablePadding onClick={() => setMenuData('Agregar')}>
+          <ListItem onClick={() => setMenuData('Agregar')}>
             <ListItemButton
               selected={menuData === 'Agregar'}
               sx={{
@@ -66,7 +66,7 @@ export const Sidenav = () => {
               <ListItemText primary='Agregar Producto' />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => setMenuData('Listar')}>
+          <ListItem onClick={() => setMenuData('Listar')}>
             <ListItemButton
               selected={menuData === 'Listar'}
               sx={{
@@ -83,7 +83,7 @@ export const Sidenav = () => {
               <ListItemText primary='Listar Productos' />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => setMenuData('TodosUsuarios')}>
+          <ListItem onClick={() => setMenuData('TodosUsuarios')}>
             <ListItemButton
               selected={menuData === 'TodosUsuarios'}
               sx={{
