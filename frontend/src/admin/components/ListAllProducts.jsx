@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Typography,
 } from '@mui/material';
 import { useContext } from 'react';
 import { ItemsContext } from '../../context/ItemsContext';
@@ -19,6 +20,8 @@ import { toast } from 'sonner';
 import { useEffect } from 'react';
 import { AdminLayout } from '../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
+import HistoryIcon from '@mui/icons-material/History';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 export const ListAllProducts = ({}) => {
   const { itemState, deleteProductbyId, getAllItems } =
@@ -59,19 +62,23 @@ export const ListAllProducts = ({}) => {
     return (
       <>
         <Button
+          size='small'
           sx={{ marginRight: 2 }}
           variant='contained'
           color='buttonGreen'
           onClick={() => handleEditProduct(params)}
+          startIcon={<HistoryIcon />}
         >
-          Editar
+          <Typography fontWeight={600}>Editar</Typography>
         </Button>
         <Button
+          size='small'
           variant='contained'
           color='buttonRed'
           onClick={() => handleClickOpen(params)}
+          startIcon={<DeleteOutlineOutlinedIcon />}
         >
-          Eliminar
+          <Typography fontWeight={600}>Eliminar</Typography>
         </Button>
       </>
     );
