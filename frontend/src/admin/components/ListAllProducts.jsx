@@ -30,9 +30,9 @@ export const ListAllProducts = ({}) => {
   const [item, setItem] = useState('');
   const [editView, setEditView] = useState(false);
 
-  useEffect(() => {
-    getAllItems();
-  }, [getAllItems]);
+  // useEffect(() => {
+  //   getAllItems();
+  // }, [getAllItems]);
 
   const handleClickOpen = (params) => {
     setItem(params.row);
@@ -85,7 +85,7 @@ export const ListAllProducts = ({}) => {
   };
 
   return (
-    <AdminLayout title={'Todos los productos'}>
+    <AdminLayout>
       {!editView ? (
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ width: '90%' }}>

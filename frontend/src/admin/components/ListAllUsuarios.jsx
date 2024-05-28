@@ -22,27 +22,9 @@ import { useState } from 'react';
 import { setUserToAdmin } from '../../auth/helpers/createUser';
 
 export const ListAllUsuarios = ({}) => {
-  const { itemState, getAllUsuarios } = useContext(ItemsContext);
+  const { itemState } = useContext(ItemsContext);
   const [usuario, setUsuario] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
-
-  useEffect(() => {
-    const fetchUsuarios = async () => {
-      try {
-        await getAllUsuarios();
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUsuarios();
-  }, [getAllUsuarios]);
-
-  if (loading) return <CircularProgress />;
-  if (error) return <div>Error loading data: {error.message}</div>;
 
   const handleClickOpen = (params) => {
     setUsuario(params.row);
