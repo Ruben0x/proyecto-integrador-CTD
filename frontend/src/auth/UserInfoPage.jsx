@@ -184,35 +184,35 @@ export const UserInfoPage = () => {
           Últimas Reservas
           </Typography>
           <Grid container direction='row' spacing={2}>
-          <Grid item sm={12} md={5} >
-            <TextField
-              value= {productos[0]?.nombre}
-              label='Nombre'
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item sm={12} md={3}>
-            <TextField
-              value= {productos[0]?.nombreMarca}
-              label='Marca'
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-              fullWidth
-            />
-          </Grid>
-          <Grid item sm={12} md={4}>          
-            <TextField
-              value= '01/03 a 28/05'
-              label='Fecha'
-              InputLabelProps={{ shrink: true }}
-              InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-              fullWidth
-            />
-          </Grid>
+            <Grid item sm={12} md={5} >
+              <TextField
+                value= {productos[0]?.nombre}
+                label='Nombre'
+                InputLabelProps={{ shrink: true }}
+                InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
+                fullWidth
+              />
+            </Grid>
+            <Grid item sm={12} md={3}>
+              <TextField
+                value= {productos[0]?.nombreMarca}
+                label='Marca'
+                InputLabelProps={{ shrink: true }}
+                InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
+                fullWidth
+              />
+            </Grid>
+            <Grid item sm={12} md={4}>          
+              <TextField
+                value= '01/03 a 28/05'
+                label='Fecha'
+                InputLabelProps={{ shrink: true }}
+                InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
+                fullWidth
+              />
+            </Grid>
           
-        </Grid>
+          </Grid>
         </Grid>
         </Grid>
       </Grid>

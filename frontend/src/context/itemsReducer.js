@@ -12,6 +12,9 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         usuarios: action.payload,
       };
+    
+
+
     case types.getRandoms:
       return {
         ...state,
@@ -30,7 +33,11 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         items: filteredItems,
       };
-
+     case types.getCategorias:
+        return {
+          ...state,
+          categorias: action.payload,
+        };
     default:
       return state;
   }

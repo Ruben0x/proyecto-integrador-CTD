@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 const initialState = {
   items: [],
   usuarios: [],
+  categorias:[],
 };
 
 export const ItemsProvider = ({ children }) => {
@@ -22,6 +23,13 @@ export const ItemsProvider = ({ children }) => {
     axios.get('http://localhost:3000/usuarios').then((res) =>
       // console.log(res.data)
       dispatch({ type: types.getUsuarios, payload: res.data })
+    );
+  }, []);
+  
+  const getAllCategorias = useCallback(() => {
+    axios.get('http://localhost:3000/categorias').then((res) =>
+      // console.log(res.data)
+      dispatch({ type: types.getCategorias, payload: res.data })
     );
   }, []);
 
@@ -131,6 +139,7 @@ export const ItemsProvider = ({ children }) => {
         getAllItems,
         getAllUsuarios,
         postEditItem,
+        getAllCategorias,
       }}
     >
       {children}
