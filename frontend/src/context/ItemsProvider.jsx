@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 const initialState = {
   items: [],
   usuarios: [],
+  caracteristicas: [],
 };
 
 export const ItemsProvider = ({ children }) => {
@@ -24,6 +25,15 @@ export const ItemsProvider = ({ children }) => {
       dispatch({ type: types.getUsuarios, payload: res.data })
     );
   }, []);
+  const getCaracteristicas = () => {
+    axios
+      .get('http://localhost:3000/caracteristicas')
+      .then((res) =>
+        // console.log(res.data)
+        dispatch({ type: types.getCaracteristicas, payload: res.data })
+      )
+      .catch((err) => console.log('Error:', err));
+  };
 
   const getItemsRandoms = () => {
     useEffect(() => {
@@ -120,6 +130,14 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    getAllItems();
+  }, [getAllItems]);
+
+  useEffect(() => {
+    getAllUsuarios();
+  }, [getAllUsuarios]);
+
   getItemsRandoms();
   return (
     <ItemsContext.Provider
@@ -130,6 +148,7 @@ export const ItemsProvider = ({ children }) => {
         deleteProductbyId,
         getAllItems,
         getAllUsuarios,
+        getCaracteristicas,
         postEditItem,
       }}
     >
