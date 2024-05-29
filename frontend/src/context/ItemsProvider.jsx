@@ -35,6 +35,13 @@ export const ItemsProvider = ({ children }) => {
       })
       .catch((err) => console.log('Error:', err));
   };
+  
+  const getAllCategorias = useCallback(() => {
+    axios.get('http://localhost:3000/categorias').then((res) =>
+      // console.log(res.data)
+      dispatch({ type: types.getCategorias, payload: res.data })
+    );
+  }, []);
 
   const getItemsRandoms = () => {
     useEffect(() => {
@@ -182,6 +189,7 @@ export const ItemsProvider = ({ children }) => {
         getAllUsuarios,
         getCaracteristicas,
         postEditItem,
+        getAllCategorias,
       }}
     >
       {children}

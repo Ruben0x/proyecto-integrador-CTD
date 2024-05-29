@@ -26,7 +26,8 @@ const pagesSites = [
 ];
 
 //iniciales debe extraerse del back, una vez logeado
-const iniciales = ['N', 'N'];
+const iniciales = ['P', 'S'];
+const nombre = 'Portal Sonoro';
 
 function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
@@ -35,6 +36,7 @@ function ResponsiveAppBar() {
     globalUserData.nombre.charAt(0).toUpperCase(),
     globalUserData.apellido.charAt(0).toUpperCase(),
   ];
+  const nombre = `${globalUserData?.nombre} ${globalUserData?.apellido}`;
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -102,6 +104,9 @@ function ResponsiveAppBar() {
               alignItems: 'center',
             }}
           >
+            <Typography textAlign='center' color={'black'} paddingRight={1}>
+              {nombre}
+            </Typography>
             <Link component={RouterLink} to={'/auth/user'} style={{ textDecoration: 'none' }}>
             <Avatar 
               sx={{

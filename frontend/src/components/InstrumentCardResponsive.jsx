@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 
 export const InstrumentCardResponsive = ({ instrument }) => {
   const {
+    id,
     nombre,
     descripcion,
     nombreCategoria,
     nombreMarca,
     precio,
     imagenes,
-    id,
   } = instrument;
 
   const stripStyles = {
