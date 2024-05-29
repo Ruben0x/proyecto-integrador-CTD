@@ -13,7 +13,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
     nombreCategoria,
     nombreMarca,
     precio,
-    urlImg,
+    imagenes,
     id,
   } = instrument;
 
@@ -44,7 +44,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
         <CardMedia
           component='img'
           sx={{ width: '300px', height: '300px' }}
-          image={urlImg[0]}
+          image={imagenes[0]}
           alt='Live from space album cover'
         />
         <Box sx={stripStyles}>

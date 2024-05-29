@@ -1,31 +1,27 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ItemsContext } from '../../context/ItemsContext';
 import { SimpleDialog } from './SelectorCategorias';
 import { arrayCategorias } from '../../components/ResponsiveBody';
 import {
-  Box,
   Button,
   Container,
+  Typography,
   FormControl,
   FormHelperText,
-  InputAdornment,
   InputLabel,
-  MenuItem,
-  OutlinedInput,
   Select,
-  Stack,
+  MenuItem,
   TextField,
-  Typography,
+  OutlinedInput,
+  InputAdornment,
 } from '@mui/material';
 
 export const AddProductForm = ({ item = '' }) => {
-  //Obtener caracteristicas para formulario
   const [caracteristicas, setCaracteristicas] = useState([]);
-  const { getCaracteristicas, itemState } = useContext(ItemsContext);
-
-  //Para emergente de categorías===========
+  const { getCaracteristicas, itemState, postCreateItem, postEditItem } =
+    useContext(ItemsContext);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(
     item.nombreCategoria ? item.nombreCategoria : arrayCategorias[0].nombre
@@ -38,16 +34,11 @@ export const AddProductForm = ({ item = '' }) => {
     const fetchCaracteristicas = async () => {
       await getCaracteristicas();
     };
-
     fetchCaracteristicas();
   }, []);
 
   useEffect(() => {
-    if (itemState?.caracteristicas) {
-      setCaracteristicas(itemState.caracteristicas);
-    } else {
-      setCaracteristicas([]);
-    }
+    setCaracteristicas(itemState?.caracteristicas || []);
   }, [itemState]);
 
   const handleClickOpen = () => {
@@ -59,9 +50,6 @@ export const AddProductForm = ({ item = '' }) => {
     setSelectedValue(value);
     setSelectedId(id);
   };
-  //FIN EMERGENTE CATEGORIAS=================================
-
-  const { postCreateItem, postEditItem } = useContext(ItemsContext);
 
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
@@ -90,18 +78,23 @@ export const AddProductForm = ({ item = '' }) => {
       descripcion: item.descripcion || '',
       marcaId: item.marcaId || '',
       categoriaId: item.categoriaId || '',
+
       ...caracteristicas.reduce((acc, caracteristica) => {
-        acc[`caracteristica-${caracteristica.id}`] = '';
+        acc[`c-${caracteristica.id}`] = item[`c-${caracteristica.id}`] || ''; // Usamos item para obtener el valor inicial si existe
         return acc;
       }, {}),
+      // ...generateInitialCaracteristicasValues(caracteristicas, item),
+      // ...caracteristicas.reduce((acc, caracteristica) => {
+      //   acc[`c-${caracteristica.id}`] = '';
+      //   return acc;
+      // }, {}),
       precio: item.precio || '',
       imagenes: item.urlImg || [],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (!item) {
-        // postCreateItem(values);
-        console.log(values);
+        postCreateItem(values);
       }
       postEditItem(values, item.id);
     },
@@ -110,21 +103,57 @@ export const AddProductForm = ({ item = '' }) => {
   useEffect(() => {
     formik.setFieldValue('categoriaId', selectedId);
   }, [selectedId]);
+
+  // useEffect(() => {
+  //   if (caracteristicas.length) {
+  //     const initialCaracteristicas = caracteristicas.reduce(
+  //       (acc, caracteristica) => {
+  //         acc[`c-${caracteristica.id}`] =
+  //           formik.values[`c-${caracteristica.id}`] || '';
+  //         return acc;
+  //       },
+  //       {}
+  //     );
+  //     formik.setValues((prevValues) => ({
+  //       ...prevValues,
+  //       ...initialCaracteristicas,
+  //     }));
+  //   }
+  // }, [caracteristicas]);
+
   useEffect(() => {
-    if (caracteristicas.length) {
-      const initialCaracteristicas = caracteristicas.reduce(
-        (acc, caracteristica) => {
-          acc[`caracteristica-${caracteristica.id}`] = '';
-          return acc;
-        },
-        {}
-      );
+    if (item) {
+      const initialCaracteristicas = {};
+      caracteristicas.forEach((caracteristica) => {
+        const itemId = `c-${caracteristica.id}`;
+        initialCaracteristicas[itemId] = item[itemId] || '';
+      });
       formik.setValues((prevValues) => ({
         ...prevValues,
         ...initialCaracteristicas,
       }));
     }
-  }, [caracteristicas]);
+  }, [caracteristicas, item]);
+
+  function generateInitialCaracteristicasValues(caracteristicas, item) {
+    let initialValues = {};
+    if (item && item.caracteristicas) {
+      item.caracteristicas.forEach((itemCaracteristica) => {
+        const caracteristica = caracteristicas.find(
+          (c) => c.id === itemCaracteristica.id
+        );
+        if (caracteristica) {
+          initialValues[`c-${caracteristica.id}`] =
+            itemCaracteristica.valor || '';
+        }
+      });
+    } else {
+      caracteristicas.forEach((caracteristica) => {
+        initialValues[`c-${caracteristica.id}`] = '';
+      });
+    }
+    return initialValues;
+  }
 
   return (
     <Container sx={{ width: '60%', paddingBottom: 5 }}>
@@ -159,7 +188,6 @@ export const AddProductForm = ({ item = '' }) => {
             }
             helperText={formik.touched.descripcion && formik.errors.descripcion}
           />
-
           <FormControl fullWidth>
             <InputLabel>Marca</InputLabel>
             <Select
@@ -188,7 +216,6 @@ export const AddProductForm = ({ item = '' }) => {
               </FormHelperText>
             )}
           </FormControl>
-
           <SimpleDialog
             selectedValue={selectedValue}
             selectedId={selectedId}
@@ -230,7 +257,6 @@ export const AddProductForm = ({ item = '' }) => {
           <FormControl>
             <InputLabel
               htmlFor='outlined-adornment-amount'
-              // sx={formik.errors.precio ? { color: 'red' } : ''}
               sx={{ ...(formik.errors.precio && { color: 'red' }) }}
             >
               Precio
@@ -254,44 +280,29 @@ export const AddProductForm = ({ item = '' }) => {
             )}
           </FormControl>
           <Typography>Caracteristicas</Typography>
-          {caracteristicas.map((caracteristica, index) => {
-            return (
-              <FormControl key={index} sx={{ width: '70%' }} size='small'>
-                <InputLabel>{caracteristica.nombre}</InputLabel>
-                <Select
-                  id={`caracteristica-${caracteristica.id}`}
-                  name={`caracteristica-${caracteristica.id}`}
-                  label={caracteristica.nombre}
-                  value={
-                    formik.values[`caracteristica-${caracteristica.id}`] || ''
-                  }
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched[`caracteristica-${caracteristica.id}`] &&
-                    Boolean(
-                      formik.errors[`caracteristica-${caracteristica.id}`]
-                    )
-                  }
-                >
-                  {caracteristica.tipoCaracteristicas.map((tipo) => {
-                    return (
-                      <MenuItem key={tipo.id} value={tipo.id}>
-                        {tipo.nombre}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                {/* {!!formik.errors.marcaId && (
-                  <FormHelperText id='marcaId' sx={{ color: 'red' }}>
-                    {formik.touched.marcaId && formik.errors.marcaId}
-                  </FormHelperText>
-                )} */}
-              </FormControl>
-            );
-          })}
-
-          {/* UPLOAD IMAGE */}
+          {caracteristicas.map((caracteristica, index) => (
+            <FormControl key={index} sx={{ width: '70%' }} size='small'>
+              <InputLabel>{caracteristica.nombre}</InputLabel>
+              <Select
+                id={`c-${caracteristica.id}`}
+                name={`c-${caracteristica.id}`}
+                label={caracteristica.nombre}
+                value={formik.values[`c-${caracteristica.id}`] || ''}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched[`c-${caracteristica.id}`] &&
+                  Boolean(formik.errors[`c-${caracteristica.id}`])
+                }
+              >
+                {caracteristica.tipoCaracteristicas.map((tipo) => (
+                  <MenuItem key={tipo.id} value={tipo.id}>
+                    {tipo.nombre}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ))}
           {!item ? (
             <>
               <FormControl>
@@ -321,7 +332,6 @@ export const AddProductForm = ({ item = '' }) => {
               Editar
             </Button>
           )}
-          {/* UPLOAD IMAGE */}
         </Container>
       </form>
     </Container>

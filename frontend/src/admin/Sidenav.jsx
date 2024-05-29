@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { AddProductPage } from './AddProductPage';
 import AddIcon from '@mui/icons-material/Add';
 import logoWhite from '../assets/img/LogoWhite.png';
-import { Button, Container, Grid } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
@@ -20,6 +20,7 @@ import { ListAllProducts } from './components/ListAllProducts';
 import { ListAllUsuarios } from './components/ListAllUsuarios';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import { AdminHomePage } from './pages/AdminHomePage';
+import { ListAllCaracteristicas } from './components/ListAllCaracteristicas';
 
 const drawerWidth = '20%';
 
@@ -120,6 +121,23 @@ export const Sidenav = () => {
               <ListItemText primary='Listar Usuarios' />
             </ListItemButton>
           </ListItem>
+          <ListItem onClick={() => setMenuData('AdministrarCaracteristicas')}>
+            <ListItemButton
+              selected={menuData === 'AdministrarCaracteristicas'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <RecentActorsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Administrar Características' />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
         <Container
@@ -148,6 +166,7 @@ export const Sidenav = () => {
         {menuData == 'Agregar' && <AddProductPage />}
         {menuData == 'Listar' && <ListAllProducts />}
         {menuData == 'TodosUsuarios' && <ListAllUsuarios />}
+        {menuData == 'AdministrarCaracteristicas' && <ListAllCaracteristicas />}
       </Box>
     </Box>
   );

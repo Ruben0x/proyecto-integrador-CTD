@@ -6,6 +6,7 @@ export const AddProductPage = () => {
   return (
     <AdminLayout title={'Agregar Producto'}>
       <AddProductForm />
+      {/* <AddProductFormcopy /> */}
     </AdminLayout>
   );
 };

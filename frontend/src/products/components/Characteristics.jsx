@@ -7,36 +7,51 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import TuneIcon from '@mui/icons-material/Tune';
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
-export const Characteristics = () => {
+
+const iconMapping = {
+  'TIPO DE INSTRUMENTO': QueueMusicIcon,
+  COLOR: ColorLensIcon,
+  PESO: ScaleIcon,
+  DIMENSIONES: StraightenIcon,
+  MATERIAL: ConstructionIcon,
+  CONTROLES: TuneIcon,
+  INCLUYE: AttachFileIcon,
+  CONDICION: DoneIcon,
+};
+
+export const Characteristics = ({ instrumento }) => {
+  const { caracteristicas } = instrumento;
+
+  if (!caracteristicas || caracteristicas.length === 0) {
+    return (
+      <Box sx={{ backgroundColor: 'background.main', padding: 3 }}>
+        <Typography>No hay características disponibles.</Typography>
+      </Box>
+    );
+  }
   return (
     <Box sx={{ backgroundColor: 'background.main', padding: 3 }}>
       <Grid container columns={{ xs: 1, sm: 12 }} rowSpacing={2}>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <QueueMusicIcon />
-          <Typography paddingLeft={2}>TIPO DE INSTRUMENTO</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <ColorLensIcon /> <Typography paddingLeft={2}>COLOR</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <ScaleIcon /> <Typography paddingLeft={2}>PESO</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <StraightenIcon />{' '}
-          <Typography paddingLeft={2}>DIMENSIONES</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <ConstructionIcon /> <Typography paddingLeft={2}>MATERIAL</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <TuneIcon /> <Typography paddingLeft={2}>CONTROLES</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <AttachFileIcon /> <Typography paddingLeft={2}>INCLUYE</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} paddingLeft={4} sx={{ display: 'flex' }}>
-          <DoneIcon /> <Typography paddingLeft={2}> CONDICION</Typography>
-        </Grid>
+        {caracteristicas.map((caracteristica, index) => {
+          const IconComponent =
+            iconMapping[caracteristica.nombre.toUpperCase()] || TuneIcon;
+
+          return (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              paddingLeft={4}
+              sx={{ display: 'flex' }}
+              key={index}
+            >
+              <IconComponent />
+              <Typography paddingLeft={2}>
+                {caracteristica.nombre.toUpperCase()}: {caracteristica.valor}
+              </Typography>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );

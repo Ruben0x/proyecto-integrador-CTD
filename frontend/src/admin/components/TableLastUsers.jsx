@@ -15,7 +15,6 @@ import { ItemsContext } from '../../context/ItemsContext';
 
 export const TableLastUsers = () => {
   const { itemState } = useContext(ItemsContext);
-  console.log(itemState.usuarios);
 
   const usuarios = itemState.usuarios;
 
