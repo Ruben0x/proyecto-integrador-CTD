@@ -14,7 +14,7 @@ import { ItemsContext } from '../../context/ItemsContext';
 export const TableLastProducts = () => {
   const { itemState } = useContext(ItemsContext);
 
-  const productos = itemState.items.reverse();
+  const productos = itemState.items;
   return (
     <>
       <Typography variant='h5' textAlign={'center'}>

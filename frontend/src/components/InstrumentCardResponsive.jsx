@@ -15,7 +15,6 @@ export const InstrumentCardResponsive = ({ instrument }) => {
     nombreMarca,
     precio,
     imagenes,
-    
   } = instrument;
 
   const stripStyles = {

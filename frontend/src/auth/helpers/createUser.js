@@ -1,14 +1,12 @@
 import axios from 'axios';
-import { useContext } from 'react';
 import { toast } from 'sonner';
-import { GlobalUserDataContext } from './globalUserData';
 
 export const createUser = (user) => {
   axios
     .post('http://localhost:3000/usuarios', user)
     .then((res) => {
       if (res.status === 201) {
-        toast.success('Producto creado exitosamente');
+        toast.success(res.data.message);
         setTimeout(() => {
           window.location.replace('/');
         }, 1000);

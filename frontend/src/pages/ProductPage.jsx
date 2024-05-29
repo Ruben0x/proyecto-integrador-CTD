@@ -71,7 +71,7 @@ export const ProductPage = () => {
             <span style={{ color: 'white' }}>/diario</span>
           </Typography>
         </Box>
-        <Characteristics />
+        <Characteristics instrumento={instrumento} />
       </Box>
     </Container>
   );

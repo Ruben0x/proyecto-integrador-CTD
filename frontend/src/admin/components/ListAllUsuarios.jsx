@@ -36,6 +36,7 @@ export const ListAllUsuarios = ({}) => {
 
   const handleAcceptAdmin = (usuarioAdmin) => {
     setUserToAdmin(usuarioAdmin);
+
     setDeleteModal(false);
   };
 
@@ -115,7 +116,7 @@ export const ListAllUsuarios = ({}) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-description' fontWeight={600}>
-              Esta acción le modificara a {usuario.nombre} sus permisos de
+              Esta acción modificara a {usuario.nombre} sus permisos de
               Administrador
             </DialogContentText>
           </DialogContent>

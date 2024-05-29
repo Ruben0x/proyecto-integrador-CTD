@@ -4,6 +4,7 @@ import { itemReducer } from './itemsReducer';
 import axios from 'axios';
 import { types } from './types';
 import { toast } from 'sonner';
+import { clearWarningsCache } from '@mui/x-data-grid/internals';
 
 const initialState = {
   items: [],
@@ -28,13 +29,13 @@ export const ItemsProvider = ({ children }) => {
   const getCaracteristicas = () => {
     axios
       .get('http://localhost:3000/caracteristicas')
-      .then((res) =>
-        // console.log(res.data)
-        dispatch({ type: types.getCaracteristicas, payload: res.data })
-      )
+      .then((res) => {
+        // console.log(res.data);
+        dispatch({ type: types.getCaracteristicas, payload: res.data });
+      })
       .catch((err) => console.log('Error:', err));
   };
-  
+
   const getAllCategorias = useCallback(() => {
     axios.get('http://localhost:3000/categorias').then((res) =>
       // console.log(res.data)
@@ -43,11 +44,10 @@ export const ItemsProvider = ({ children }) => {
   }, []);
 
   const getItemsRandoms = () => {
-    useEffect(() => {
-      axios
-        .get('http://localhost:3000/productos/random')
-        .then((res) => dispatch({ type: types.getRandoms, payload: res.data }));
-    }, []);
+    axios
+      .get('http://localhost:3000/productos/random')
+      .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
+      .catch((err) => toast(err));
   };
 
   const deleteProductbyId = async (id) => {
@@ -70,7 +70,20 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const postCreateItem = async (values) => {
+    // Construir el tipoCaracteristicaId dinámicamente
+    const tipoCaracteristicaId = Object.keys(values)
+      .filter((key) => key.startsWith('c-') && values[key] !== '')
+      .map((key) => values[key])
+      .join(',');
+
     const formData = new FormData();
+
+    formData.append('nombre', values.nombre);
+    formData.append('descripcion', values.descripcion);
+    formData.append('categoriaId', values.categoriaId);
+    formData.append('marcaId', values.marcaId);
+    formData.append('tipoCaracteristicaId', tipoCaracteristicaId);
+    formData.append('precio', values.precio);
 
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -78,33 +91,48 @@ export const ItemsProvider = ({ children }) => {
           for (let i = 0; i < values.imagenes.length; i++) {
             formData.append(`imagenes`, values.imagenes[i]);
           }
-        } else {
-          formData.append(key, values[key]);
         }
       }
     }
+    // console.log(formData);
 
     try {
       const response = await fetch('http://localhost:3000/productos', {
         method: 'POST',
         body: formData,
       });
+
       if (response.ok) {
-        console.log('Producto creado exitosamente');
         toast.success('Producto creado exitosamente');
         setTimeout(() => {
           location.reload();
         }, 300);
       } else {
-        toast.error('Ya existe un producto con ese nombre');
+        const errorData = await response.json();
+        toast.error(
+          `Error: ${errorData.message || 'Ya existe un producto con ese nombre'}`
+        );
       }
     } catch (error) {
-      console.error('Error al crear producto', error);
+      toast.error('Error al crear producto. Por favor, intente nuevamente.');
     }
   };
 
   const postEditItem = async (values, id) => {
+    // console.log(values);
+    // Construir el tipoCaracteristicaId dinámicamente
+    const tipoCaracteristicaId = Object.keys(values)
+      .filter((key) => key.startsWith('c-') && values[key] !== '')
+      .map((key) => values[key])
+      .join(',');
     const formData = new FormData();
+
+    formData.append('nombre', values.nombre);
+    formData.append('descripcion', values.descripcion);
+    formData.append('categoriaId', values.categoriaId);
+    formData.append('marcaId', values.marcaId);
+    formData.append('tipoCaracteristicaId', tipoCaracteristicaId);
+    formData.append('precio', values.precio);
 
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -112,8 +140,6 @@ export const ItemsProvider = ({ children }) => {
           for (let i = 0; i < values.imagenes.length; i++) {
             formData.append(`imagenes`, values.imagenes[i]);
           }
-        } else {
-          formData.append(key, values[key]);
         }
       }
     }
@@ -133,7 +159,7 @@ export const ItemsProvider = ({ children }) => {
         toast.error('Ya existe un producto con ese nombre');
       }
     } catch (error) {
-      console.error('Error al crear producto', error);
+      console.error('Error al crear producto', error.message);
     }
   };
 
@@ -144,8 +170,13 @@ export const ItemsProvider = ({ children }) => {
   useEffect(() => {
     getAllUsuarios();
   }, [getAllUsuarios]);
+  useEffect(() => {
+    getCaracteristicas();
+  }, []);
+  useEffect(() => {
+    getItemsRandoms();
+  }, []);
 
-  getItemsRandoms();
   return (
     <ItemsContext.Provider
       value={{
