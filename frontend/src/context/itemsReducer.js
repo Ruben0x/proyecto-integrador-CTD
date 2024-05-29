@@ -12,9 +12,11 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         usuarios: action.payload,
       };
-    
-
-
+    case types.getCaracteristicas:
+      return {
+        ...state,
+        caracteristicas: action.payload,
+      };
     case types.getRandoms:
       return {
         ...state,

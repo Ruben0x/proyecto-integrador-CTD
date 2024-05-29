@@ -5,6 +5,7 @@ import { ItemsContext } from '../../context/ItemsContext';
 import { SimpleDialog } from './SelectorCategorias';
 import { arrayCategorias } from '../../components/ResponsiveBody';
 import {
+  Box,
   Button,
   Container,
   FormControl,
@@ -14,20 +15,40 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  Stack,
   TextField,
+  Typography,
 } from '@mui/material';
 
 export const AddProductForm = ({ item = '' }) => {
+  //Obtener caracteristicas para formulario
+  const [caracteristicas, setCaracteristicas] = useState([]);
+  const { getCaracteristicas, itemState } = useContext(ItemsContext);
+
   //Para emergente de categorías===========
   const [open, setOpen] = useState(false);
-  // const [selectedValue, setSelectedValue] = useState(arrayCategorias[0].nombre);
-  // const [selectedId, setSelectedId] = useState(arrayCategorias[0].id);
   const [selectedValue, setSelectedValue] = useState(
     item.nombreCategoria ? item.nombreCategoria : arrayCategorias[0].nombre
   );
   const [selectedId, setSelectedId] = useState(
     item.categoriaId ? item.categoriaId : arrayCategorias[0].id
   );
+
+  useEffect(() => {
+    const fetchCaracteristicas = async () => {
+      await getCaracteristicas();
+    };
+
+    fetchCaracteristicas();
+  }, []);
+
+  useEffect(() => {
+    if (itemState?.caracteristicas) {
+      setCaracteristicas(itemState.caracteristicas);
+    } else {
+      setCaracteristicas([]);
+    }
+  }, [itemState]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,13 +90,18 @@ export const AddProductForm = ({ item = '' }) => {
       descripcion: item.descripcion || '',
       marcaId: item.marcaId || '',
       categoriaId: item.categoriaId || '',
+      ...caracteristicas.reduce((acc, caracteristica) => {
+        acc[`caracteristica-${caracteristica.id}`] = '';
+        return acc;
+      }, {}),
       precio: item.precio || '',
       imagenes: item.urlImg || [],
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (!item) {
-        postCreateItem(values);
+        // postCreateItem(values);
+        console.log(values);
       }
       postEditItem(values, item.id);
     },
@@ -84,9 +110,24 @@ export const AddProductForm = ({ item = '' }) => {
   useEffect(() => {
     formik.setFieldValue('categoriaId', selectedId);
   }, [selectedId]);
+  useEffect(() => {
+    if (caracteristicas.length) {
+      const initialCaracteristicas = caracteristicas.reduce(
+        (acc, caracteristica) => {
+          acc[`caracteristica-${caracteristica.id}`] = '';
+          return acc;
+        },
+        {}
+      );
+      formik.setValues((prevValues) => ({
+        ...prevValues,
+        ...initialCaracteristicas,
+      }));
+    }
+  }, [caracteristicas]);
 
   return (
-    <Container sx={{ width: '60%' }}>
+    <Container sx={{ width: '60%', paddingBottom: 5 }}>
       <form onSubmit={formik.handleSubmit}>
         <Container
           sx={{
@@ -148,32 +189,6 @@ export const AddProductForm = ({ item = '' }) => {
             )}
           </FormControl>
 
-          {/*
-          <InputLabel>Categoría</InputLabel>
-          <Select
-            id='categoriaId'
-            name='categoriaId'
-            label='categoriaId'
-            value={formik.values.categoriaId}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.categoriaId && Boolean(formik.errors.categoriaId)
-            }
-          >
-            <MenuItem value={'1'}>Cuerdas</MenuItem>
-            <MenuItem value={'2'}>Percusiones</MenuItem>
-            <MenuItem value={'3'}>Teclas</MenuItem>
-            <MenuItem value={'4'}>Vientos</MenuItem>
-          </Select>
-          {!!formik.errors.categoriaId && (
-            <FormHelperText id='categoriaId' sx={{ color: 'red' }}>
-              {formik.touched.categoriaId && formik.errors.categoriaId}
-            </FormHelperText>
-          )}
-        */}
-          {/**Despliega ventana de categorias*/}
-
           <SimpleDialog
             selectedValue={selectedValue}
             selectedId={selectedId}
@@ -202,17 +217,16 @@ export const AddProductForm = ({ item = '' }) => {
               {formik.touched.nombreCategoria && formik.errors.nombreCategoria}
             </FormHelperText>
           )}
-          <FormControl fullWidth >
+          <FormControl fullWidth>
             <TextField
               value={formik.values.categoriaId}
               id='categoriaId'
               name='categoriaId'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              sx={{display:'none'}}
+              sx={{ display: 'none' }}
             />
           </FormControl>
-
           <FormControl>
             <InputLabel
               htmlFor='outlined-adornment-amount'
@@ -239,6 +253,43 @@ export const AddProductForm = ({ item = '' }) => {
               </FormHelperText>
             )}
           </FormControl>
+          <Typography>Caracteristicas</Typography>
+          {caracteristicas.map((caracteristica, index) => {
+            return (
+              <FormControl key={index} sx={{ width: '70%' }} size='small'>
+                <InputLabel>{caracteristica.nombre}</InputLabel>
+                <Select
+                  id={`caracteristica-${caracteristica.id}`}
+                  name={`caracteristica-${caracteristica.id}`}
+                  label={caracteristica.nombre}
+                  value={
+                    formik.values[`caracteristica-${caracteristica.id}`] || ''
+                  }
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched[`caracteristica-${caracteristica.id}`] &&
+                    Boolean(
+                      formik.errors[`caracteristica-${caracteristica.id}`]
+                    )
+                  }
+                >
+                  {caracteristica.tipoCaracteristicas.map((tipo) => {
+                    return (
+                      <MenuItem key={tipo.id} value={tipo.id}>
+                        {tipo.nombre}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                {/* {!!formik.errors.marcaId && (
+                  <FormHelperText id='marcaId' sx={{ color: 'red' }}>
+                    {formik.touched.marcaId && formik.errors.marcaId}
+                  </FormHelperText>
+                )} */}
+              </FormControl>
+            );
+          })}
 
           {/* UPLOAD IMAGE */}
           {!item ? (
