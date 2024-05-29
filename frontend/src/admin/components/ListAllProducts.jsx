@@ -14,14 +14,13 @@ import {
 import { useContext } from 'react';
 import { ItemsContext } from '../../context/ItemsContext';
 import { useState } from 'react';
-import { AddProductForm } from './AddProductForm';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
 import { AdminLayout } from '../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { AddProductFormcopy } from './AddProductFormcopy';
 
 export const ListAllProducts = ({}) => {
   const { itemState, deleteProductbyId } = useContext(ItemsContext);
@@ -126,7 +125,7 @@ export const ListAllProducts = ({}) => {
           >
             Volver al listado de productos
           </Button>
-          <AddProductForm item={item} />
+          <AddProductFormcopy item={item} />
         </>
       )}
       {deleteModal && (

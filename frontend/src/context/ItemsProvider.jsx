@@ -35,7 +35,7 @@ export const ItemsProvider = ({ children }) => {
       })
       .catch((err) => console.log('Error:', err));
   };
-  
+
   const getAllCategorias = useCallback(() => {
     axios.get('http://localhost:3000/categorias').then((res) =>
       // console.log(res.data)
@@ -44,11 +44,10 @@ export const ItemsProvider = ({ children }) => {
   }, []);
 
   const getItemsRandoms = () => {
-    useEffect(() => {
-      axios
-        .get('http://localhost:3000/productos/random')
-        .then((res) => dispatch({ type: types.getRandoms, payload: res.data }));
-    }, []);
+    axios
+      .get('http://localhost:3000/productos/random')
+      .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
+      .catch((err) => toast(err));
   };
 
   const deleteProductbyId = async (id) => {
@@ -145,8 +144,6 @@ export const ItemsProvider = ({ children }) => {
       }
     }
 
-    console.log(formData);
-
     try {
       const response = await fetch('http://localhost:3000/productos/' + id, {
         method: 'PATCH',
@@ -176,8 +173,10 @@ export const ItemsProvider = ({ children }) => {
   useEffect(() => {
     getCaracteristicas();
   }, []);
+  useEffect(() => {
+    getItemsRandoms();
+  }, []);
 
-  getItemsRandoms();
   return (
     <ItemsContext.Provider
       value={{

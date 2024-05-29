@@ -1,4 +1,14 @@
-import { Avatar, Badge, Box, Button, Grid, InputLabel, Stack, TextField, Typography } from '@mui/material';
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Grid,
+  InputLabel,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { AuthLayout } from './layout/AuthLayout';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalUserDataContext } from './helpers/globalUserData';
@@ -11,12 +21,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { ItemsContext } from '../context/ItemsContext';
 
 export const UserInfoPage = () => {
-  const { isLogged, globalUserData,  } = useContext(GlobalUserDataContext);
+  const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const { itemState } = useContext(ItemsContext);
   const [productos, setProductos] = useState([]);
 
-
-  
   useEffect(() => {
     //este codigo redirige a 'login' cuando intenta ir a /user sin loggear
     if (!isLogged) {
@@ -26,14 +34,14 @@ export const UserInfoPage = () => {
     if (itemState.itemsRandoms) {
       setProductos(itemState.itemsRandoms);
     }
-  }, [isLogged,itemState]);
+  }, [isLogged, itemState]);
   if (productos === undefined) {
     return <div>Loading...</div>;
   }
 
-  console.log(globalUserData);
-  console.log(productos);
-  console.log(productos[0]);
+  // console.log(globalUserData);
+  // console.log(productos);
+  // console.log(productos[0]);
 
   const validationSchema = Yup.object({
     email: Yup.string('Ingrese su correo')
@@ -56,33 +64,39 @@ export const UserInfoPage = () => {
     },
   });
 
-
-
-
-
   return (
-
     <AuthLayout
       title='Hola de nuevo!'
       subtitle={`${globalUserData.nombre} ${globalUserData.apellido}`}
     >
-
       <Grid direction='row' container justifyContent={'center'} gap={3}>
         <Grid
           item
-          sx={{ backgroundColor: 'background.main', minWidth: 400}}
+          sx={{ backgroundColor: 'background.main', minWidth: 400 }}
           padding={5}
           borderRadius={5}
-          sm={3} 
+          sm={3}
         >
-          <Stack direction='column' spacing={2} sx={{ alignItems: 'center', maxWidth:'500px'}}>
-            <Grid container direction="row" alignItems="center" justifyContent="center">
-              
+          <Stack
+            direction='column'
+            spacing={2}
+            sx={{ alignItems: 'center', maxWidth: '500px' }}
+          >
+            <Grid
+              container
+              direction='row'
+              alignItems='center'
+              justifyContent='center'
+            >
               <Badge
-              overlap="circular"
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              badgeContent={<BorderColorIcon fontSize='small' sx={{bgcolor:'white', borderRadius:'50%'}}/>}
-              
+                overlap='circular'
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeContent={
+                  <BorderColorIcon
+                    fontSize='small'
+                    sx={{ bgcolor: 'white', borderRadius: '50%' }}
+                  />
+                }
               >
                 <Avatar sx={{ width: 60, height: 60 }}>
                   <AccountCircleIcon fontSize='large' />
@@ -97,61 +111,72 @@ export const UserInfoPage = () => {
               </Box>
             </Grid>
             <form onSubmit={formik.handleSubmit}>
-            <Grid container alignItems="center" justifyContent="center">
-              <Grid item xs={12} md={6} sx={{ mt: 2 }}>
-                <TextField
-                  id='nombre'
-                  name='nombre'
-                  label='Nombre'
-                  type='nombre'
-                  placeholder='Portal'
-                  value={formik.values.nombre}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-                  helperText={formik.touched.nombre && formik.errors.nombre}
+              <Grid container alignItems='center' justifyContent='center'>
+                <Grid item xs={12} md={6} sx={{ mt: 2 }}>
+                  <TextField
+                    id='nombre'
+                    name='nombre'
+                    label='Nombre'
+                    type='nombre'
+                    placeholder='Portal'
+                    value={formik.values.nombre}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.nombre && Boolean(formik.errors.nombre)
+                    }
+                    helperText={formik.touched.nombre && formik.errors.nombre}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} sx={{ mt: 2 }}>
+                  <TextField
+                    id='apellido'
+                    name='apellido'
+                    label='Apellido'
+                    type='apellido'
+                    placeholder='Portal'
+                    value={formik.values.apellido}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.apellido && Boolean(formik.errors.apellido)
+                    }
+                    helperText={
+                      formik.touched.apellido && formik.errors.apellido
+                    }
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} md={12} sx={{ mt: 2 }}>
+                  <TextField
+                    id='email'
+                    name='email'
+                    label='Correo'
+                    type='email'
+                    placeholder='correo@google.com'
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    fullWidth
+                    disabled
+                  />
+                </Grid>
+                <Button
+                  type='submit'
+                  variant='contained'
                   fullWidth
-                  
-                />
+                  color='secondary'
+                  sx={{ mt: 2 }}
+                >
+                  GUARDAR CAMBIOS
+                </Button>
               </Grid>
-              <Grid item xs={12} md={6} sx={{ mt: 2 }}>
-                <TextField
-                  id='apellido'
-                  name='apellido'
-                  label='Apellido'
-                  type='apellido'
-                  placeholder='Portal'
-                  value={formik.values.apellido}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.apellido && Boolean(formik.errors.apellido)}
-                  helperText={formik.touched.apellido && formik.errors.apellido}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} md={12} sx={{ mt: 2 }}>
-                <TextField
-                  id='email'
-                  name='email'
-                  label='Correo'
-                  type='email'
-                  placeholder='correo@google.com'
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                  fullWidth
-                  disabled
-                />
-              </Grid>
-              <Button type='submit' variant='contained' fullWidth color='secondary' sx={{mt:2}}> 
-                    GUARDAR CAMBIOS
-              </Button>
-            </Grid>
-          </form>
-         
-          <Button
+            </form>
+
+            <Button
               variant='contained'
               color='terceario'
               onClick={logout}
@@ -162,61 +187,57 @@ export const UserInfoPage = () => {
                 borderRadius: 70,
                 fontSize: '.5rem',
                 marginLeft: '0.5rem',
-                alignContent:'center',
+                alignContent: 'center',
               }}
             >
-              <LogoutIcon/> Salir
+              <LogoutIcon /> Salir
             </Button>
-            
           </Stack>
-
         </Grid>
-      
+
         <Grid
           item
-          sx={{ backgroundColor: 'background.main', minWidth: 400}}
+          sx={{ backgroundColor: 'background.main', minWidth: 400 }}
           padding={5}
           borderRadius={5}
-          sm={6} 
+          sm={6}
         >
-        <Grid direction='column' container justifyContent={'center'} gap={3}>
-          <Typography align='center' fontWeight={600} fontSize={25}>
-          Últimas Reservas
-          </Typography>
-          <Grid container direction='row' spacing={2}>
-            <Grid item sm={12} md={5} >
-              <TextField
-                value= {productos[0]?.nombre}
-                label='Nombre'
-                InputLabelProps={{ shrink: true }}
-                InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-                fullWidth
-              />
+          <Grid direction='column' container justifyContent={'center'} gap={3}>
+            <Typography align='center' fontWeight={600} fontSize={25}>
+              Últimas Reservas
+            </Typography>
+            <Grid container direction='row' spacing={2}>
+              <Grid item sm={12} md={5}>
+                <TextField
+                  value={productos[0]?.nombre}
+                  label='Nombre'
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item sm={12} md={3}>
+                <TextField
+                  value={productos[0]?.nombreMarca}
+                  label='Marca'
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item sm={12} md={4}>
+                <TextField
+                  value='01/03 a 28/05'
+                  label='Fecha'
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
-            <Grid item sm={12} md={3}>
-              <TextField
-                value= {productos[0]?.nombreMarca}
-                label='Marca'
-                InputLabelProps={{ shrink: true }}
-                InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item sm={12} md={4}>          
-              <TextField
-                value= '01/03 a 28/05'
-                label='Fecha'
-                InputLabelProps={{ shrink: true }}
-                InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-                fullWidth
-              />
-            </Grid>
-          
           </Grid>
-        </Grid>
         </Grid>
       </Grid>
     </AuthLayout>
-
   );
 };

@@ -147,6 +147,7 @@ export const Sidenav = () => {
             fullWidth
             onClick={() => {
               navigate('/');
+              window.location.reload();
             }}
           >
             Salir
