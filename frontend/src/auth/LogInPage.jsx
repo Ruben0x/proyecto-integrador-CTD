@@ -28,9 +28,8 @@ export const LogInPage = () => {
     email: Yup.string('Ingrese su correo')
       .email('Correo Invalido')
       .required('Correo es obligatorio'),
-    password: Yup.string('Ingrese su contraseña').required(
-      'Debe ingresar una contraseña'
-    ),
+    password: Yup.string('Ingrese su contraseña')
+    .required('Debe ingresar una contraseña'),
   });
 
   const formik = useFormik({

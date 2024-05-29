@@ -1,6 +1,10 @@
 import axios from 'axios'; 
+import ErrorSnackbar from '../components/ErrorSnackbar';
+import { Alert } from '@mui/material';
 
-export const login = async (loginValues, setIsLogged, setGlobalUserData) => { 
+
+
+export const login = async (loginValues, setIsLogged, setGlobalUserData, handleLoginError) => { 
   try {
     const response = await axios.get('http://localhost:3000/usuarios');
     const userData = response.data;
@@ -8,6 +12,10 @@ export const login = async (loginValues, setIsLogged, setGlobalUserData) => {
     
     if (foundUser) { 
       /* //revisar Password if (foundUser.password === loginValues.password) { console.log("usuario: "); console.log(foundUser); } else { console.log('Correo o Clave erróneo'); */ 
+
+      if (["ERROR", "ERRORES", "ERR0R", "ERR0RES"].includes(loginValues.password.toString().toUpperCase())) {
+        throw new Error("Correo o Clave erróneo");
+      }
 
       // Set isLogged TRUE
       setIsLogged(true);
@@ -36,7 +44,9 @@ export const login = async (loginValues, setIsLogged, setGlobalUserData) => {
     }
   } 
   catch (error){
+    alert("Correo o Clave erróneo");
     console.error(error);
+    
   }
 };
 
