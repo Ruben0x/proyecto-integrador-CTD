@@ -31,6 +31,13 @@ export const Characteristics = ({ instrumento }) => {
   }
   return (
     <Box sx={{ backgroundColor: 'background.main', padding: 3 }}>
+      <Typography
+        paddingBottom={2}
+        textTransform={'uppercase'}
+        sx={{ typography: { xs: 'h5' } }}
+      >
+        Características:
+      </Typography>
       <Grid container columns={{ xs: 1, sm: 12 }} rowSpacing={2}>
         {caracteristicas.map((caracteristica, index) => {
           const IconComponent =

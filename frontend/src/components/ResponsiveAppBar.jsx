@@ -33,7 +33,7 @@ const nombre = 'Portal Sonoro';
 function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
 
-  console.log(globalUserData.rol);
+  // console.log(globalUserData.rol);
 
   const iniciales = [
     globalUserData.nombre.charAt(0).toUpperCase(),
@@ -64,7 +64,6 @@ function ResponsiveAppBar() {
               <img src={logoportalsonoroprincipal} alt='' />
             </Divider>
           </Link>
-
           <Typography
             variant='h6'
             noWrap
@@ -110,7 +109,9 @@ function ResponsiveAppBar() {
             sx={{
               padding: '1rem',
               flexGrow: 1,
-              display: isLogged ? 'flex' : 'none',
+              display: isLogged
+                ? { xs: 'none', sm: 'flex', justifyContent: 'flex-end' }
+                : 'none',
               justifyContent: 'flex-end',
               alignItems: 'center',
             }}
@@ -172,7 +173,7 @@ function ResponsiveAppBar() {
               flexGrow: 1,
               display: isLogged
                 ? 'none'
-                : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
+                : { xs: 'none', sm: 'flex', justifyContent: 'flex-end' },
             }}
           >
             <Link
@@ -216,13 +217,11 @@ function ResponsiveAppBar() {
               </Button>
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
-            {/*Menu Hamburguesa*/}
-          </Box>
+
           <Box
             sx={{
               flexGrow: 0,
-              display: isLogged ? 'none' : { xs: 'flex', md: 'none' },
+              display: { xs: 'flex', sm: 'none' },
             }}
           >
             <IconButton
@@ -233,8 +232,21 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color='inherit'
             >
-              <MenuIcon />
+              {isLogged ? (
+                <Avatar
+                  sx={{
+                    bgcolor: 'primary.main',
+                    width: 48,
+                    height: 48,
+                  }}
+                >
+                  {`${iniciales[0]}${iniciales[1]}`}
+                </Avatar>
+              ) : (
+                <MenuIcon />
+              )}
             </IconButton>
+
             <Menu
               id='menu-appbar'
               anchorEl={anchorElNav}
@@ -253,20 +265,54 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pagesSites.map((page, index) => (
-                <Link
-                  component={RouterLink}
-                  to={page.site}
-                  style={{ textDecoration: 'none' }}
-                  key={index}
-                >
-                  <MenuItem onClick={handleCloseNavMenu}>
+              {isLogged ? (
+                <>
+                  <Link
+                    component={RouterLink}
+                    to={'/auth/user'}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign='center' color={'black'}>
+                        Mi Perfil
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                  {globalUserData.rol === 'admin' && (
+                    <Link
+                      component={RouterLink}
+                      to={'/administracion'}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography textAlign='center' color={'black'}>
+                          Panel Admin
+                        </Typography>
+                      </MenuItem>
+                    </Link>
+                  )}
+                  <MenuItem onClick={logout}>
                     <Typography textAlign='center' color={'black'}>
-                      {page.title}
+                      Cerrar Sesión
                     </Typography>
                   </MenuItem>
-                </Link>
-              ))}
+                </>
+              ) : (
+                pagesSites.map((page, index) => (
+                  <Link
+                    component={RouterLink}
+                    to={page.site}
+                    style={{ textDecoration: 'none' }}
+                    key={index}
+                  >
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign='center' color={'black'}>
+                        {page.title}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ))
+              )}
             </Menu>
           </Box>
         </Toolbar>

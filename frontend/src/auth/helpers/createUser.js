@@ -21,16 +21,16 @@ export const setUserToAdmin = (user) => {
   // console.log(user.rol);
 
   const isAdmin = user.rol === 'admin' ? 'registrado' : 'admin';
-  console.log(isAdmin);
   axios
     .patch('http://localhost:3000/usuarios/' + user.id, { rol: isAdmin })
     .then((res) => {
-      console.log(res);
       if (res.status === 200) {
         toast.success('Usuario actualizado con éxito');
+      } else {
+        toast.error('Error al actualizar el usuario');
       }
     })
-    .catch((error) => {
-      toast.error(error.response.data.message);
+    .catch(() => {
+      toast.error('Error al actualizar el usuario');
     });
 };
