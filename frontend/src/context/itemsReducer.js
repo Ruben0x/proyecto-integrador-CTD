@@ -35,11 +35,19 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         items: filteredItems,
       };
-     case types.getCategorias:
-        return {
-          ...state,
-          categorias: action.payload,
-        };
+    case types.deleteUser:
+      const filteredUsers = state.usuarios.filter(
+        (user) => user.id !== action.payload
+      );
+      return {
+        ...state,
+        usuarios: filteredUsers,
+      };
+    case types.getCategorias:
+      return {
+        ...state,
+        categorias: action.payload,
+      };
     default:
       return state;
   }

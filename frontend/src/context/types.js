@@ -5,4 +5,5 @@ export const types = {
   getCaracteristicas: '[GET] Caracteristicas',
   postItem: '[POST] Item',
   deleteItem: '[Delete] Item',
+  deleteUser: '[Delete] User',
 };

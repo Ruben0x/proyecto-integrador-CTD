@@ -22,7 +22,6 @@ export const login = async (
           loginValues.password.toString().toUpperCase()
         )
       ) {
-        toast.error('Correo o Clave erróneo');
         throw new Error('Correo o Clave erróneo');
       }
 
@@ -46,10 +45,14 @@ export const login = async (
         window.location.replace('/');
       }, 100);
     } else {
-      console.log('Correo o Clave erróneo');
+      toast.error('Correo o Clave erróneo');
+
+      // console.log('Correo o Clave erróneo');
     }
   } catch (error) {
-    alert('Correo o Clave erróneo');
+    toast.error('Correo o Clave erróneo');
+
+    // alert('Correo o Clave erróneo');
     console.error(error);
   }
 };

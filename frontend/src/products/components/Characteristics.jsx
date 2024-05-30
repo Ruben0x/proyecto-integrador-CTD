@@ -34,7 +34,7 @@ export const Characteristics = ({ instrumento }) => {
       <Typography
         paddingBottom={2}
         textTransform={'uppercase'}
-        sx={{ typography: { sm: 'h4', xs: 'h5' } }}
+        sx={{ typography: { xs: 'h5' } }}
       >
         Características:
       </Typography>
