@@ -21,6 +21,7 @@ import { ListAllUsuarios } from './components/ListAllUsuarios';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import { AdminHomePage } from './pages/AdminHomePage';
 import { ListAllCaracteristicas } from './components/ListAllCaracteristicas';
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = '20%';
 
@@ -65,7 +66,7 @@ export const Sidenav = () => {
               }}
             >
               <ListItemIcon>
-                <AddIcon />
+                <HomeIcon />
               </ListItemIcon>
               <ListItemText primary='Home' />
             </ListItemButton>
