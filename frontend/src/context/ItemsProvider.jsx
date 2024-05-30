@@ -68,6 +68,24 @@ export const ItemsProvider = ({ children }) => {
       return false;
     }
   };
+  const deleteUserById = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        dispatch({ type: types.deleteUser, payload: id });
+        return true;
+      } else {
+        console.error(response.statusText);
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
 
   const postCreateItem = async (values) => {
     // Construir el tipoCaracteristicaId dinámicamente
@@ -184,6 +202,7 @@ export const ItemsProvider = ({ children }) => {
         dispatch,
         postCreateItem,
         deleteProductbyId,
+        deleteUserById,
         getAllItems,
         getAllUsuarios,
         getCaracteristicas,
