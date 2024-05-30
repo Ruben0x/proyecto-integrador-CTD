@@ -8,6 +8,7 @@ import { ThemeProvider } from '@emotion/react';
 import { ItemsProvider } from './context/ItemsProvider.jsx';
 import { InstrumentCard } from './components/InstrumentCard.jsx';
 import { Toaster } from 'sonner';
+import { GlobalUserDataProvider } from './auth/helpers/globalUserData.jsx';
 
 const theme = createTheme({
   palette: {
@@ -23,14 +24,28 @@ const theme = createTheme({
     neutralColor: {
       main: '#ffffff', // white
     },
+    buttonGreen: {
+      main: '#50A020', // green
+    },
+    buttonRed: {
+      main: '#CF2222', // red
+    },
+    background: {
+      main: '#F9E9DE',
+    },
+    userBg: {
+      main: '#FCFBF7',
+    },
   },
 });
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <ItemsProvider>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </ItemsProvider>
+    <GlobalUserDataProvider>
+      <ItemsProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </ItemsProvider>
+    </GlobalUserDataProvider>
   </BrowserRouter>
 );

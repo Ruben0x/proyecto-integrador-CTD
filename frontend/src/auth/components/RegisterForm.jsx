@@ -2,11 +2,9 @@ import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { createUser } from './createUser';
+import { createUser } from '../helpers/createUser';
 
 export const RegisterForm = () => {
-  const navigate = useNavigate();
-
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese su Nombre')
       .min(2, 'Mínimo 2 caracteres')

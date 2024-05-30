@@ -2,50 +2,38 @@
 import Stack from '@mui/material/Stack';
 import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
-import { Box, Card, useMediaQuery } from '@mui/material';
+import { Box, Grid, useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
-import { ItemsContext } from '../context/ItemsContext';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useContext } from 'react';
 import { GridInstrumentos } from './GridInstrumentos';
 
-
 //===HARDCODEO DE CATEGORIAS
-const arrayhardcode = [
-  { imagen: '/images/cuerdas-categorias.png', categoria: 'cuerdas' },
-  { imagen: '/images/percusiones-categorias.png', categoria: 'percusiones' },
-  { imagen: '/images/teclas-categorias.png', categoria: 'teclas' },
-  { imagen: '/images/vientos-categoria.png', categoria: 'vientos' },
+export const arrayCategorias = [
+  { id: 1, nombre: 'cuerdas', img: '/images/cuerdas-categorias.png' },
+  { id: 2, nombre: 'percusiones', img: '/images/percusiones-categorias.png' },
+  { id: 3, nombre: 'teclas', img: '/images/teclas-categorias.png' },
+  { id: 4, nombre: 'vientos', img: '/images/vientos-categoria.png' },
 ];
 
 const ResponsiveBody = () => {
-  const { itemState } = useContext(ItemsContext);
-  const [productos, setProductos] = useState([]);
-
-  useEffect(() => {
-    setProductos(itemState.items);
-  }, [itemState]);
-
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column',
-      alignItems: 'center',
-      
-      }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Stack
         spacing={0}
         sx={{
-        width:'100%',
+          width: '100%',
         }}
       >
         {/*Seccion Buscador del Body*/}
-        <Container 
+        <Container
           maxWidth='100%'
           className='section-buscar'
-
           sx={{
             backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
             backgroundSize: 'cover',
@@ -53,32 +41,37 @@ const ResponsiveBody = () => {
             backgroundPosition: useMediaQuery('(max-width:900px)')
               ? 'calc(0% - 490px + 10%)'
               : 'right',
-              display: 'flex', 
-              justifyContent:'center'
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
           <Box maxWidth={'1440px'} width={'100%'}>
-            <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
-            Bienvenido a
-              <Typography
-              variant='body1'
-              sx={{
-              fontWeight: '800',
-              color: '#FF5500',
-              display: 'inline',
-              fontSize: 32,
-              }}
-              >
-                {' '}PORTAL SONORO
-              </Typography>
-            </Typography>
-
+            <Grid container columnSpacing={1}>
+              <Grid item>
+                <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
+                  Bienvenido a
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant='body1'
+                  sx={{
+                    fontWeight: '800',
+                    color: '#FF5500',
+                    display: 'inline',
+                    fontSize: 32,
+                  }}
+                >
+                  PORTAL SONORO
+                </Typography>
+              </Grid>
+            </Grid>
             <Typography color={'#FFFFFF'} fontSize={20}>
               Encuentra el equipamiento perfecto para ti
             </Typography>
             <SearchBar maxWidth='733px' />
           </Box>
-          </Container>
+        </Container>
 
         {/*Seccion categorias del Body*/}
         <Container
@@ -88,44 +81,55 @@ const ResponsiveBody = () => {
             backgroundColor: '#F9E9DE',
             paddingTop: '50px',
             paddingBottom: '100px',
-            display:'flex',
-            justifyContent:'center'
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
-        <Box maxWidth={'1440px'} width={'100%'}>
-          <Typography fontWeight='bold' fontSize={20}>
-            Revisa las categorías - Reserva tus opciones
-          </Typography>
-          <Typography fontSize={40}>
-            ENCUENTRA TU{' '}
-            <Typography
-              fontWeight='800'
-              fontSize={40}
-              color={'#FF5500'}
-              display={'inline'}
+          <Box maxWidth={'1440px'} width={'100%'}>
+            <Grid container justifyContent={'center'}>
+              <Typography fontWeight='bold' fontSize={20}>
+                Revisa las categorías - Reserva tus opciones
+              </Typography>
+              <Grid
+                container
+                columnSpacing={1}
+                justifyContent={'center'}
+                alignItems={'baseline'}
+              >
+                <Grid item>
+                  <Typography fontSize={40}>ENCUENTRA TU </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    fontWeight='800'
+                    fontSize={40}
+                    color={'#FF5500'}
+                    display={'inline'}
+                  >
+                    EQUIPAMIENTO
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            {/*/contenedor de tarjeta: **esta hardcodeado***/}
+            <Container
+              sx={{
+                minWidth: '100%',
+                display: 'flex',
+                justifyContent: 'space-around',
+
+                flexWrap: 'wrap',
+              }}
             >
-              EQUIPAMIENTO
-            </Typography>
-          </Typography>
-
-          {/*/contenedor de tarjeta: **esta hardcodeado***/}
-          <Container
-            sx={{
-              minWidth: '100%',
-              display: 'flex',
-              justifyContent: 'space-around',
-
-              flexWrap: 'wrap',
-            }}
-          >
-            {arrayhardcode.map((item, index) => (
-              <MediaCard
-                imagen={item.imagen}
-                categoria={item.categoria}
-                key={index}
-              />
-            ))}
-          </Container>
+              {arrayCategorias.map((item) => (
+                <MediaCard
+                  imagen={item.img}
+                  categoria={item.nombre}
+                  key={item.id}
+                />
+              ))}
+            </Container>
           </Box>
         </Container>
 
@@ -138,23 +142,32 @@ const ResponsiveBody = () => {
             height: '100%',
             textAlign: 'center',
             padding: '30px',
-
           }}
         >
-          <Typography fontWeight='800' fontSize={35}>
-            <Typography
-              fontWeight='800'
-              fontSize={40}
-              color={'#FF5500'}
-              display={'inline'}
-            >
-              100%{' '}
-            </Typography>
-            RECOMENDADOS
-          </Typography>
+          <Grid container justifyContent={'center'} columnSpacing={1}>
+            <Grid item>
+              <Typography
+                fontWeight='800'
+                color={'#FF5500'}
+                display={'inline'}
+                sx={{ fontSize: { xs: 30, md: 40 } }}
+              >
+                100%{' '}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography
+                fontWeight='800'
+                sx={{ fontSize: { xs: 30, md: 40 } }}
+              >
+                RECOMENDADOS
+              </Typography>
+            </Grid>
+          </Grid>
           <Typography fontWeight='600' fontSize={20}>
             Creemos que estas alternativas son perfectas para ti
           </Typography>
+
           <GridInstrumentos />
         </Container>
       </Stack>

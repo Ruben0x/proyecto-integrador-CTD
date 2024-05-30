@@ -11,18 +11,21 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AddProductPage } from './AddProductPage';
 import AddIcon from '@mui/icons-material/Add';
-import { AdminProductList } from './AdminProductList';
-import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logoWhite from '../assets/img/LogoWhite.png';
-import { Button, StyledEngineProvider, useTheme } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { ListAllProducts } from './components/ListAllProducts';
+import { ListAllUsuarios } from './components/ListAllUsuarios';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import { AdminHomePage } from './pages/AdminHomePage';
+import { ListAllCaracteristicas } from './components/ListAllCaracteristicas';
 
-const drawerWidth = 240;
+const drawerWidth = '20%';
 
 export const Sidenav = () => {
-  const [menuData, setMenuData] = useState('Agregar');
+  const [menuData, setMenuData] = useState('Home');
   const navigate = useNavigate();
 
   return (
@@ -43,41 +46,128 @@ export const Sidenav = () => {
         variant='permanent'
         anchor='left'
       >
-        <img src={logoWhite} alt='' />
+        <Box textAlign={'center'} marginTop={2}>
+          <img src={logoWhite} alt='Logo_PortalSonoro' width={'80%'} />
+        </Box>
 
         <Toolbar />
         <Divider />
         <List>
-          <ListItem disablePadding onClick={() => setMenuData('Agregar')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+          <ListItem onClick={() => setMenuData('Home')}>
+            <ListItemButton
+              selected={menuData === 'Home'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary='Home' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem onClick={() => setMenuData('Agregar')}>
+            <ListItemButton
+              selected={menuData === 'Agregar'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               <ListItemText primary='Agregar Producto' />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => setMenuData('Listar')}>
-            <ListItemButton sx={{ backgroundColor: '#898989' }}>
+          <ListItem onClick={() => setMenuData('Listar')}>
+            <ListItemButton
+              selected={menuData === 'Listar'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
-              <ListItemText primary='Listar' />
+              <ListItemText primary='Listar Productos' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem onClick={() => setMenuData('TodosUsuarios')}>
+            <ListItemButton
+              selected={menuData === 'TodosUsuarios'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <RecentActorsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Listar Usuarios' />
+            </ListItemButton>
+          </ListItem>
+          <ListItem onClick={() => setMenuData('AdministrarCaracteristicas')}>
+            <ListItemButton
+              selected={menuData === 'AdministrarCaracteristicas'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <RecentActorsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Administrar Características' />
             </ListItemButton>
           </ListItem>
         </List>
         <Divider />
-        <Button
-          onClick={() => {
-            navigate('/');
-          }}
+        <Container
+          sx={{ marginTop: 'auto', marginBottom: 4, textAlign: 'center' }}
         >
-          Salir
-        </Button>
+          <Button
+            fullWidth
+            onClick={() => {
+              navigate('/');
+              window.location.reload();
+            }}
+          >
+            Salir
+          </Button>
+        </Container>
       </Drawer>
-      <Box component='main' sx={{ flexGrow: 1 }}>
+      <Box
+        component='main'
+        sx={{
+          flexGrow: 1,
+          backgroundColor: 'background.main',
+          height: '100vh',
+        }}
+      >
         <Toolbar />
+        {menuData == 'Home' && <AdminHomePage />}
         {menuData == 'Agregar' && <AddProductPage />}
-        {menuData == 'Listar' && <AdminProductList />}
+        {menuData == 'Listar' && <ListAllProducts />}
+        {menuData == 'TodosUsuarios' && <ListAllUsuarios />}
+        {menuData == 'AdministrarCaracteristicas' && <ListAllCaracteristicas />}
       </Box>
     </Box>
   );

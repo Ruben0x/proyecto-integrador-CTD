@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 
 export const InstrumentCardResponsive = ({ instrument }) => {
   const {
+    id,
     nombre,
     descripcion,
     nombreCategoria,
     nombreMarca,
     precio,
-    urlImg,
-    id,
+    imagenes,
   } = instrument;
 
   const stripStyles = {
@@ -44,7 +44,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
         <CardMedia
           component='img'
           sx={{ width: '300px', height: '300px' }}
-          image={urlImg[0]}
+          image={imagenes[0]}
           alt='Live from space album cover'
         />
         <Box sx={stripStyles}>
@@ -79,7 +79,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
           </Typography>
         </CardContent>
         <Typography color='white' variant='subtitle2' alignSelf='end' p={3}>
-          <Link to={'/instrumentos/' + id}>Ver mas...</Link>
+          <Link to={'/instrumentos/' + id}>Ver más...</Link>
         </Typography>
       </Box>
     </Card>
