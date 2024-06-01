@@ -87,6 +87,26 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
+  const getUserById = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+        method: 'GET',
+      });
+  
+      if (response.ok) {
+        const userData = await response.json();
+        dispatch({ type: types.getUser, payload: userData });
+        return userData;
+      } else {
+        console.error(response.statusText);
+        return null;
+      }
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+  
   const postCreateItem = async (values) => {
     // Construir el tipoCaracteristicaId dinámicamente
     const tipoCaracteristicaId = Object.keys(values)
@@ -203,6 +223,7 @@ export const ItemsProvider = ({ children }) => {
         postCreateItem,
         deleteProductbyId,
         deleteUserById,
+        getUserById,
         getAllItems,
         getAllUsuarios,
         getCaracteristicas,
