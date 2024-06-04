@@ -4,7 +4,6 @@ import { itemReducer } from './itemsReducer';
 import axios from 'axios';
 import { types } from './types';
 import { toast } from 'sonner';
-import { clearWarningsCache } from '@mui/x-data-grid/internals';
 
 const initialState = {
   items: [],
@@ -17,18 +16,18 @@ export const ItemsProvider = ({ children }) => {
 
   const getAllItems = useCallback(() => {
     axios
-      .get('http://localhost:3000/productos')
+      .get(`${import.meta.env.VITE_API_URL}/productos`)
       .then((res) => dispatch({ type: types.getItems, payload: res.data }));
   }, []);
   const getAllUsuarios = useCallback(() => {
-    axios.get('http://localhost:3000/usuarios').then((res) =>
+    axios.get(`${import.meta.env.VITE_API_URL}/usuarios`).then((res) =>
       // console.log(res.data)
       dispatch({ type: types.getUsuarios, payload: res.data })
     );
   }, []);
   const getCaracteristicas = () => {
     axios
-      .get('http://localhost:3000/caracteristicas')
+      .get(`${import.meta.env.VITE_API_URL}/caracteristicas`)
       .then((res) => {
         // console.log(res.data);
         dispatch({ type: types.getCaracteristicas, payload: res.data });
@@ -37,7 +36,7 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const getAllCategorias = useCallback(() => {
-    axios.get('http://localhost:3000/categorias').then((res) =>
+    axios.get(`${import.meta.env.VITE_API_URL}/categorias`).then((res) =>
       // console.log(res.data)
       dispatch({ type: types.getCategorias, payload: res.data })
     );
@@ -45,16 +44,19 @@ export const ItemsProvider = ({ children }) => {
 
   const getItemsRandoms = () => {
     axios
-      .get('http://localhost:3000/productos/random')
+      .get(`${import.meta.env.VITE_API_URL}/productos/random`)
       .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
       .catch((err) => toast(err));
   };
 
   const deleteProductbyId = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/productos/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/productos/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       if (response.ok) {
         dispatch({ type: types.deleteItem, payload: id });
@@ -70,9 +72,12 @@ export const ItemsProvider = ({ children }) => {
   };
   const deleteUserById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/usuarios/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       if (response.ok) {
         dispatch({ type: types.deleteUser, payload: id });
@@ -115,10 +120,13 @@ export const ItemsProvider = ({ children }) => {
     // console.log(formData);
 
     try {
-      const response = await fetch('http://localhost:3000/productos', {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/productos`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         toast.success('Producto creado exitosamente');
@@ -163,10 +171,13 @@ export const ItemsProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/productos/' + id, {
-        method: 'PATCH',
-        body: formData,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/productos/` + id,
+        {
+          method: 'PATCH',
+          body: formData,
+        }
+      );
       if (response.ok) {
         console.log('Producto editado exitosamente');
         toast.success('Producto editado exitosamente');

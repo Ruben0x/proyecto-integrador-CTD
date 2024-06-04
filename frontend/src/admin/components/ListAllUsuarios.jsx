@@ -21,6 +21,7 @@ import { AdminLayout } from '../layout/AdminLayout';
 import { useState } from 'react';
 import { setUserToAdmin } from '../../auth/helpers/createUser';
 import { toast } from 'sonner';
+import { useStore } from '../../context/store/UserProvider';
 
 export const ListAllUsuarios = ({}) => {
   const { itemState, deleteUserById } = useContext(ItemsContext);
@@ -28,6 +29,14 @@ export const ListAllUsuarios = ({}) => {
   const [usuario, setUsuario] = useState('');
   const [editModal, setEditModal] = useState(false);
 
+  const { itemState: itemState2, getAllUsuarios, isLoading } = useStore();
+
+  // console.log(isLoading);
+  useEffect(() => {
+    getAllUsuarios();
+  }, []);
+  console.log(itemState2);
+  if (isLoading) return 'Cargando...';
   const handleClickOpen = (params) => {
     setUsuario(params.row);
     setDeleteModal(true);

@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 export const createUser = (user) => {
   axios
-    .post('http://localhost:3000/usuarios', user)
+    .post(`${process.env.import.meta.env.VITE_API_URL}/usuarios`, user)
     .then((res) => {
       if (res.status === 201) {
         toast.success(res.data.message);
@@ -22,7 +22,9 @@ export const setUserToAdmin = (user) => {
 
   const isAdmin = user.rol === 'admin' ? 'registrado' : 'admin';
   axios
-    .patch('http://localhost:3000/usuarios/' + user.id, { rol: isAdmin })
+    .patch(`${process.env.import.meta.env.VITE_API_URL}/usuarios/` + user.id, {
+      rol: isAdmin,
+    })
     .then((res) => {
       if (res.status === 200) {
         toast.success('Usuario actualizado con éxito');

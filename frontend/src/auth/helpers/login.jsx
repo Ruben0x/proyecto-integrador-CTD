@@ -10,7 +10,9 @@ export const login = async (
   handleLoginError
 ) => {
   try {
-    const response = await axios.get('http://localhost:3000/usuarios');
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/usuarios`
+    );
     const userData = response.data;
     const foundUser = userData.find((user) => user.email === loginValues.email);
 

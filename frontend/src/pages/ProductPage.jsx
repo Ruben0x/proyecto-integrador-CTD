@@ -10,15 +10,19 @@ export const ProductPage = () => {
   const { id } = useParams();
   const [instrumento, setInstrumento] = useState([]);
   const [listaImagenes, setListaImagenes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios('http://localhost:3000/productos/' + id)
+    axios(`${import.meta.env.VITE_API_URL}/productos/` + id)
       .then((res) => {
         setInstrumento(res.data);
         setListaImagenes(res.data.imagenes || []);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [id]);
 
@@ -27,6 +31,7 @@ export const ProductPage = () => {
   }
 
   // console.log(instrumento);
+  if (isLoading) return 'Cargando...';
 
   return (
     <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
