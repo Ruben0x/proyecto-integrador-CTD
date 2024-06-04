@@ -18,8 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export const AddProductForm = ({ item = '' }) => {
-  console.log(item);
+export const AddProductFormcopy = ({ item = '' }) => {
   //Obtener caracteristicas para formulario
   const [caracteristicas, setCaracteristicas] = useState([]);
   const { getCaracteristicas, itemState } = useContext(ItemsContext);
@@ -82,48 +81,36 @@ export const AddProductForm = ({ item = '' }) => {
       .min(0, 'El precio no puede ser menor a 0'),
     imagenes: Yup.mixed().required('Required!'),
   });
+  const initialValues = {
+    nombre: item.nombre || '',
+    descripcion: item.descripcion || '',
+    marcaId: item.marcaId || '',
+    categoriaId: item.categoriaId || '',
+    precio: item.precio || '',
+    imagenes: item.urlImg || [],
+  };
+
+  // Iterar sobre las características y asignar dinámicamente las propiedades
+  item.caracteristicas?.forEach((caracteristica, index) => {
+    initialValues[`c-${index}`] =
+      caracteristica.caracteristicaTipoCaracteristicaId || '';
+  });
 
   const formik = useFormik({
-    initialValues: {
-      nombre: item.nombre || '',
-      descripcion: item.descripcion || '',
-      marcaId: item.marcaId || '',
-      categoriaId: item.categoriaId || '',
-      ...caracteristicas.reduce((acc, caracteristica) => {
-        acc[`c-${caracteristica.id}`] = '';
-        return acc;
-      }, {}),
-      precio: item.precio || '',
-      imagenes: item.urlImg || [],
-    },
+    initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (!item) {
         postCreateItem(values);
+      } else {
+        postEditItem(values, item.id);
       }
-      postEditItem(values, item.id);
     },
   });
 
   useEffect(() => {
     formik.setFieldValue('categoriaId', selectedId);
   }, [selectedId]);
-
-  useEffect(() => {
-    if (caracteristicas.length) {
-      const initialCaracteristicas = caracteristicas.reduce(
-        (acc, caracteristica) => {
-          acc[`c-${caracteristica.id}`] = '';
-          return acc;
-        },
-        {}
-      );
-      formik.setValues((prevValues) => ({
-        ...prevValues,
-        ...initialCaracteristicas,
-      }));
-    }
-  }, [caracteristicas]);
 
   return (
     <Container sx={{ width: '60%', paddingBottom: 5 }}>
@@ -253,38 +240,30 @@ export const AddProductForm = ({ item = '' }) => {
             )}
           </FormControl>
           <Typography>Caracteristicas</Typography>
-          {caracteristicas.map((caracteristica, index) => {
-            return (
-              <FormControl key={index} sx={{ width: '70%' }} size='small'>
-                <InputLabel>{caracteristica.nombre}</InputLabel>
-                <Select
-                  id={`c-${caracteristica.id}`}
-                  name={`c-${caracteristica.id}`}
-                  label={caracteristica.nombre}
-                  value={formik.values[`c-${caracteristica.id}`] || ''}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched[`c-${caracteristica.id}`] &&
-                    Boolean(formik.errors[`c-${caracteristica.id}`])
-                  }
-                >
-                  {caracteristica.tipoCaracteristicas.map((tipo) => {
-                    return (
-                      <MenuItem key={tipo.id} value={tipo.id}>
-                        {tipo.nombre}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                {/* {!!formik.errors.marcaId && (
-                  <FormHelperText id='marcaId' sx={{ color: 'red' }}>
-                    {formik.touched.marcaId && formik.errors.marcaId}
-                  </FormHelperText>
-                )} */}
-              </FormControl>
-            );
-          })}
+
+          {caracteristicas?.map((caracteristica, index) => (
+            <FormControl key={index} fullWidth margin='normal'>
+              <InputLabel>{caracteristica?.nombre}</InputLabel>
+              <Select
+                id={`c-${index}`}
+                name={`c-${index}`}
+                label={caracteristica?.nombre}
+                value={formik.values[`c-${index}`]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched[`c-${index}`] &&
+                  Boolean(formik.errors[`c-${index}`])
+                }
+              >
+                {caracteristica?.tipoCaracteristicas?.map((tipo, id) => (
+                  <MenuItem key={tipo.id} value={tipo.id}>
+                    {tipo.nombre}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ))}
 
           {/* UPLOAD IMAGE */}
           {!item ? (

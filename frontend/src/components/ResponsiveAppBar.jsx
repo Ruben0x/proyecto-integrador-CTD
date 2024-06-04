@@ -10,13 +10,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { Avatar, Divider } from '@mui/material';
 import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logomobile from '../assets/img/logomobile.png';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { logout } from '../auth/helpers/login';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 //const pages = ['Crear Cuenta','Iniciar Sesión'] <- se reemplaza opr pagesSites
 const pagesSites = [
@@ -25,15 +27,19 @@ const pagesSites = [
 ];
 
 //iniciales debe extraerse del back, una vez logeado
-const iniciales = ['N', 'N'];
+const iniciales = ['P', 'S'];
+const nombre = 'Portal Sonoro';
 
 function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
 
+  // console.log(globalUserData.rol);
+
   const iniciales = [
-    globalUserData.nombre.charAt(0).toUpperCase(),
-    globalUserData.apellido.charAt(0).toUpperCase(),
+    globalUserData?.nombre.charAt(0).toUpperCase(),
+    globalUserData?.apellido.charAt(0).toUpperCase(),
   ];
+  const nombre = `${globalUserData?.nombre} ${globalUserData?.apellido}`;
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -49,12 +55,15 @@ function ResponsiveAppBar() {
     <AppBar position='sticky' color='neutralColor'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
+          <Link
+            component={RouterLink}
+            to={'/'}
+            style={{ textDecoration: 'none' }}
+          >
             <Divider sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
               <img src={logoportalsonoroprincipal} alt='' />
             </Divider>
           </Link>
-
           <Typography
             variant='h6'
             noWrap
@@ -69,7 +78,11 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           ></Typography>
-          <Link to={'/'} style={{ textDecoration: 'none' }}>
+          <Link
+            component={RouterLink}
+            to={'/'}
+            style={{ textDecoration: 'none' }}
+          >
             <Divider sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
               <img src={logomobile} alt='' />
             </Divider>
@@ -96,21 +109,47 @@ function ResponsiveAppBar() {
             sx={{
               padding: '1rem',
               flexGrow: 1,
-              display: isLogged ? 'flex' : 'none',
+              display: isLogged
+                ? { xs: 'none', sm: 'flex', justifyContent: 'flex-end' }
+                : 'none',
               justifyContent: 'flex-end',
               alignItems: 'center',
             }}
           >
-            <Avatar
+            <Typography textAlign='center' color={'black'} paddingRight={1}>
+              {nombre}
+            </Typography>
+            <Link
+              component={RouterLink}
+              to={'/auth/user'}
+              style={{ textDecoration: 'none' }}
+            >
+              <Avatar
+                sx={{
+                  bgcolor: 'primary.main',
+                  width: 48,
+                  height: 48,
+                }}
+              >
+                {`${iniciales[0]}${iniciales[1]}`}
+              </Avatar>
+            </Link>
+            <Button
+              component={RouterLink}
+              variant='contained'
+              color='terceario'
+              to='/administracion'
               sx={{
-                bgcolor: 'primary.main',
-                width: 48,
-                height: 48,
+                my: 2,
+                color: 'white',
+                display: globalUserData?.rol === 'admin' ? 'block' : 'none',
+                borderRadius: 70,
+                fontSize: '.5rem',
+                marginLeft: '0.5rem',
               }}
             >
-              {`${iniciales[0]}${iniciales[1]}`}
-            </Avatar>
-
+              <AdminPanelSettingsIcon />
+            </Button>
             <Button
               variant='contained'
               color='terceario'
@@ -134,10 +173,14 @@ function ResponsiveAppBar() {
               flexGrow: 1,
               display: isLogged
                 ? 'none'
-                : { xs: 'none', md: 'flex', justifyContent: 'flex-end' },
+                : { xs: 'none', sm: 'flex', justifyContent: 'flex-end' },
             }}
           >
-            <Link to={'/auth/registro'} style={{ textDecoration: 'none' }}>
+            <Link
+              component={RouterLink}
+              to={'/auth/registro'}
+              style={{ textDecoration: 'none' }}
+            >
               <Button
                 variant='contained'
                 color='terceario'
@@ -153,7 +196,11 @@ function ResponsiveAppBar() {
               </Button>
             </Link>
             {/* </Link> */}
-            <Link to={'/auth/login'} style={{ textDecoration: 'none' }}>
+            <Link
+              component={RouterLink}
+              to={'/auth/login'}
+              style={{ textDecoration: 'none' }}
+            >
               <Button
                 variant='contained'
                 color='terceario'
@@ -170,13 +217,11 @@ function ResponsiveAppBar() {
               </Button>
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
-            {/*Menu Hamburguesa*/}
-          </Box>
+
           <Box
             sx={{
               flexGrow: 0,
-              display: isLogged ? 'none' : { xs: 'flex', md: 'none' },
+              display: { xs: 'flex', sm: 'none' },
             }}
           >
             <IconButton
@@ -187,8 +232,21 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color='inherit'
             >
-              <MenuIcon />
+              {isLogged ? (
+                <Avatar
+                  sx={{
+                    bgcolor: 'primary.main',
+                    width: 48,
+                    height: 48,
+                  }}
+                >
+                  {`${iniciales[0]}${iniciales[1]}`}
+                </Avatar>
+              ) : (
+                <MenuIcon />
+              )}
             </IconButton>
+
             <Menu
               id='menu-appbar'
               anchorEl={anchorElNav}
@@ -207,19 +265,54 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pagesSites.map((page, index) => (
-                <Link
-                  to={page.site}
-                  style={{ textDecoration: 'none' }}
-                  key={index}
-                >
-                  <MenuItem onClick={handleCloseNavMenu}>
+              {isLogged ? (
+                <Box>
+                  <Link
+                    component={RouterLink}
+                    to={'/auth/user'}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign='center' color={'black'}>
+                        Mi Perfil
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                  {globalUserData.rol === 'admin' && (
+                    <Link
+                      component={RouterLink}
+                      to={'/administracion'}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography textAlign='center' color={'black'}>
+                          Panel Admin
+                        </Typography>
+                      </MenuItem>
+                    </Link>
+                  )}
+                  <MenuItem onClick={logout}>
                     <Typography textAlign='center' color={'black'}>
-                      {page.title}
+                      Cerrar Sesión
                     </Typography>
                   </MenuItem>
-                </Link>
-              ))}
+                </Box>
+              ) : (
+                pagesSites.map((page, index) => (
+                  <Link
+                    component={RouterLink}
+                    to={page.site}
+                    style={{ textDecoration: 'none' }}
+                    key={index}
+                  >
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign='center' color={'black'}>
+                        {page.title}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ))
+              )}
             </Menu>
           </Box>
         </Toolbar>

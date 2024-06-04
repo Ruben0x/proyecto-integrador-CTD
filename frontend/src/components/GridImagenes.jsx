@@ -1,11 +1,8 @@
-import * as React from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
-import { useMemo } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { Grid } from '@mui/material';
 
-export const GridImagenes = ({ listaImagenes }) => {
+export const GridImagenes = ({ listaImagenes = [] }) => {
   const [imagenes, setImagenes] = useState([]);
 
   useEffect(() => {
@@ -17,37 +14,16 @@ export const GridImagenes = ({ listaImagenes }) => {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <img style={{ width: '100%' }} src={imagenes[0].url} alt='' />
+          {imagenes[0] && (
+            <img style={{ width: '100%' }} src={imagenes[0].url} alt='' />
+          )}
         </Grid>
         <Grid item xs={12} md={6} sm container>
-          <Grid item xs={12} md={6}>
-            <Grid item>
-              <Grid item xs={12}>
-                {imagenes[1].url && (
-                  <img style={{ width: '100%' }} src={imagenes[1].url} alt='' />
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                {imagenes[2] && (
-                  <img style={{ width: '100%' }} src={imagenes[2].url} alt='' />
-                )}
-              </Grid>
+          {imagenes.slice(1, 5).map((imagen, index) => (
+            <Grid item xs={12} md={6} key={index}>
+              <img style={{ width: '100%' }} src={imagen?.url || ''} alt='' />
             </Grid>
-          </Grid>
-          <Grid item xs={12} md={6} sm container>
-            <Grid item>
-              <Grid item xs={12}>
-                {imagenes[3] && (
-                  <img style={{ width: '100%' }} src={imagenes[3].url} alt='' />
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                {imagenes[4] && (
-                  <img style={{ width: '100%' }} src={imagenes[4].url} alt='' />
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
+          ))}
         </Grid>
       </Grid>
     );

@@ -13,6 +13,8 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { login } from './helpers/login';
 import { GlobalUserDataContext } from './helpers/globalUserData';
+import { ItemsContext } from '../context/ItemsContext';
+
 
 
 
@@ -23,14 +25,14 @@ const label = { inputProps: { 'aria-label': 'Checkbox recuerdame' } };
 
 
 export const LogInPage = () => {
+  const { getUserById } = useContext(ItemsContext);
   const { setIsLogged, setGlobalUserData } = useContext(GlobalUserDataContext);
   const validationSchema = Yup.object({
     email: Yup.string('Ingrese su correo')
       .email('Correo Invalido')
       .required('Correo es obligatorio'),
-    password: Yup.string('Ingrese su contraseña').required(
-      'Debe ingresar una contraseña'
-    ),
+    password: Yup.string('Ingrese su contraseña')
+    .required('Debe ingresar una contraseña'),
   });
 
   const formik = useFormik({
@@ -41,7 +43,7 @@ export const LogInPage = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      login(values, setIsLogged, setGlobalUserData);
+      login(values, setIsLogged, setGlobalUserData, getUserById );
     },
   });
   return (

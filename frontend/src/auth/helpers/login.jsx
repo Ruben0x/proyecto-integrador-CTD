@@ -1,14 +1,38 @@
-import axios from 'axios'; 
+import axios from 'axios';
+import ErrorSnackbar from '../components/ErrorSnackbar';
+import { Alert } from '@mui/material';
+import { toast } from 'sonner';
+import { ItemsContext } from '../../context/ItemsContext';
+import { useContext } from 'react';
 
-export const login = async (loginValues, setIsLogged, setGlobalUserData) => { 
+
+export const login = async (
+  loginValues,
+  setIsLogged,
+  setGlobalUserData,
+  getUserById,
+  handleLoginError,
+
+) => {
+
+  let errorMsg = "Dirección de Correo Errónea";
   try {
-    const response = await axios.get('http://localhost:3000/usuarios');
-    const userData = response.data;
-    const foundUser = userData.find((user) => user.email === loginValues.email);
-    
-    if (foundUser) { 
-      /* //revisar Password if (foundUser.password === loginValues.password) { console.log("usuario: "); console.log(foundUser); } else { console.log('Correo o Clave erróneo'); */ 
+    const response = await axios.post('http://localhost:3000/usuarios/login', {
+      email: loginValues.email,
+      password: loginValues.password,
+    });
+    const loginResponse = response.data;
+    if (loginResponse?.statusCode === 400) {
+      errorMsg = loginResponse.message;
+      throw new Error(errorMsg);
+    } else if (loginResponse.message === 'No Autorizado') {
+      errorMsg = loginResponse.message;
+      throw new Error(errorMsg);
+    } else if (loginResponse?.usuarioId && loginResponse?.rol) {
+      console.log(loginResponse);
 
+      getUserById(loginResponse.usuarioId).then((foundUser) => {
+        console.log(foundUser);
       // Set isLogged TRUE
       setIsLogged(true);
       // Set globalUserData al usuario que matchea
@@ -21,36 +45,37 @@ export const login = async (loginValues, setIsLogged, setGlobalUserData) => {
         localStorage.setItem('isLogged', JSON.stringify(true));
         localStorage.setItem('globalUserData', JSON.stringify(foundUser));
       } else {
-
         sessionStorage.setItem('isLogged', JSON.stringify(true));
         sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
       }
 
-
-
       setTimeout(() => {
         window.location.replace('/');
       }, 100);
-    } else {
-      console.log('Correo o Clave erróneo');
+      });
     }
-  } 
-  catch (error){
+
+
+  } catch (error) {
+    toast.error(errorMsg);
+
+    // alert('Correo o Clave erróneo');
     console.error(error);
   }
+
+
 };
 
-export const logout = ()=>{
-  
+export const logout = () => {
   localStorage.removeItem('globalUserData');
   sessionStorage.removeItem('globalUserData');
-  localStorage.setItem('isLogged', JSON.stringify(false))
-  sessionStorage.setItem('isLogged', JSON.stringify(false))
-    
+  localStorage.setItem('isLogged', JSON.stringify(false));
+  sessionStorage.setItem('isLogged', JSON.stringify(false));
+
   localStorage.removeItem('isLogged');
   sessionStorage.removeItem('isLogged');
 
-    setTimeout(() => {
-      window.location.replace('/');
-    }, 100);
-}
+  setTimeout(() => {
+    window.location.replace('/');
+  }, 100);
+};

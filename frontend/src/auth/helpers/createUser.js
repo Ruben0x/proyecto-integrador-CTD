@@ -6,7 +6,7 @@ export const createUser = (user) => {
     .post('http://localhost:3000/usuarios', user)
     .then((res) => {
       if (res.status === 201) {
-        toast.success('Producto creado exitosamente');
+        toast.success(res.data.message);
         setTimeout(() => {
           window.location.replace('/');
         }, 1000);
@@ -14,5 +14,23 @@ export const createUser = (user) => {
     })
     .catch((error) => {
       toast.error(error.response.data.message);
+    });
+};
+
+export const setUserToAdmin = (user) => {
+  // console.log(user.rol);
+
+  const isAdmin = user.rol === 'admin' ? 'registrado' : 'admin';
+  axios
+    .patch('http://localhost:3000/usuarios/' + user.id, { rol: isAdmin })
+    .then((res) => {
+      if (res.status === 200) {
+        toast.success('Usuario actualizado con éxito');
+      } else {
+        toast.error('Error al actualizar el usuario');
+      }
+    })
+    .catch(() => {
+      toast.error('Error al actualizar el usuario');
     });
 };
