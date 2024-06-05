@@ -1,7 +1,8 @@
 import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, useMediaQuery } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { Calendario } from './Calendario';
 
 
 
@@ -13,7 +14,8 @@ const SearchSection = () => {
     sx={{
     backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
     backgroundSize: 'cover',
-    height: '300px',
+    minHeight: '300px',
+    paddingBottom:'10px',
     backgroundPosition: useMediaQuery('(max-width:900px)')
         ? 'calc(0% - 490px + 10%)'
         : 'right',
@@ -22,30 +24,42 @@ const SearchSection = () => {
     }}
     >
     <Box maxWidth={'1440px'} width={'100%'}>
-    <Grid container columnSpacing={1}>
-        <Grid item>
-        <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
-            Bienvenido a
-        </Typography>
+        <Grid container columnSpacing={1}>
+            <Grid item>
+            <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
+                Bienvenido a
+            </Typography>
+            </Grid>
+            <Grid item>
+            <Typography
+                variant='body1'
+                sx={{
+                fontWeight: '800',
+                color: '#FF5500',
+                display: 'inline',
+                fontSize: 32,
+                }}
+            >
+                PORTAL SONORO
+            </Typography>
+            </Grid>
         </Grid>
-        <Grid item>
-        <Typography
-            variant='body1'
-            sx={{
-            fontWeight: '800',
-            color: '#FF5500',
-            display: 'inline',
-            fontSize: 32,
-            }}
-        >
-            PORTAL SONORO
+        <Typography color={'#FFFFFF'} fontSize={20}>
+            Encuentra el equipamiento perfecto para ti
         </Typography>
+        <Grid container spacing={3}>
+        <Grid item xs={12} sm={5}>
+            <SearchBar maxWidth='733px' />
         </Grid>
-    </Grid>
-    <Typography color={'#FFFFFF'} fontSize={20}>
-        Encuentra el equipamiento perfecto para ti
-    </Typography>
-    <SearchBar maxWidth='733px' />
+        <Grid item xs={12} sm={5}>
+            <Calendario/>
+        </Grid>
+        <Grid item xs={12} sm={2}>
+        <Button type='submit' variant='contained' fullWidth color='primary'>
+                    BUSCAR
+                  </Button>
+        </Grid>
+        </Grid>
     </Box>
     </Container>
   );

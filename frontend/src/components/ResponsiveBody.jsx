@@ -8,6 +8,8 @@ import MediaCard from './MediaCard';
 import { GridInstrumentos } from './GridInstrumentos';
 import SearchSection from './SearchSection';
 
+
+
 //===HARDCODEO DE CATEGORIAS
 export const arrayCategorias = [
   { id: 1, nombre: 'cuerdas', img: '/images/cuerdas-categorias.png' },
