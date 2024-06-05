@@ -18,6 +18,7 @@ import { Characteristics } from '../components/Characteristics';
 import DateRangePickerComponent from '../components/DateRangePickerComponent';
 import { GridImagenes } from '../components/GridImagenes';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
+import { ProductCalendar } from '../components/ProductCalendar';
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -48,10 +49,6 @@ export const ProductPage = () => {
     console.log(instrumento);
   };
 
-  const handleReserva = () => {
-    !isLogged ? alert('Debes estar logueado') : alert('hola');
-  };
-
   return (
     <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
       <Box sx={{ margin: 2 }}>
@@ -80,7 +77,7 @@ export const ProductPage = () => {
         </Typography>
         <Box>
           {isLogged && (
-            <Box disableSpacing sx={{ position: 'absolute' }}>
+            <Box sx={{ position: 'absolute' }}>
               <IconButton
                 size='large'
                 aria-label='add to favorites'
@@ -133,13 +130,31 @@ export const ProductPage = () => {
               {instrumento.descripcion}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ backgroundColor: 'background.main', padding: 3 }}
+          >
             <Characteristics instrumento={instrumento} />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ backgroundColor: 'background.main', padding: 3 }}
+          >
             <Characteristics instrumento={instrumento} />
           </Grid>
-          <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
+          >
             <Typography
               variant='subtitle1'
               textTransform={'uppercase'}
@@ -148,12 +163,7 @@ export const ProductPage = () => {
             >
               Selecciona las fechas que necesitas y reserva <span>ahora</span>
             </Typography>
-            <DateRangePickerComponent />
-            <Box marginTop={'auto'}>
-              <Button fullWidth variant='contained' onClick={handleReserva}>
-                Reservar
-              </Button>
-            </Box>
+            <ProductCalendar />
           </Grid>
         </Grid>
       </Box>
