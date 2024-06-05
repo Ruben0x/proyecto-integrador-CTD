@@ -5,23 +5,24 @@ import { toast } from 'sonner';
 import { ItemsContext } from '../../context/ItemsContext';
 import { useContext } from 'react';
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const login = async (
   loginValues,
   setIsLogged,
   setGlobalUserData,
   getUserById,
-  handleLoginError,
-
+  handleLoginError
 ) => {
-
-  let errorMsg = "Dirección de Correo Errónea";
+  let errorMsg = 'Dirección de Correo Errónea';
   try {
-    const response = await axios.post('http://localhost:3000/usuarios/login', {
+    const response = await axios.post(`${apiUrl}/usuarios/login`, {
       email: loginValues.email,
       password: loginValues.password,
     });
     const loginResponse = response.data;
+
+    console.log(loginResponse);
     if (loginResponse?.statusCode === 400) {
       errorMsg = loginResponse.message;
       throw new Error(errorMsg);
@@ -33,37 +34,33 @@ export const login = async (
 
       getUserById(loginResponse.usuarioId).then((foundUser) => {
         console.log(foundUser);
-      // Set isLogged TRUE
-      setIsLogged(true);
-      // Set globalUserData al usuario que matchea
-      setGlobalUserData(foundUser);
+        // Set isLogged TRUE
+        setIsLogged(true);
+        // Set globalUserData al usuario que matchea
+        setGlobalUserData(foundUser);
 
-      //almacena los datos si estaba o no checkeado el 'rememberme': true= LocalStorag. False = sessionstorage
-      if (loginValues.rememberme) {
-        sessionStorage.setItem('isLogged', JSON.stringify(true));
-        sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
-        localStorage.setItem('isLogged', JSON.stringify(true));
-        localStorage.setItem('globalUserData', JSON.stringify(foundUser));
-      } else {
-        sessionStorage.setItem('isLogged', JSON.stringify(true));
-        sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
-      }
+        //almacena los datos si estaba o no checkeado el 'rememberme': true= LocalStorag. False = sessionstorage
+        if (loginValues.rememberme) {
+          sessionStorage.setItem('isLogged', JSON.stringify(true));
+          sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
+          localStorage.setItem('isLogged', JSON.stringify(true));
+          localStorage.setItem('globalUserData', JSON.stringify(foundUser));
+        } else {
+          sessionStorage.setItem('isLogged', JSON.stringify(true));
+          sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
+        }
 
-      setTimeout(() => {
-        window.location.replace('/');
-      }, 100);
+        setTimeout(() => {
+          window.location.replace('/');
+        }, 100);
       });
     }
-
-
   } catch (error) {
     toast.error(errorMsg);
 
     // alert('Correo o Clave erróneo');
     console.error(error);
   }
-
-
 };
 
 export const logout = () => {

@@ -12,23 +12,25 @@ const initialState = {
   caracteristicas: [],
 };
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const ItemsProvider = ({ children }) => {
   const [itemState, dispatch] = useReducer(itemReducer, initialState);
 
   const getAllItems = useCallback(() => {
     axios
-      .get('http://localhost:3000/productos')
+      .get(`${apiUrl}/productos`)
       .then((res) => dispatch({ type: types.getItems, payload: res.data }));
   }, []);
   const getAllUsuarios = useCallback(() => {
-    axios.get('http://localhost:3000/usuarios').then((res) =>
+    axios.get(`${apiUrl}/usuarios`).then((res) =>
       // console.log(res.data)
       dispatch({ type: types.getUsuarios, payload: res.data })
     );
   }, []);
   const getCaracteristicas = () => {
     axios
-      .get('http://localhost:3000/caracteristicas')
+      .get(`${apiUrl}/caracteristicas`)
       .then((res) => {
         // console.log(res.data);
         dispatch({ type: types.getCaracteristicas, payload: res.data });
@@ -37,7 +39,7 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const getAllCategorias = useCallback(() => {
-    axios.get('http://localhost:3000/categorias').then((res) =>
+    axios.get(`${apiUrl}/categorias`).then((res) =>
       // console.log(res.data)
       dispatch({ type: types.getCategorias, payload: res.data })
     );
@@ -45,14 +47,14 @@ export const ItemsProvider = ({ children }) => {
 
   const getItemsRandoms = () => {
     axios
-      .get('http://localhost:3000/productos/random')
+      .get(`${apiUrl}/productos/random`)
       .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
       .catch((err) => toast(err));
   };
 
   const deleteProductbyId = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/productos/${id}`, {
+      const response = await fetch(`${apiUrl}/productos/${id}`, {
         method: 'DELETE',
       });
 
@@ -70,7 +72,7 @@ export const ItemsProvider = ({ children }) => {
   };
   const deleteUserById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+      const response = await fetch(`${apiUrl}/usuarios/${id}`, {
         method: 'DELETE',
       });
 
@@ -89,10 +91,10 @@ export const ItemsProvider = ({ children }) => {
 
   const getUserById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+      const response = await fetch(`${apiUrl}/usuarios/${id}`, {
         method: 'GET',
       });
-  
+
       if (response.ok) {
         const userData = await response.json();
         dispatch({ type: types.getUser, payload: userData });
@@ -106,7 +108,7 @@ export const ItemsProvider = ({ children }) => {
       return null;
     }
   };
-  
+
   const postCreateItem = async (values) => {
     // Construir el tipoCaracteristicaId dinámicamente
     const tipoCaracteristicaId = Object.keys(values)
@@ -135,7 +137,7 @@ export const ItemsProvider = ({ children }) => {
     // console.log(formData);
 
     try {
-      const response = await fetch('http://localhost:3000/productos', {
+      const response = await fetch(`${apiUrl}/productos`, {
         method: 'POST',
         body: formData,
       });
@@ -183,7 +185,7 @@ export const ItemsProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/productos/' + id, {
+      const response = await fetch(`${apiUrl}/productos/` + id, {
         method: 'PATCH',
         body: formData,
       });

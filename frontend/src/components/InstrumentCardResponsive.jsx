@@ -1,12 +1,18 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-
-import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
+import ShareIcon from '@mui/icons-material/Share';
+import { Box, CardActions, IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 
 export const InstrumentCardResponsive = ({ instrument }) => {
+  const [favs, setFavs] = useState(false);
+  const { isLogged } = useContext(GlobalUserDataContext);
   const {
     id,
     nombre,
@@ -40,7 +46,28 @@ export const InstrumentCardResponsive = ({ instrument }) => {
         textAlign: "left",
       }}
     >
-      <Box sx={{ position: "relative" }}>
+      <Box sx={{ position: 'relative' }}>
+        {isLogged && (
+          <CardActions disableSpacing sx={{ position: 'absolute' }}>
+            <IconButton
+              size='large'
+              aria-label='add to favorites'
+              onClick={() => {
+                setFavs(!favs);
+              }}
+            >
+              {favs ? (
+                <FavoriteIcon color='buttonRed' />
+              ) : (
+                <FavoriteTwoToneIcon color='warning' />
+              )}
+            </IconButton>
+            <IconButton aria-label='share'>
+              <ShareIcon color='primary' />
+            </IconButton>
+          </CardActions>
+        )}
+
         <CardMedia
           component="img"
           sx={{ width: "300px", height: "300px" }}
