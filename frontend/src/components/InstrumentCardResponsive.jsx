@@ -2,8 +2,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
-import { Box } from '@mui/material';
+import { Box, CardActions, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const InstrumentCardResponsive = ({ instrument }) => {
@@ -41,6 +43,17 @@ export const InstrumentCardResponsive = ({ instrument }) => {
       }}
     >
       <Box sx={{ position: 'relative' }}>
+        <CardActions disableSpacing sx={{ position: 'absolute' }}>
+          <IconButton
+            aria-label='add to favorites'
+            onClick={() => console.log('hola')}
+          >
+            <FavoriteIcon color='buttonRed' />
+          </IconButton>
+          <IconButton aria-label='share'>
+            <ShareIcon color='primary' />
+          </IconButton>
+        </CardActions>
         <CardMedia
           component='img'
           sx={{ width: '300px', height: '300px' }}
