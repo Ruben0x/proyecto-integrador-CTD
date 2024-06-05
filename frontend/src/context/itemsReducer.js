@@ -35,13 +35,13 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         items: filteredItems,
       };
-    case types.deleteUser:
-      const filteredUsers = state.usuarios.filter(
-        (user) => user.id !== action.payload
+    case types.getUsuario:
+      const foundUser = state.usuarios.find(
+        (user) => user.id === action.payload
       );
       return {
         ...state,
-        usuarios: filteredUsers,
+        usuario: foundUser,
       };
     case types.getCategorias:
       return {

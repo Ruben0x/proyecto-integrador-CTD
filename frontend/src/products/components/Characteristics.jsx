@@ -34,9 +34,11 @@ export const Characteristics = ({ instrumento }) => {
       <Typography
         paddingBottom={2}
         textTransform={'uppercase'}
+        fontWeight={600}
         sx={{ typography: { xs: 'h5' } }}
+        textAlign={'center'}
       >
-        Características:
+        Características
       </Typography>
       <Grid container columns={{ xs: 1, sm: 12 }} rowSpacing={2}>
         {caracteristicas.map((caracteristica, index) => {
@@ -48,7 +50,7 @@ export const Characteristics = ({ instrumento }) => {
               item
               xs={12}
               sm={6}
-              paddingLeft={4}
+              paddingLeft={1}
               sx={{ display: 'flex' }}
               key={index}
             >

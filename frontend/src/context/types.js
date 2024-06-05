@@ -1,6 +1,7 @@
 export const types = {
   getItems: '[GET] Items',
   getUsuarios: '[GET] Usuarios',
+  getUsuario: '[GET] Usuario',
   getRandoms: '[GET] ItemsRandom',
   getCaracteristicas: '[GET] Caracteristicas',
   postItem: '[POST] Item',

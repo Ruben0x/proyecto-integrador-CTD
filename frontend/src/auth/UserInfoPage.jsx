@@ -54,9 +54,9 @@ export const UserInfoPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      nombre: globalUserData.nombre,
-      apellido: globalUserData.apellido,
-      email: globalUserData.email,
+      nombre: globalUserData.nombre ||'' ,
+      apellido: globalUserData.apellido ||'',
+      email: globalUserData.email || '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -119,7 +119,7 @@ export const UserInfoPage = () => {
                     label='Nombre'
                     type='nombre'
                     placeholder='Portal'
-                    value={formik.values.nombre}
+                    value={formik.values.nombre || ''}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
@@ -136,7 +136,7 @@ export const UserInfoPage = () => {
                     label='Apellido'
                     type='apellido'
                     placeholder='Portal'
-                    value={formik.values.apellido}
+                    value={formik.values.apellido || ''}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
@@ -155,11 +155,8 @@ export const UserInfoPage = () => {
                     label='Correo'
                     type='email'
                     placeholder='correo@google.com'
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    value={formik.values.email || ''}
+
                     fullWidth
                     disabled
                   />

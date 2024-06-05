@@ -36,8 +36,8 @@ function ResponsiveAppBar() {
   // console.log(globalUserData.rol);
 
   const iniciales = [
-    globalUserData.nombre.charAt(0).toUpperCase(),
-    globalUserData.apellido.charAt(0).toUpperCase(),
+    globalUserData?.nombre.charAt(0).toUpperCase(),
+    globalUserData?.apellido.charAt(0).toUpperCase(),
   ];
   const nombre = `${globalUserData?.nombre} ${globalUserData?.apellido}`;
 
@@ -142,7 +142,7 @@ function ResponsiveAppBar() {
               sx={{
                 my: 2,
                 color: 'white',
-                display: globalUserData.rol === 'admin' ? 'block' : 'none',
+                display: globalUserData?.rol === 'admin' ? 'block' : 'none',
                 borderRadius: 70,
                 fontSize: '.5rem',
                 marginLeft: '0.5rem',
@@ -266,7 +266,7 @@ function ResponsiveAppBar() {
               }}
             >
               {isLogged ? (
-                <>
+                <Box>
                   <Link
                     component={RouterLink}
                     to={'/auth/user'}
@@ -296,7 +296,7 @@ function ResponsiveAppBar() {
                       Cerrar Sesión
                     </Typography>
                   </MenuItem>
-                </>
+                </Box>
               ) : (
                 pagesSites.map((page, index) => (
                   <Link
