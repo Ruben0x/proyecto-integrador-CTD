@@ -3,7 +3,7 @@ import { ItemsContext } from '../context/ItemsContext';
 import { Autocomplete, Box, TextField } from '@mui/material';
 
 export const Ruben = () => {
-  const { itemState, deleteProductbyId } = useContext(ItemsContext);
+  const { itemState } = useContext(ItemsContext);
   const [inputValue, setInputValue] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
   const handleInputChange = (event, newInputValue) => {
@@ -19,13 +19,13 @@ export const Ruben = () => {
   const filterOptions = (options, { inputValue }) => {
     return options.filter((option) => {
       const combinedText =
-        `${option.nombre} ${option.nombreCategoria} ${option.nombreMarca}`.toLowerCase();
+        `${option.nombre} ${option.nombreCategoria} ${option.nombreMarca} ${option.descripcion}`.toLowerCase();
       return combinedText.includes(inputValue.toLowerCase());
     });
   };
 
   const getOptionLabel = (option) =>
-    `${option.nombre} (${option.nombreCategoria}, ${option.nombreMarca})`;
+    `${option.nombre} (${option.nombreCategoria}, ${option.nombreMarca}), ${option.descripcion}`;
 
   return (
     <>
