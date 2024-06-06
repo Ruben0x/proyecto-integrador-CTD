@@ -6,19 +6,6 @@ import {
   IconButton,
   Link,
   Typography,
-} from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import WestIcon from '@mui/icons-material/West';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
-import ShareIcon from '@mui/icons-material/Share';
-import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Characteristics } from '../components/Characteristics';
-import DateRangePickerComponent from '../components/DateRangePickerComponent';
-import { GridImagenes } from '../components/GridImagenes';
-import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
-import { ProductCalendar } from '../components/ProductCalendar';
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import WestIcon from "@mui/icons-material/West";
@@ -31,6 +18,7 @@ import { Characteristics } from "../components/Characteristics";
 import DateRangePickerComponent from "../components/DateRangePickerComponent";
 import { GridImagenes } from "../components/GridImagenes";
 import { GlobalUserDataContext } from "../../auth/helpers/globalUserData";
+import { ProductCalendar } from "../components/ProductCalendar";
 import Politicas from "../components/Politicas";
 
 export const ProductPage = () => {
@@ -151,7 +139,7 @@ export const ProductPage = () => {
             item
             xs={12}
             md={6}
-            sx={{ backgroundColor: 'background.main', padding: 3 }}
+            sx={{ backgroundColor: "background.main", padding: 3 }}
           >
             <Characteristics instrumento={instrumento} />
           </Grid>
@@ -159,7 +147,7 @@ export const ProductPage = () => {
             item
             xs={12}
             md={6}
-            sx={{ backgroundColor: 'background.main', padding: 3 }}
+            sx={{ backgroundColor: "background.main", padding: 3 }}
           >
             <Characteristics instrumento={instrumento} />
           </Grid>
@@ -168,30 +156,38 @@ export const ProductPage = () => {
             item
             xs={12}
             md={6}
-            display={'flex'}
-            flexDirection={'column'}
-            alignItems={'center'}
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
           >
-          <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"}>
-            <Typography
-              variant="subtitle1"
-              textTransform={"uppercase"}
-              fontWeight={600}
-              textAlign={"center"}
-            >
-              Selecciona las fechas que necesitas y reserva <span>ahora</span>
-            </Typography>
-            <ProductCalendar />
-            <DateRangePickerComponent />
-            <Box marginTop={"auto"}>
-              <Button fullWidth variant="contained" onClick={handleReserva}>
-                Reservar
-              </Button>
-            </Box>
+            <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"}>
+              <Typography
+                variant="subtitle1"
+                textTransform={"uppercase"}
+                fontWeight={600}
+                textAlign={"center"}
+              >
+                Selecciona las fechas que necesitas y reserva <span>ahora</span>
+              </Typography>
+              <ProductCalendar />
+              <DateRangePickerComponent />
+              <Box marginTop={"auto"}>
+                <Button fullWidth variant="contained" onClick={handleReserva}>
+                  Reservar
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"} backgroundColor={"lightgray"}>
-        <Typography sx={{ textDecoration: 'underline' }}
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display={"flex"}
+            flexDirection={"column"}
+            backgroundColor={"lightgray"}
+          >
+            <Typography
+              sx={{ textDecoration: "underline" }}
               variant="subtitle1"
               textTransform={"uppercase"}
               fontWeight={700}
@@ -199,7 +195,8 @@ export const ProductPage = () => {
             >
               políticas de reserva
             </Typography>
-          <Politicas/>
+            <Politicas />
+          </Grid>
         </Grid>
       </Box>
     </Container>
