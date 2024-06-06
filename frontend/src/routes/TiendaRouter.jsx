@@ -3,10 +3,10 @@ import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import { Route, Routes } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage';
 import { Footer } from '../components/Footer';
-import { ProductPage } from '../pages/ProductPage';
 import { RegisterPage } from '../auth/RegisterPage';
 import { LogInPage } from '../auth/LogInPage';
 import { UserInfoPage } from '../auth/UserInfoPage';
+import { ProductPage } from '../products/pages/ProductPage';
 
 export const TiendaRouter = () => {
   return (

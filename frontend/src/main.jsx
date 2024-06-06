@@ -6,9 +6,9 @@ import { App } from './App.jsx';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import { ItemsProvider } from './context/ItemsProvider.jsx';
-import { InstrumentCard } from './components/InstrumentCard.jsx';
-import { Toaster } from 'sonner';
 import { GlobalUserDataProvider } from './auth/helpers/globalUserData.jsx';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const theme = createTheme({
   palette: {
@@ -41,11 +41,13 @@ const theme = createTheme({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <GlobalUserDataProvider>
-      <ItemsProvider>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </ItemsProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ItemsProvider>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </ItemsProvider>
+      </LocalizationProvider>
     </GlobalUserDataProvider>
   </BrowserRouter>
 );
