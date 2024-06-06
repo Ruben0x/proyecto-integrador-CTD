@@ -19,6 +19,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { logout } from './helpers/login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ItemsContext } from '../context/ItemsContext';
+import { TableAllFavs } from './components/TableAllFavs';
 
 export const UserInfoPage = () => {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
@@ -54,8 +55,8 @@ export const UserInfoPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      nombre: globalUserData.nombre ||'' ,
-      apellido: globalUserData.apellido ||'',
+      nombre: globalUserData.nombre || '',
+      apellido: globalUserData.apellido || '',
       email: globalUserData.email || '',
     },
     validationSchema: validationSchema,
@@ -156,7 +157,6 @@ export const UserInfoPage = () => {
                     type='email'
                     placeholder='correo@google.com'
                     value={formik.values.email || ''}
-
                     fullWidth
                     disabled
                   />
@@ -199,7 +199,8 @@ export const UserInfoPage = () => {
           borderRadius={5}
           sm={6}
         >
-          <Grid direction='column' container justifyContent={'center'} gap={3}>
+          <TableAllFavs />
+          {/* <Grid direction='column' container justifyContent={'center'} gap={3}>
             <Typography align='center' fontWeight={600} fontSize={25}>
               Últimas Reservas
             </Typography>
@@ -232,7 +233,7 @@ export const UserInfoPage = () => {
                 />
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     </AuthLayout>
