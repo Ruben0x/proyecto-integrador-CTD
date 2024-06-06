@@ -219,8 +219,17 @@ export const TableAllFavs = () => {
   return (
     <>
       <Container
-        sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          marginTop: 2,
+        }}
       >
+        <Typography variant="h5" gutterBottom>
+          FAVORITOS
+        </Typography>
         <Box sx={{ width: "100%" }}>
           <List>
             {favState.favoritos.map((fav) => (
