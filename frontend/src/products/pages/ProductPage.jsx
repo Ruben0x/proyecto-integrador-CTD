@@ -192,6 +192,7 @@ export const ProductPage = () => {
               textTransform={"uppercase"}
               fontWeight={700}
               textAlign={"center"}
+              marginTop={2}
             >
               políticas de reserva
             </Typography>
