@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ItemsContext } from "../context/ItemsContext";
-import { Box, Grid } from "@mui/material";
-import { InstrumentCardResponsive } from "./InstrumentCardResponsive";
+import React, { useContext, useEffect, useState } from 'react';
+import { ItemsContext } from '../context/ItemsContext';
+import { Box, Grid } from '@mui/material';
+import { InstrumentCardResponsive } from './InstrumentCardResponsive';
 
 export const GridInstrumentos = () => {
   const { itemState } = useContext(ItemsContext);
@@ -23,7 +23,7 @@ export const GridInstrumentos = () => {
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
-        justifyContent={"center"}
+        justifyContent={'center'}
       >
         {productos.map((instrument) => (
           <Grid item xs={4} sm={6} md={6} key={instrument.id}>
