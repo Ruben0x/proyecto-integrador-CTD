@@ -157,7 +157,7 @@ export const ProductPage = () => {
             </Box>
           </Grid>
         </Grid>
-        <Grid item xs={12} display={"flex"} flexDirection={"column"} backgroundColor={"lightgray"}>
+        <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"} backgroundColor={"lightgray"}>
         <Typography sx={{ textDecoration: 'underline' }}
               variant="subtitle1"
               textTransform={"uppercase"}
