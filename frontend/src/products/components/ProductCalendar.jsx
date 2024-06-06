@@ -57,6 +57,7 @@ export const ProductCalendar = () => {
         <Grid container justifyContent={'center'}>
           {!isSmallScreen ? (
             <Calendar
+              className='bg-dark orange'
               multiple
               range
               rangeHover
