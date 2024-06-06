@@ -9,10 +9,12 @@ import { Box, CardActions, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
+import { addFavoritos } from '../context/store/FavoritosProvider';
 
 export const InstrumentCardResponsive = ({ instrument }) => {
   const [favs, setFavs] = useState(false);
-  const { isLogged } = useContext(GlobalUserDataContext);
+  const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
+
   const {
     id,
     nombre,
@@ -23,6 +25,10 @@ export const InstrumentCardResponsive = ({ instrument }) => {
     imagenes,
   } = instrument;
 
+  const handleAddFavs = () => {
+    setFavs(!favs);
+    addFavoritos(globalUserData.id, id);
+  };
   const stripStyles = {
     position: 'absolute',
     bottom: '0',
@@ -52,9 +58,7 @@ export const InstrumentCardResponsive = ({ instrument }) => {
             <IconButton
               size='large'
               aria-label='add to favorites'
-              onClick={() => {
-                setFavs(!favs);
-              }}
+              onClick={handleAddFavs}
             >
               {favs ? (
                 <FavoriteIcon color='buttonRed' />
