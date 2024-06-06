@@ -30,7 +30,7 @@ export const Characteristics = ({ instrumento }) => {
     );
   }
   return (
-    <Box sx={{ backgroundColor: 'background.main', padding: 3 }}>
+    <>
       <Typography
         paddingBottom={2}
         textTransform={'uppercase'}
@@ -62,6 +62,6 @@ export const Characteristics = ({ instrumento }) => {
           );
         })}
       </Grid>
-    </Box>
+    </>
   );
 };

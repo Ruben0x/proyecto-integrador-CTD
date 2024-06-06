@@ -6,6 +6,19 @@ import {
   IconButton,
   Link,
   Typography,
+} from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import WestIcon from '@mui/icons-material/West';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
+import ShareIcon from '@mui/icons-material/Share';
+import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Characteristics } from '../components/Characteristics';
+import DateRangePickerComponent from '../components/DateRangePickerComponent';
+import { GridImagenes } from '../components/GridImagenes';
+import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
+import { ProductCalendar } from '../components/ProductCalendar';
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import WestIcon from "@mui/icons-material/West";
@@ -81,7 +94,7 @@ export const ProductPage = () => {
         </Typography>
         <Box>
           {isLogged && (
-            <Box disableSpacing sx={{ position: "absolute" }}>
+            <Box sx={{ position: "absolute" }}>
               <IconButton
                 size="large"
                 aria-label="add to favorites"
@@ -134,12 +147,31 @@ export const ProductPage = () => {
               {instrumento.descripcion}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ backgroundColor: 'background.main', padding: 3 }}
+          >
             <Characteristics instrumento={instrumento} />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ backgroundColor: 'background.main', padding: 3 }}
+          >
             <Characteristics instrumento={instrumento} />
           </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
+          >
           <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"}>
             <Typography
               variant="subtitle1"
@@ -149,6 +181,7 @@ export const ProductPage = () => {
             >
               Selecciona las fechas que necesitas y reserva <span>ahora</span>
             </Typography>
+            <ProductCalendar />
             <DateRangePickerComponent />
             <Box marginTop={"auto"}>
               <Button fullWidth variant="contained" onClick={handleReserva}>
