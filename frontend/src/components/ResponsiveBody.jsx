@@ -7,18 +7,15 @@ import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
 import { GridInstrumentos } from './GridInstrumentos';
 import SearchSection from './SearchSection';
+import useCategorias from '../helpers/useCategorias';
 
 
 
-//===HARDCODEO DE CATEGORIAS
-export const arrayCategorias = [
-  { id: 1, nombre: 'cuerdas', img: '/images/cuerdas-categorias.png' },
-  { id: 2, nombre: 'percusiones', img: '/images/percusiones-categorias.png' },
-  { id: 3, nombre: 'teclas', img: '/images/teclas-categorias.png' },
-  { id: 4, nombre: 'vientos', img: '/images/vientos-categoria.png' },
-];
+
+
 
 const ResponsiveBody = () => {
+  const arrayCategorias = useCategorias();
   return (
     <div
       style={{

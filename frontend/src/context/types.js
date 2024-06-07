@@ -7,4 +7,5 @@ export const types = {
   postItem: '[POST] Item',
   deleteItem: '[Delete] Item',
   deleteUser: '[Delete] User',
+  getCategorias: '[GET] Categorias',
 };
