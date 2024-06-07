@@ -8,4 +8,6 @@ export const types = {
   deleteItem: '[Delete] Item',
   deleteUser: '[Delete] User',
   getCategorias: '[GET] Categorias',
+  //getProductsByCategories: '[GET] Products by Categories'
+  getItemsByCategories: '[GET] ItemsByCategories',
 };

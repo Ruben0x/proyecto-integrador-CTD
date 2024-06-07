@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import AddIcon from '@mui/icons-material/Add';
-import useCategorias from '../../helpers/useCategorias';
+import {useCategorias} from '../../helpers/useCategorias';
 
 
 export function SimpleDialog(props) {

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ItemsContext } from '../context/ItemsContext'; 
 
 const useCategorias = () => {
@@ -8,4 +8,5 @@ const useCategorias = () => {
   }, [getAllCategorias]);
   return itemState.categorias;
 };
-export default useCategorias;
+
+export { useCategorias};

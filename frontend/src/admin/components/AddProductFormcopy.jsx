@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import useCategorias from '../../helpers/useCategorias';
+import {useCategorias} from '../../helpers/useCategorias';
 
 
 export const AddProductFormcopy = ({ item = '' }) => {

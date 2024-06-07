@@ -2,11 +2,11 @@ import Container from '@mui/material/Container';
 import { Box, Grid,  } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
-import {useCategorias} from '../helpers/useCategorias';
-import { Link } from 'react-router-dom';
+import useCategorias from '../helpers/useCategorias';
+import { Link as RouterLink } from 'react-router-dom';
 
 
-const CategoriasSectionMain = () => {
+const CategoriasSectionXS = () => {
     const arrayCategorias = useCategorias();
     return (
         <Container
@@ -22,9 +22,7 @@ const CategoriasSectionMain = () => {
         >
           <Box maxWidth={'1440px'} width={'100%'}>
             <Grid container justifyContent={'center'}>
-              <Typography fontWeight='bold' fontSize={20}>
-                Revisa las categorías - Reserva tus opciones
-              </Typography>
+
               <Grid
                 container
                 columnSpacing={1}
@@ -57,16 +55,11 @@ const CategoriasSectionMain = () => {
               }}
             >
               {arrayCategorias.map((item) => (
-                <Link
-                key={item.id}
-                to={`/instrumentos/cat/${item.id}`}>
                 <MediaCard
                   imagen={item.img}
                   categoria={item.nombre}
-                  
-                  
+                  key={item.id}
                 />
-                </Link>
               ))}
             </Container>
           </Box>
@@ -75,4 +68,4 @@ const CategoriasSectionMain = () => {
 
     );
 };
-export default CategoriasSectionMain;
+export default CategoriasSectionXS;

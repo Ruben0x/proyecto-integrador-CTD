@@ -204,6 +204,19 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
+  const getItemsByCategories = async (categoryIds) => {
+    try {
+      const response = await fetch(
+        `${apiUrl}/categorias/${categoryIds[0]}/productos?filter=${categoryIds.slice(1).join('%2C')}`
+      );
+      const data = await response.json();
+      dispatch({ type: types.getItemsByCategories, payload: data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   useEffect(() => {
     getAllItems();
   }, [getAllItems]);
@@ -232,6 +245,7 @@ export const ItemsProvider = ({ children }) => {
         getCaracteristicas,
         postEditItem,
         getAllCategorias,
+        getItemsByCategories,
       }}
     >
       {children}
