@@ -77,6 +77,28 @@ export const TableAllFavs = () => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={
+                    <Typography
+                      variant='body1'
+                      component='span'
+                      fontWeight='bold'
+                    >
+                      <Link
+                        to={`/instrumentos/${fav.producto.id}`}
+                        style={{ textDecoration: 'none', color: 'inherit' }}
+                      >
+                        {fav.producto.nombre}
+                      </Link>
+                    </Typography>
+                  }
+                  secondary={
+                    <Box>
+                      <Typography variant='body2'>{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
+                      <Typography variant='body2'>{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
+                    </Box>
+                  }
+                />
+                {/* <ListItemText
+                  primary={
                     <Link
                       to={`/instrumentos/${fav.producto.id}`}
                       style={{ textDecoration: 'none', color: 'inherit' }}
@@ -96,7 +118,7 @@ export const TableAllFavs = () => {
                       <Typography variant='body2'>{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
                     </Box>
                   }
-                />
+                /> */}
                 <Button
                   size='small'
                   variant='contained'

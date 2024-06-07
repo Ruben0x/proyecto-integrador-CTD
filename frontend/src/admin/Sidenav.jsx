@@ -9,7 +9,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { AddProductPage } from './AddProductPage';
 import AddIcon from '@mui/icons-material/Add';
 import logoWhite from '../assets/img/LogoWhite.png';
 import { Button, Container } from '@mui/material';
@@ -20,8 +19,11 @@ import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import { AdminHomePage } from './pages/AdminHomePage';
 import { ListAllCaracteristicas } from './components/Characteristics/ListAllCaracteristicas';
 import HomeIcon from '@mui/icons-material/Home';
+import CategoryIcon from '@mui/icons-material/Category';
 import { ListAllProducts } from './components/Product/ListAllProducts';
 import { ListAllUsuarios } from './components/Users/ListAllUsuarios';
+import { AddCategoryForm } from './components/Categories/AddCategoryForm';
+import { AddProductForm } from './components/Product/AddProductForm';
 
 const drawerWidth = '20%';
 
@@ -139,6 +141,23 @@ export const Sidenav = () => {
               <ListItemText primary='Administrar Características' />
             </ListItemButton>
           </ListItem>
+          <ListItem onClick={() => setMenuData('AgregarCategorias')}>
+            <ListItemButton
+              selected={menuData === 'AgregarCategorias'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary='Agregar Categorías' />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
         <Container
@@ -165,10 +184,11 @@ export const Sidenav = () => {
       >
         <Toolbar />
         {menuData == 'Home' && <AdminHomePage />}
-        {menuData == 'Agregar' && <AddProductPage />}
+        {menuData == 'Agregar' && <AddProductForm />}
         {menuData == 'Listar' && <ListAllProducts />}
         {menuData == 'TodosUsuarios' && <ListAllUsuarios />}
         {menuData == 'AdministrarCaracteristicas' && <ListAllCaracteristicas />}
+        {menuData == 'AgregarCategorias' && <AddCategoryForm />}
       </Box>
     </Box>
   );

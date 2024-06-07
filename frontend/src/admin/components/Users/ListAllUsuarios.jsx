@@ -16,19 +16,19 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { setUserToAdmin } from '../../../auth/helpers/createUser';
 import { AdminLayout } from '../../layout/AdminLayout';
 import { useUsers } from '../../../context/store/UsersProvider';
 
 export const ListAllUsuarios = ({}) => {
-  const { getAllUsers, isLoading, userState, deleteUser } = useUsers();
+  const { getAllUsers, isLoading, userState, deleteUser, changeUserRol } =
+    useUsers();
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [usuario, setUsuario] = useState();
 
   useEffect(() => {
     getAllUsers();
-  }, [getAllUsers]);
+  }, []);
 
   const handleClickOpen = (params) => {
     setUsuario(params.row);
@@ -46,7 +46,7 @@ export const ListAllUsuarios = ({}) => {
     setEditModal(false);
   };
   const handleAcceptAdmin = (usuarioAdmin) => {
-    setUserToAdmin(usuarioAdmin);
+    changeUserRol(usuarioAdmin);
     setEditModal(false);
   };
 

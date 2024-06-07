@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import MediaCard from './MediaCard';
 import { GridInstrumentos } from './GridInstrumentos';
 import SearchSection from './SearchSection';
-
-
+import { useUsers } from '../context/store/UsersProvider';
+import { useEffect } from 'react';
 
 //===HARDCODEO DE CATEGORIAS
 export const arrayCategorias = [
@@ -19,6 +19,13 @@ export const arrayCategorias = [
 ];
 
 const ResponsiveBody = () => {
+  const { getAnonToken, isLoading } = useUsers();
+
+  useEffect(() => {
+    getAnonToken();
+  }, []);
+
+  if (isLoading) return 'Cargando...';
   return (
     <div
       style={{
@@ -34,7 +41,7 @@ const ResponsiveBody = () => {
         }}
       >
         {/*Seccion Buscador del Body*/}
-        <SearchSection/>
+        <SearchSection />
 
         {/*Seccion categorias del Body*/}
         <Container
