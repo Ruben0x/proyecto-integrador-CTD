@@ -48,6 +48,11 @@ export const itemReducer = (state = {}, action) => {
         ...state,
         categorias: action.payload,
       };
+    case types.getItemsByCategories:
+      return {
+        ...state,
+        itemsByCategories: action.payload,
+      };
     default:
       return state;
   }

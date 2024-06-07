@@ -8,6 +8,7 @@ import { LogInPage } from '../auth/LogInPage';
 import { UserInfoPage } from '../auth/UserInfoPage';
 import { ProductPage } from '../products/pages/ProductPage';
 import { Ruben } from '../components/Ruben';
+import { ProductCatPage } from '../pages/ProductCatPage';
 
 export const TiendaRouter = () => {
   return (
@@ -20,6 +21,7 @@ export const TiendaRouter = () => {
           <Route element={<UserInfoPage />} path='/auth/user' />
           <Route element={<LogInPage />} path='/auth/login' />
           <Route element={<ProductPage />} path='/instrumentos/:id' />
+          <Route element={<ProductCatPage />} path='/instrumentos/cat/:id'/>
           <Route element={<Ruben />} path='/ruben' />
         </Routes>
       </div>

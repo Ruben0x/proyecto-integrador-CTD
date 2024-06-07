@@ -1,15 +1,38 @@
 //import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import {  Grid,  } from '@mui/material';
+import {  Grid, Link,  } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { GridInstrumentos } from './GridInstrumentos';
-import SearchSection from './SearchSection';
 import CategoriasSectionMain from './CategoriasSectionMain';
+import { GridInstrumentosResult } from './GridInstrumentosResult';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const ResponsiveBody = () => {
+
+const ItemsByCategory = () => {
+
+  const { id } = useParams();
+  const [productos, setProductos] = useState([]);
+
+
+  useEffect(() => {
+    axios('http://localhost:3000/categorias/' + id+'/productos')
+      .then((res) => {
+        setProductos(res.data);
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  if (!productos) {
+    return <Navigate to={'/'} />;
+  }
 
   return (
+    
     <div
       style={{
         display: 'flex',
@@ -23,15 +46,13 @@ const ResponsiveBody = () => {
           width: '100%',
         }}
       >
-        {/*Seccion Buscador del Body*/}
-        <SearchSection/>
 
         {/*Seccion categorias del Body*/}
         <CategoriasSectionMain/>
 
         {/*Seccion recomendados del Body*/}
         <Container
-          className='section-recomendados'
+          className='section-categorias-result'
           sx={{
             width: '100%',
             minHeight: '300px',
@@ -48,7 +69,7 @@ const ResponsiveBody = () => {
                 display={'inline'}
                 sx={{ fontSize: { xs: 30, md: 40 } }}
               >
-                100%{' '}
+                #CATEGORIA{' '}
               </Typography>
             </Grid>
             <Grid item>
@@ -56,18 +77,18 @@ const ResponsiveBody = () => {
                 fontWeight='800'
                 sx={{ fontSize: { xs: 30, md: 40 } }}
               >
-                RECOMENDADOS
+                EN TODAS SUS VARIEDADES
               </Typography>
             </Grid>
+            <Grid item>
+            </Grid>
           </Grid>
-          <Typography fontWeight='600' fontSize={20}>
-            Creemos que estas alternativas son perfectas para ti
-          </Typography>
 
-          <GridInstrumentos />
+
+          <GridInstrumentosResult productos={productos} />
         </Container>
       </Stack>
     </div>
   );
 };
-export default ResponsiveBody;
+export default ItemsByCategory;
