@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export const TableLastCategorias = () => {
+  const { getAllUsers, isLoading, userState } = useUsers();
+  if (isLoading) return 'Cargando...';
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Box sx={{ width: '90%' }}>
         <DataGrid
-          rows={itemState.usuarios}
+          rows={userState.users}
           columns={[
             { field: 'id', headerName: 'ID', width: 50 },
             { field: 'nombre', headerName: 'Nombre', width: 100 },

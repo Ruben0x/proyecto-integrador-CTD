@@ -22,12 +22,12 @@ export const ItemsProvider = ({ children }) => {
       .get(`${apiUrl}/productos`)
       .then((res) => dispatch({ type: types.getItems, payload: res.data }));
   }, []);
-  const getAllUsuarios = useCallback(() => {
-    axios.get(`${apiUrl}/usuarios`).then((res) =>
-      // console.log(res.data)
-      dispatch({ type: types.getUsuarios, payload: res.data })
-    );
-  }, []);
+  // const getAllUsuarios = useCallback(() => {
+  //   axios.get(`${apiUrl}/usuarios`).then((res) =>
+  //     // console.log(res.data)
+  //     dispatch({ type: types.getUsuarios, payload: res.data })
+  //   );
+  // }, []);
   const getCaracteristicas = () => {
     axios
       .get(`${apiUrl}/caracteristicas`)
@@ -207,9 +207,9 @@ export const ItemsProvider = ({ children }) => {
     getAllItems();
   }, [getAllItems]);
 
-  useEffect(() => {
-    getAllUsuarios();
-  }, [getAllUsuarios]);
+  // useEffect(() => {
+  //   getAllUsuarios();
+  // }, [getAllUsuarios]);
   useEffect(() => {
     getCaracteristicas();
   }, []);
@@ -227,7 +227,7 @@ export const ItemsProvider = ({ children }) => {
         deleteUserById,
         getUserById,
         getAllItems,
-        getAllUsuarios,
+        // getAllUsuarios,
         getCaracteristicas,
         postEditItem,
         getAllCategorias,

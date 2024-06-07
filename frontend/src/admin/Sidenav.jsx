@@ -16,12 +16,12 @@ import { Button, Container } from '@mui/material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import { ListAllProducts } from './components/ListAllProducts';
-import { ListAllUsuarios } from './components/ListAllUsuarios';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import { AdminHomePage } from './pages/AdminHomePage';
-import { ListAllCaracteristicas } from './components/ListAllCaracteristicas';
+import { ListAllCaracteristicas } from './components/Characteristics/ListAllCaracteristicas';
 import HomeIcon from '@mui/icons-material/Home';
+import { ListAllProducts } from './components/Product/ListAllProducts';
+import { ListAllUsuarios } from './components/Users/ListAllUsuarios';
 
 const drawerWidth = '20%';
 

@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ItemsContext } from '../../context/ItemsContext';
-import { SimpleDialog } from './SelectorCategorias';
-import { arrayCategorias } from '../../components/ResponsiveBody';
+
 import {
   Button,
   Container,
@@ -17,8 +15,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { SimpleDialog } from '../SelectorCategorias';
+import { arrayCategorias } from '../../../components/ResponsiveBody';
+import { ItemsContext } from '../../../context/ItemsContext';
 
-export const AddProductFormcopy = ({ item = '' }) => {
+export const AddProductForm = ({ item = '' }) => {
   //Obtener caracteristicas para formulario
   const [caracteristicas, setCaracteristicas] = useState([]);
   const { getCaracteristicas, itemState } = useContext(ItemsContext);
@@ -248,7 +249,7 @@ export const AddProductFormcopy = ({ item = '' }) => {
                 id={`c-${index}`}
                 name={`c-${index}`}
                 label={caracteristica?.nombre}
-                value={formik.values[`c-${index}`]}
+                value={formik.values[`c-${index}`] || 'S/N'}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={

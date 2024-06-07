@@ -18,7 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export const AddProductForm = ({ item = '' }) => {
+export const AddCategoryForm = ({ item = '' }) => {
   console.log(item);
   //Obtener caracteristicas para formulario
   const [caracteristicas, setCaracteristicas] = useState([]);

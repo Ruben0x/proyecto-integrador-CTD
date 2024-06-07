@@ -1,13 +1,12 @@
 import React from 'react';
-import { AddProductForm } from './components/AddProductForm';
 import { AdminLayout } from './layout/AdminLayout';
-import { AddProductFormcopy } from './components/AddProductFormcopy';
+import { AddProductForm } from './components/Product/AddProductForm';
 
 export const AddProductPage = () => {
   return (
     <AdminLayout title={'Agregar Producto'}>
       {/* <AddProductForm /> */}
-      <AddProductFormcopy />
+      <AddProductForm />
     </AdminLayout>
   );
 };
