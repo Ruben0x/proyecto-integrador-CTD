@@ -40,10 +40,6 @@ export const UserInfoPage = () => {
     return <div>Loading...</div>;
   }
 
-  // console.log(globalUserData);
-  // console.log(productos);
-  // console.log(productos[0]);
-
   const validationSchema = Yup.object({
     email: Yup.string('Ingrese su correo')
       .email('Correo Invalido')
@@ -200,40 +196,6 @@ export const UserInfoPage = () => {
           sm={6}
         >
           <TableAllFavs />
-          {/* <Grid direction='column' container justifyContent={'center'} gap={3}>
-            <Typography align='center' fontWeight={600} fontSize={25}>
-              Últimas Reservas
-            </Typography>
-            <Grid container direction='row' spacing={2}>
-              <Grid item sm={12} md={5}>
-                <TextField
-                  value={productos[0]?.nombre}
-                  label='Nombre'
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item sm={12} md={3}>
-                <TextField
-                  value={productos[0]?.nombreMarca}
-                  label='Marca'
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item sm={12} md={4}>
-                <TextField
-                  value='01/03 a 28/05'
-                  label='Fecha'
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{ readOnly: true, sx: { color: 'inherit' } }}
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-          </Grid> */}
         </Grid>
       </Grid>
     </AuthLayout>

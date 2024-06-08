@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import {
   Box,
@@ -11,22 +10,26 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { useContext } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
-import { useState } from 'react';
+import { ItemsContext } from '../../../context/ItemsContext';
+import { useState, useContext, useEffect } from 'react';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { toast } from 'sonner';
-import { AdminLayout } from '../layout/AdminLayout';
+import { AdminLayout } from '../../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { AddProductFormcopy } from './AddProductFormcopy';
+import { AddProductForm } from '../Product/AddProductForm';
 
-export const ListAllProducts = ({}) => {
-  const { itemState, deleteProductbyId } = useContext(ItemsContext);
+export const ListAllCaracteristicas = ({}) => {
+  const { itemState } = useContext(ItemsContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [item, setItem] = useState('');
   const [editView, setEditView] = useState(false);
+  const [caracteristicas, setCaracteristicas] = useState([]);
+
+  useEffect(() => {
+    setCaracteristicas(itemState.caracteristicas);
+  }, []);
 
   const handleClickOpen = (params) => {
     setItem(params.row);
@@ -84,25 +87,15 @@ export const ListAllProducts = ({}) => {
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ width: '90%' }}>
             <DataGrid
-              rows={itemState.items}
+              rows={caracteristicas}
               columns={[
                 { field: 'id', headerName: 'ID', width: 70 },
                 { field: 'nombre', headerName: 'Nombre', width: 180 },
-                {
-                  field: 'nombreMarca',
-                  headerName: 'Marca',
-                  width: 100,
-                },
-                {
-                  field: 'nombreCategoria',
-                  headerName: 'Categoría',
-                  width: 100,
-                },
-                { field: 'descripcion', headerName: 'Descripcion', width: 200 },
+
                 {
                   field: 'acciones',
                   headerName: 'Acciones',
-                  width: 280,
+                  width: 300,
                   renderCell: renderActions,
                 },
               ]}
@@ -125,7 +118,7 @@ export const ListAllProducts = ({}) => {
           >
             Volver al listado de productos
           </Button>
-          <AddProductFormcopy item={item} />
+          <AddProductForm item={item} />
         </>
       )}
       {deleteModal && (

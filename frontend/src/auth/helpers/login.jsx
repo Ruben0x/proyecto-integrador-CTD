@@ -1,9 +1,5 @@
 import axios from 'axios';
-import ErrorSnackbar from '../components/ErrorSnackbar';
-import { Alert } from '@mui/material';
 import { toast } from 'sonner';
-import { ItemsContext } from '../../context/ItemsContext';
-import { useContext } from 'react';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

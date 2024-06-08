@@ -25,7 +25,7 @@ function isReserved(strDate) {
 
 export const ProductCalendar = () => {
   const [values, setValues] = useState(initialValue);
-  const [viewError, setViewError] = useState(true);
+  const [viewError, setViewError] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
 
   const theme = useTheme();
@@ -95,6 +95,7 @@ export const ProductCalendar = () => {
             </Calendar>
           ) : (
             <Calendar
+              className='bg-dark orange'
               multiple
               range
               rangeHover

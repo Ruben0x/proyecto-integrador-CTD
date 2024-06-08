@@ -10,13 +10,16 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useContext } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
+import { useUsers } from '../../context/store/UsersProvider';
+import { useEffect } from 'react';
 
 export const TableLastUsers = () => {
-  const { itemState } = useContext(ItemsContext);
+  const { getAllUsers, isLoading, userState } = useUsers();
 
-  const usuarios = itemState.usuarios;
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+  if (isLoading) return 'Cargando...';
 
   return (
     <>
@@ -35,7 +38,7 @@ export const TableLastUsers = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {usuarios.map((row) => (
+            {userState.users.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
