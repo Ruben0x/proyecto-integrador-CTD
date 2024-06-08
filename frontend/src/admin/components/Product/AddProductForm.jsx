@@ -16,11 +16,12 @@ import {
   Typography,
 } from '@mui/material';
 import { SimpleDialog } from '../SelectorCategorias';
-import { arrayCategorias } from '../../../components/ResponsiveBody';
 import { ItemsContext } from '../../../context/ItemsContext';
 import { AdminLayout } from '../../layout/AdminLayout';
+import { useCategorias } from '../../../helpers/useCategorias';
 
 export const AddProductForm = ({ item = '' }) => {
+  const arrayCategorias = useCategorias();
   //Obtener caracteristicas para formulario
   const [caracteristicas, setCaracteristicas] = useState([]);
   const { getCaracteristicas, itemState } = useContext(ItemsContext);

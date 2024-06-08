@@ -34,18 +34,11 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const getAllCategorias = useCallback(() => {
-    axios.get(`${apiUrl}/categorias`).then((res) =>
-      // console.log(res.data)
-      dispatch({ type: types.getCategorias, payload: res.data })
-    );
+    axios.get(`${apiUrl}/categorias`).then((res) => {
+      // console.log(res.data);
+      dispatch({ type: types.getCategorias, payload: res.data });
+    });
   }, []);
-
-  const getItemsRandoms = () => {
-    axios
-      .get(`${apiUrl}/productos/random`)
-      .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
-      .catch((err) => toast(err));
-  };
 
   const deleteProductbyId = async (id) => {
     try {
@@ -192,16 +185,12 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     getAllItems();
   }, [getAllItems]);
 
   useEffect(() => {
     getCaracteristicas();
-  }, []);
-  useEffect(() => {
-    getItemsRandoms();
   }, []);
 
   return (

@@ -6,18 +6,8 @@ import Typography from '@mui/material/Typography';
 import { GridInstrumentos } from './GridInstrumentos';
 import SearchSection from './SearchSection';
 import CategoriasSectionMain from './CategoriasSectionMain';
-import { useUsers } from '../context/store/UsersProvider';
-import { useEffect } from 'react';
 
 const ResponsiveBody = () => {
-  const { getAnonToken, isLoading } = useUsers();
-
-  useEffect(() => {
-    getAnonToken();
-  }, []);
-
-  if (isLoading) return 'Cargando...';
-
   return (
     <div
       style={{

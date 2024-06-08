@@ -10,6 +10,7 @@ export const userProductos = create((set) => ({
   },
 
   getProductosRandoms: (token) => {
+    if (!token) return;
     set(() => ({
       isLoading: true,
     }));
