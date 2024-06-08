@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ItemsContext } from '../context/ItemsContext';
 import { Box, Grid } from '@mui/material';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';

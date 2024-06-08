@@ -3,10 +3,6 @@ import { create } from 'zustand';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-// const { userState } = useUsers();
-
-// const accessToken = userState.token.accessToken;
-
 export const userProductos = create((set) => ({
   isLoading: false,
   productoState: {
