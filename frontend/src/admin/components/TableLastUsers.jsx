@@ -19,6 +19,7 @@ export const TableLastUsers = () => {
   useEffect(() => {
     getAllUsers();
   }, []);
+
   if (isLoading) return 'Cargando...';
 
   return (

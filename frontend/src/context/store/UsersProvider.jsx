@@ -18,12 +18,22 @@ export const useUsers = create((set) => ({
       isLoading: true,
     }));
 
-    axios.get(`${apiUrl}/usuarios`).then((res) =>
-      set((state) => ({
-        userState: { ...state.userState, users: res.data },
-        isLoading: false,
-      }))
-    );
+    axios
+      .get(`${apiUrl}/usuarios`, { timeout: 5000 }) // Añadir un tiempo de espera de 5 segundos
+      .then((res) => {
+        // console.log(res);
+        set((state) => ({
+          userState: { ...state.userState, users: res.data },
+          isLoading: false,
+        }));
+      })
+      .catch((error) => {
+        // Manejar el error (por ejemplo, un tiempo de espera excedido)
+        console.error('Error fetching users:', error);
+        set(() => ({
+          isLoading: false,
+        }));
+      });
   },
   deleteUser: async (userId) => {
     set(() => ({
