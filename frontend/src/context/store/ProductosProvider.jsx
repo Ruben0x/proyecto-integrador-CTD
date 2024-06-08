@@ -30,7 +30,7 @@ export const userProductos = create((set) => ({
         }));
       })
       .catch((error) => {
-        console.error('Error fetching random products:', error);
+        console.error('Error fetching random products:', error.message);
         set(() => ({
           isLoading: false,
         }));

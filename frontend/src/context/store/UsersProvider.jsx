@@ -108,7 +108,7 @@ export const useUsers = create((set) => ({
         }));
       })
       .catch((error) => {
-        console.error('Error fetching anonymous token:', error);
+        console.error('Error fetching anonymous token:', error.message);
         set((state) => ({
           isLoading: false,
         }));

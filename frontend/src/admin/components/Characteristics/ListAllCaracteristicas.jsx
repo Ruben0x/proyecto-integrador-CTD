@@ -101,7 +101,7 @@ export const ListAllCaracteristicas = ({}) => {
               ]}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
+                  paginationModel: { pageSize: 10 },
                 },
               }}
               pageSizeOptions={[5, 10]}

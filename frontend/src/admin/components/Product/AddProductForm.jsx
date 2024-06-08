@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
 import {
   Button,
   Container,
@@ -18,29 +17,20 @@ import {
 import { SimpleDialog } from '../SelectorCategorias';
 import { ItemsContext } from '../../../context/ItemsContext';
 import { AdminLayout } from '../../layout/AdminLayout';
-import { useCategorias } from '../../../helpers/useCategorias';
+import { useCategorias } from '../../../context/store/CategoriasProvider';
 
 export const AddProductForm = ({ item = '' }) => {
-  const arrayCategorias = useCategorias();
-  //Obtener caracteristicas para formulario
+  const { postCreateItem, postEditItem, getCaracteristicas, itemState } =
+    useContext(ItemsContext);
+  const { getAllCategorias, isLoading, categoryState } = useCategorias();
   const [caracteristicas, setCaracteristicas] = useState([]);
-  const { getCaracteristicas, itemState } = useContext(ItemsContext);
-
-  //Para emergente de categorías===========
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(
-    item.nombreCategoria ? item.nombreCategoria : arrayCategorias[0].nombre
-  );
-  const [selectedId, setSelectedId] = useState(
-    item.categoriaId ? item.categoriaId : arrayCategorias[0].id
-  );
+  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedId, setSelectedId] = useState('');
 
   useEffect(() => {
-    const fetchCaracteristicas = async () => {
-      await getCaracteristicas();
-    };
-
-    fetchCaracteristicas();
+    getAllCategorias();
+    getCaracteristicas();
   }, []);
 
   useEffect(() => {
@@ -51,18 +41,20 @@ export const AddProductForm = ({ item = '' }) => {
     }
   }, [itemState]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  useEffect(() => {
+    if (categoryState?.categorias?.length > 0) {
+      const defaultCategory = categoryState.categorias[0];
+      setSelectedValue(item.nombreCategoria || defaultCategory.nombre);
+      setSelectedId(item.categoriaId || defaultCategory.id);
+    }
+  }, [categoryState, item]);
 
+  const handleClickOpen = () => setOpen(true);
   const handleClose = (value, id) => {
     setOpen(false);
     setSelectedValue(value);
     setSelectedId(id);
   };
-  //FIN EMERGENTE CATEGORIAS=================================
-
-  const { postCreateItem, postEditItem } = useContext(ItemsContext);
 
   const validationSchema = Yup.object({
     nombre: Yup.string('Ingrese el Nombre del producto')
@@ -84,6 +76,7 @@ export const AddProductForm = ({ item = '' }) => {
       .min(0, 'El precio no puede ser menor a 0'),
     imagenes: Yup.mixed().required('Required!'),
   });
+
   const initialValues = {
     nombre: item.nombre || '',
     descripcion: item.descripcion || '',
@@ -93,15 +86,14 @@ export const AddProductForm = ({ item = '' }) => {
     imagenes: item.urlImg || [],
   };
 
-  // Iterar sobre las características y asignar dinámicamente las propiedades
   item.caracteristicas?.forEach((caracteristica, index) => {
     initialValues[`c-${index}`] =
       caracteristica.caracteristicaTipoCaracteristicaId || '';
   });
 
   const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
+    initialValues,
+    validationSchema,
     onSubmit: (values) => {
       if (!item) {
         postCreateItem(values);
@@ -114,6 +106,8 @@ export const AddProductForm = ({ item = '' }) => {
   useEffect(() => {
     formik.setFieldValue('categoriaId', selectedId);
   }, [selectedId]);
+
+  if (isLoading) return 'Cargando ...';
 
   return (
     <AdminLayout>
@@ -151,7 +145,6 @@ export const AddProductForm = ({ item = '' }) => {
                 formik.touched.descripcion && formik.errors.descripcion
               }
             />
-
             <FormControl fullWidth>
               <InputLabel>Marca</InputLabel>
               <Select
@@ -180,7 +173,6 @@ export const AddProductForm = ({ item = '' }) => {
                 </FormHelperText>
               )}
             </FormControl>
-
             <SimpleDialog
               selectedValue={selectedValue}
               selectedId={selectedId}
@@ -223,7 +215,6 @@ export const AddProductForm = ({ item = '' }) => {
             <FormControl>
               <InputLabel
                 htmlFor='outlined-adornment-amount'
-                // sx={formik.errors.precio ? { color: 'red' } : ''}
                 sx={{ ...(formik.errors.precio && { color: 'red' }) }}
               >
                 Precio
@@ -247,32 +238,37 @@ export const AddProductForm = ({ item = '' }) => {
               )}
             </FormControl>
             <Typography>Caracteristicas</Typography>
+            {caracteristicas?.map((caracteristica, index) => {
+              const currentValue = formik.values[`c-${index}`];
+              const isValidValue = caracteristica.tipoCaracteristicas.some(
+                (tipo) => tipo.id === currentValue
+              );
+              const value = isValidValue ? currentValue : '';
 
-            {caracteristicas?.map((caracteristica, index) => (
-              <FormControl key={index} fullWidth margin='normal'>
-                <InputLabel>{caracteristica?.nombre}</InputLabel>
-                <Select
-                  id={`c-${index}`}
-                  name={`c-${index}`}
-                  label={caracteristica?.nombre}
-                  value={formik.values[`c-${index}`] || 'S/N'}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched[`c-${index}`] &&
-                    Boolean(formik.errors[`c-${index}`])
-                  }
-                >
-                  {caracteristica?.tipoCaracteristicas?.map((tipo, id) => (
-                    <MenuItem key={tipo.id} value={tipo.id}>
-                      {tipo.nombre}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            ))}
-
-            {/* UPLOAD IMAGE */}
+              return (
+                <FormControl key={index} fullWidth margin='normal'>
+                  <InputLabel>{caracteristica?.nombre}</InputLabel>
+                  <Select
+                    id={`c-${index}`}
+                    name={`c-${index}`}
+                    label={caracteristica?.nombre}
+                    value={value}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched[`c-${index}`] &&
+                      Boolean(formik.errors[`c-${index}`])
+                    }
+                  >
+                    {caracteristica?.tipoCaracteristicas?.map((tipo) => (
+                      <MenuItem key={tipo.id} value={tipo.id}>
+                        {tipo.nombre}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              );
+            })}
             {!item ? (
               <>
                 <FormControl>
@@ -307,7 +303,6 @@ export const AddProductForm = ({ item = '' }) => {
                 Editar
               </Button>
             )}
-            {/* UPLOAD IMAGE */}
           </Container>
         </form>
       </Container>
