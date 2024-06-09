@@ -28,7 +28,8 @@ export const BarraAutocompletado = () => {
     `${option.nombre} (${option.nombreCategoria}, ${option.nombreMarca}), ${option.descripcion}`;
 
   return (
-      <Box sx={{width:'100%'}}>
+
+    <Box sx={{width:'100%', backgroundColor:'white', padding: '0', height:'48px'}}>
         <Autocomplete
           value={selectedValue}
           onChange={handleChange}
@@ -38,9 +39,10 @@ export const BarraAutocompletado = () => {
           filterOptions={filterOptions}
           getOptionLabel={getOptionLabel}
           renderInput={(params) => (
-            <TextField {...params} label='Buscar Producto' variant='outlined' />
+            <TextField {...params}  variant='outlined' />
           )}
         />
       </Box>
+
   );
 };

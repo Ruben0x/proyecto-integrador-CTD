@@ -71,10 +71,10 @@ const CategoriasSectionXS = () => {
           }}
         >
           {arrayCategorias.map((item) => (
- 
+          <Link key={item.id} to={`/instrumentos/cat/${item.id}`}>
               <MediaCardXS key={item.id} imagen={`http://localhost:3000/images/${item.img}`} categoria={item.nombre} seleccion={false} idCategoria={item.id} onClick={handleCardClick}
               arrayFilter={arrayFilter}/>
-
+          </Link>
           ))}
         </Container>
       </Box>

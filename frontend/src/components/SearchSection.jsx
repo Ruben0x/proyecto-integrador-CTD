@@ -20,7 +20,7 @@ const SearchSection = () => {
         },
         //validationSchema: validationSchema,
         onSubmit: (values) => {
-          //search(values);
+          console.log(values);
         },
       });
 
@@ -95,7 +95,17 @@ const SearchSection = () => {
 
                 </Paper>
                 */}
-                <BarraAutocompletado/>
+                <BarraAutocompletado   id='searchField'
+                  name='searchField'
+                  label='buscar'
+                  type='searchField'
+                  placeholder='Busca acá tu instrumento'
+                  value={formik.values.searchField}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  
+
+                  />
 
             </Grid>
             <Grid item xs={12} sm={5}>
