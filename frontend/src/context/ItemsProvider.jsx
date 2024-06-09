@@ -4,7 +4,6 @@ import { itemReducer } from './itemsReducer';
 import axios from 'axios';
 import { types } from './types';
 import { toast } from 'sonner';
-import { clearWarningsCache } from '@mui/x-data-grid/internals';
 
 const initialState = {
   items: [],
@@ -23,12 +22,7 @@ export const ItemsProvider = ({ children }) => {
       .get(`${apiUrl}/productos`)
       .then((res) => dispatch({ type: types.getItems, payload: res.data }));
   }, []);
-  const getAllUsuarios = useCallback(() => {
-    axios.get(`${apiUrl}/usuarios`).then((res) =>
-      // console.log(res.data)
-      dispatch({ type: types.getUsuarios, payload: res.data })
-    );
-  }, []);
+
   const getCaracteristicas = () => {
     axios
       .get(`${apiUrl}/caracteristicas`)
@@ -40,18 +34,11 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const getAllCategorias = useCallback(() => {
-    axios.get(`${apiUrl}/categorias`).then((res) =>
-      // console.log(res.data)
-      dispatch({ type: types.getCategorias, payload: res.data })
-    );
+    axios.get(`${apiUrl}/categorias`).then((res) => {
+      // console.log(res.data);
+      dispatch({ type: types.getCategorias, payload: res.data });
+    });
   }, []);
-
-  const getItemsRandoms = () => {
-    axios
-      .get(`${apiUrl}/productos/random`)
-      .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
-      .catch((err) => toast(err));
-  };
 
   const deleteProductbyId = async (id) => {
     try {
@@ -61,24 +48,6 @@ export const ItemsProvider = ({ children }) => {
 
       if (response.ok) {
         dispatch({ type: types.deleteItem, payload: id });
-        return true;
-      } else {
-        console.error(response.statusText);
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  };
-  const deleteUserById = async (id) => {
-    try {
-      const response = await fetch(`${apiUrl}/usuarios/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        dispatch({ type: types.deleteUser, payload: id });
         return true;
       } else {
         console.error(response.statusText);
@@ -216,19 +185,12 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     getAllItems();
   }, [getAllItems]);
 
   useEffect(() => {
-    getAllUsuarios();
-  }, [getAllUsuarios]);
-  useEffect(() => {
     getCaracteristicas();
-  }, []);
-  useEffect(() => {
-    getItemsRandoms();
   }, []);
 
   return (
@@ -238,10 +200,8 @@ export const ItemsProvider = ({ children }) => {
         dispatch,
         postCreateItem,
         deleteProductbyId,
-        deleteUserById,
         getUserById,
         getAllItems,
-        getAllUsuarios,
         getCaracteristicas,
         postEditItem,
         getAllCategorias,

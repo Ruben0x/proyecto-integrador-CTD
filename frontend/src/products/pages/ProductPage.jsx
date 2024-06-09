@@ -154,7 +154,7 @@ export const ProductPage = () => {
               sx={{ textDecoration: 'underline' }}
               variant='subtitle1'
               textTransform={'uppercase'}
-              fontWeight={700}
+              fontWeight={800}
               textAlign={'center'}
             >
               políticas de reserva

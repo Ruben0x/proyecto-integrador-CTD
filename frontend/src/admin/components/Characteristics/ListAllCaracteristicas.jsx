@@ -10,15 +10,15 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { ItemsContext } from '../../context/ItemsContext';
+import { ItemsContext } from '../../../context/ItemsContext';
 import { useState, useContext, useEffect } from 'react';
-import { AddProductForm } from './AddProductForm';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { toast } from 'sonner';
-import { AdminLayout } from '../layout/AdminLayout';
+import { AdminLayout } from '../../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { AddProductForm } from '../Product/AddProductForm';
 
 export const ListAllCaracteristicas = ({}) => {
   const { itemState } = useContext(ItemsContext);
@@ -29,7 +29,6 @@ export const ListAllCaracteristicas = ({}) => {
 
   useEffect(() => {
     setCaracteristicas(itemState.caracteristicas);
-    console.log(caracteristicas);
   }, []);
 
   const handleClickOpen = (params) => {
@@ -102,7 +101,7 @@ export const ListAllCaracteristicas = ({}) => {
               ]}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
+                  paginationModel: { pageSize: 10 },
                 },
               }}
               pageSizeOptions={[5, 10]}

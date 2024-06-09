@@ -1,14 +1,13 @@
 //import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import {  Grid,  } from '@mui/material';
+import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { GridInstrumentos } from './GridInstrumentos';
 import SearchSection from './SearchSection';
 import CategoriasSectionMain from './CategoriasSectionMain';
 
 const ResponsiveBody = () => {
-
   return (
     <div
       style={{
@@ -24,10 +23,10 @@ const ResponsiveBody = () => {
         }}
       >
         {/*Seccion Buscador del Body*/}
-        <SearchSection/>
+        <SearchSection />
 
         {/*Seccion categorias del Body*/}
-        <CategoriasSectionMain/>
+        <CategoriasSectionMain />
 
         {/*Seccion recomendados del Body*/}
         <Container
