@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import { ItemsContext } from '../context/ItemsContext';
 import { Autocomplete, Box, TextField } from '@mui/material';
 
+import BaseHardcoded from '../../src/helpers/baseProductosHardcode.json';
+
 export const BarraAutocompletado = () => {
   const { itemState } = useContext(ItemsContext);
   const [inputValue, setInputValue] = useState('');
@@ -11,9 +13,14 @@ export const BarraAutocompletado = () => {
   };
 
   const handleChange = (event, newValue) => {
-    setSelectedValue(newValue);
+    if (newValue) {
+      setSelectedValue(newValue);
+    } else {
+      setSelectedValue(null); 
+    }
   };
-  const options = itemState.items;
+  const options = itemState.items.length > 0 ? itemState.items : BaseHardcoded;
+
 
   console.log(itemState.items);
   const filterOptions = (options, { inputValue }) => {
@@ -31,6 +38,7 @@ export const BarraAutocompletado = () => {
 
     <Box sx={{width:'100%', backgroundColor:'white', padding: '0', height:'48px'}}>
         <Autocomplete
+          freeSolo
           value={selectedValue}
           onChange={handleChange}
           inputValue={inputValue}
