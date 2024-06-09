@@ -18,7 +18,6 @@ export default function MediaCardXS({ imagen, categoria, idCategoria, onClick,
   
   const handleClick = () => {
     setSeleccion(!seleccion);
-    console.log(seleccion);
     onClick(idCategoria);
   };
   

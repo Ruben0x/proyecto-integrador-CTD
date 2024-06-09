@@ -19,7 +19,6 @@ const CategoriasSectionXS = () => {
       newArray.push(idCategoria);
     }
     setArrayFilter(newArray);
-    console.log(arrayFilter);
   };
   const arrayCategorias = useCategorias();
   return (
