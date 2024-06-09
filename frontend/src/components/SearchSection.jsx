@@ -14,8 +14,12 @@ import { ItemsContext } from "../context/ItemsContext";
 import axios from "axios";
 import { useFormik } from "formik";
 import { BarraAutocompletado } from "./BarraAutocompletado";
+import { useNavigate } from "react-router-dom";
 
-const SearchSection = () => {
+const SearchSection = (props) => {
+  const navigate = useNavigate(); //permitirá redirigir a la pagina /search
+
+
   const formik = useFormik({
     initialValues: {
       searchField: "",
@@ -23,7 +27,8 @@ const SearchSection = () => {
     },
     //validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      navigate('/search', { state: { query: values } });
+      
     },
   });
 
