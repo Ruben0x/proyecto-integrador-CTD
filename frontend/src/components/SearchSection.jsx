@@ -80,6 +80,7 @@ const SearchSection = () => {
                 value={formik.values.searchField}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                formik={formik}
               />
             </Grid>
             <Grid item xs={12} sm={5}>

@@ -4,19 +4,23 @@ import { Autocomplete, Box, TextField } from '@mui/material';
 
 import BaseHardcoded from '../../src/helpers/baseProductosHardcode.json';
 
-export const BarraAutocompletado = () => {
+export const BarraAutocompletado = ({ formik }) => {
   const { itemState } = useContext(ItemsContext);
   const [inputValue, setInputValue] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
+
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
+    formik.setFieldValue('searchField', newInputValue); 
   };
-
+  
   const handleChange = (event, newValue) => {
     if (newValue) {
       setSelectedValue(newValue);
+      formik.setFieldValue('searchField', newValue.nombre)
     } else {
       setSelectedValue(null); 
+      formik.setFieldValue('searchField', '')
     }
   };
   const options = itemState.items.length > 0 ? itemState.items : BaseHardcoded;
