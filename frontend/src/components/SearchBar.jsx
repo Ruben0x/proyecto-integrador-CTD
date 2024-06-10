@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function SearchBar({ maxWidth }) {
   return (
     <Paper
-      component='form'
+      
       sx={{
         p: '2px 4px',
         display: 'flex',

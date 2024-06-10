@@ -3,11 +3,11 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import {  Grid, Link,  } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import CategoriasSectionMain from './CategoriasSectionMain';
 import { GridInstrumentosResult } from './GridInstrumentosResult';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import CategoriasSectionXS from './CategoriasSectionXS';
 
 
 const ItemsByCategory = () => {
@@ -19,17 +19,27 @@ const ItemsByCategory = () => {
   useEffect(() => {
     axios('http://localhost:3000/categorias/' + id+'/productos')
       .then((res) => {
-        setProductos(res.data);
+        const transformedData = res.data.map((producto) => {
+          return {
+           ...producto,
+            imagenes: producto.imagenes.map((imagen) => imagen.url),
+          };
+        });
+        setProductos(transformedData);
         
       })
       .catch((err) => {
         console.log(err);
       });
+      
   }, [id]);
 
   if (!productos) {
     return <Navigate to={'/'} />;
-  }
+  } 
+  const tituloCategoria = productos[0]?.nombreCategoria.toUpperCase();  
+
+
 
   return (
     
@@ -48,7 +58,7 @@ const ItemsByCategory = () => {
       >
 
         {/*Seccion categorias del Body*/}
-        <CategoriasSectionMain/>
+        <CategoriasSectionXS/>
 
         {/*Seccion recomendados del Body*/}
         <Container
@@ -69,7 +79,7 @@ const ItemsByCategory = () => {
                 display={'inline'}
                 sx={{ fontSize: { xs: 30, md: 40 } }}
               >
-                #CATEGORIA{' '}
+                {tituloCategoria}
               </Typography>
             </Grid>
             <Grid item>

@@ -57,7 +57,7 @@ const CategoriasSectionMain = () => {
         >
           {arrayCategorias.map((item) => (
             <Link key={item.id} to={`/instrumentos/cat/${item.id}`}>
-              <MediaCard imagen={item.img} categoria={item.nombre} />
+              <MediaCard imagen={`http://localhost:3000/images/${item.img}`} categoria={item.nombre} />
             </Link>
           ))}
         </Container>

@@ -11,6 +11,7 @@ import { Ruben } from '../components/Ruben';
 import { ProductCatPage } from '../pages/ProductCatPage';
 import { useUsers } from '../context/store/UsersProvider';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
+import { ProductSearchPage } from '../pages/ProductSearchPage';
 
 export const TiendaRouter = () => {
   const { getAnonToken, isLoading, userState } = useUsers();
@@ -36,6 +37,7 @@ export const TiendaRouter = () => {
           <Route element={<LogInPage />} path='/auth/login' />
           <Route element={<ProductPage />} path='/instrumentos/:id' />
           <Route element={<ProductCatPage />} path='/instrumentos/cat/:id' />
+          <Route element={<ProductSearchPage />} path='/search' />
           <Route element={<Ruben />} path='/ruben' />
         </Routes>
       </div>
