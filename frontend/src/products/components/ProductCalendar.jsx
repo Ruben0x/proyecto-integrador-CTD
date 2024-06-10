@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
-import '../../styles/calendar.css';
+import React, { useContext, useState } from "react";
+import "../../styles/Calendar.css";
 import {
   Button,
   Container,
   Grid,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
-import { Calendar, DateObject } from 'react-multi-date-picker';
-import { useTheme } from '@emotion/react';
+} from "@mui/material";
+import { GlobalUserDataContext } from "../../auth/helpers/globalUserData";
+import { Calendar, DateObject } from "react-multi-date-picker";
+import { useTheme } from "@emotion/react";
 
 const reserved = [
   [new DateObject().setDay(1).format(), new DateObject().setDay(5).format()],
@@ -29,7 +29,7 @@ export const ProductCalendar = () => {
   const { isLogged } = useContext(GlobalUserDataContext);
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleReserva = (fechas) => {
     const fechasSeleccionadas = fechas.slice(reservas);
@@ -39,25 +39,25 @@ export const ProductCalendar = () => {
         console.log(`${element[0].format()} hasta ${element[1].format()}`);
       });
     } else {
-      alert('Debes estar logueado');
+      alert("Debes estar logueado");
     }
   };
   return (
     <>
       {viewError ? (
-        <Grid container justifyContent={'center'} sx={{}}>
-          <Typography variant='h4' textAlign={'center'}>
+        <Grid container justifyContent={"center"} sx={{}}>
+          <Typography variant="h4" textAlign={"center"}>
             Hubo un problema al obtener las fechas, intentelo de nuevo mas tarde
           </Typography>
-          <Button variant='contained' onClick={() => setViewError(false)}>
+          <Button variant="contained" onClick={() => setViewError(false)}>
             Reintentar
           </Button>
         </Grid>
       ) : (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={"center"}>
           {!isSmallScreen ? (
             <Calendar
-              className='bg-dark orange'
+              className="bg-dark orange"
               multiple
               range
               rangeHover
@@ -81,13 +81,13 @@ export const ProductCalendar = () => {
                 let className;
                 const strDate = date.format();
 
-                if (isReserved(strDate)) className = 'reserved';
+                if (isReserved(strDate)) className = "reserved";
                 if (className) return { className };
               }}
             >
               <Button
                 fullWidth
-                variant='contained'
+                variant="contained"
                 onClick={() => handleReserva(values)}
               >
                 RESERVA
@@ -95,7 +95,7 @@ export const ProductCalendar = () => {
             </Calendar>
           ) : (
             <Calendar
-              className='bg-dark orange'
+              className="bg-dark orange"
               multiple
               range
               rangeHover
@@ -119,13 +119,13 @@ export const ProductCalendar = () => {
                 let className;
                 const strDate = date.format();
 
-                if (isReserved(strDate)) className = 'reserved';
+                if (isReserved(strDate)) className = "reserved";
                 if (className) return { className };
               }}
             >
               <Button
                 fullWidth
-                variant='contained'
+                variant="contained"
                 onClick={() => handleReserva(values)}
               >
                 RESERVA
