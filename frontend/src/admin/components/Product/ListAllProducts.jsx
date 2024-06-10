@@ -12,15 +12,15 @@ import {
   Typography,
 } from '@mui/material';
 import { useContext } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
+import { ItemsContext } from '../../../context/ItemsContext';
 import { useState } from 'react';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { toast } from 'sonner';
-import { AdminLayout } from '../layout/AdminLayout';
+import { AdminLayout } from '../../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { AddProductFormcopy } from './AddProductFormcopy';
+import { AddProductForm } from './AddProductForm';
 
 export const ListAllProducts = ({}) => {
   const { itemState, deleteProductbyId } = useContext(ItemsContext);
@@ -108,10 +108,10 @@ export const ListAllProducts = ({}) => {
               ]}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
+                  paginationModel: { pageSize: 10 },
                 },
               }}
-              pageSizeOptions={[5, 10]}
+              pageSizeOptions={[5]}
               // checkboxSelection
             />
           </Box>
@@ -125,7 +125,7 @@ export const ListAllProducts = ({}) => {
           >
             Volver al listado de productos
           </Button>
-          <AddProductFormcopy item={item} />
+          <AddProductForm item={item} />
         </>
       )}
       {deleteModal && (

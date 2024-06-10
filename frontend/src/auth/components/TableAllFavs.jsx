@@ -22,15 +22,14 @@ import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { Link } from "react-router-dom";
 
 export const TableAllFavs = () => {
+  const { getAllFavoritos, isLoading, favState, deleteFavs } = useFavoritos();
+  const { globalUserData } = useContext(GlobalUserDataContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [favorito, setFavorito] = useState();
 
-  const { getAllFavoritos, isLoading, favState, deleteFavs } = useFavoritos();
-  const { globalUserData } = useContext(GlobalUserDataContext);
-
   useEffect(() => {
     getAllFavoritos(globalUserData.id);
-  }, [getAllFavoritos, globalUserData.id]);
+  }, []);
 
   const handleClickOpen = (favorito) => {
     setFavorito(favorito);
@@ -78,36 +77,52 @@ export const TableAllFavs = () => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={
+                    <Typography
+                      variant="body1"
+                      component="span"
+                      fontWeight="bold"
+                    >
+                      <Link
+                        to={`/instrumentos/${fav.producto.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {fav.producto.nombre}
+                      </Link>
+                    </Typography>
+                  }
+                  secondary={
+                    <Box>
+                      <Typography variant="body2">{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
+                      <Typography variant="body2">{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
+                    </Box>
+                  }
+                />
+                {/* <ListItemText
+                  primary={
                     <Link
                       to={`/instrumentos/${fav.producto.id}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
                     >
                       <Typography
-                        variant="body1"
-                        component="span" // Aseguramos que se renderice como <span>
-                        fontWeight="bold"
+                        variant='body1'
+                        component='span'
+                        fontWeight='bold'
                       >
                         {fav.producto.nombre}
                       </Typography>
                     </Link>
                   }
                   secondary={
-                    <>
-                      <Typography
-                        variant="body2"
-                        component="span"
-                      >{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
-                      <Typography
-                        variant="body2"
-                        component="span"
-                      >{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
-                    </>
+                    <Box>
+                      <Typography variant='body2'>{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
+                      <Typography variant='body2'>{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
+                    </Box>
                   }
-                />
+                /> */}
                 <Button
                   size="small"
                   variant="contained"
-                  style={{ color: "white" }} // Cambia el color del texto a blanco
+                  color="buttonRed"
                   onClick={() => handleClickOpen(fav.producto)}
                   startIcon={
                     <DeleteOutlineOutlinedIcon style={{ color: "white" }} />
@@ -147,17 +162,13 @@ export const TableAllFavs = () => {
           <DialogActions sx={{ justifyContent: "center" }}>
             <Button
               variant="contained"
-              style={{ color: "white", backgroundColor: "#4CAF50" }} // Cambia el color del texto a blanco y el fondo a verde
+              color="buttonGreen"
               onClick={() => handleAcceptDelete(globalUserData.id, favorito.id)}
               autoFocus
             >
               ELIMINAR
             </Button>
-            <Button
-              variant="contained"
-              style={{ color: "white", backgroundColor: "#f44336" }} // Cambia el color del texto a blanco y el fondo a rojo
-              onClick={handleClose}
-            >
+            <Button variant="contained" color="buttonRed" onClick={handleClose}>
               CANCELAR
             </Button>
           </DialogActions>

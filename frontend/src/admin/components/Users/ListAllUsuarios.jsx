@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import {
   Box,
@@ -15,18 +14,21 @@ import {
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { ItemsContext } from '../../context/ItemsContext';
-import { useEffect, useContext } from 'react';
-import { AdminLayout } from '../layout/AdminLayout';
-import { useState } from 'react';
-import { setUserToAdmin } from '../../auth/helpers/createUser';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { AdminLayout } from '../../layout/AdminLayout';
+import { useUsers } from '../../../context/store/UsersProvider';
 
 export const ListAllUsuarios = ({}) => {
-  const { itemState, deleteUserById } = useContext(ItemsContext);
+  const { getAllUsers, isLoading, userState, deleteUser, changeUserRol } =
+    useUsers();
   const [deleteModal, setDeleteModal] = useState(false);
-  const [usuario, setUsuario] = useState('');
   const [editModal, setEditModal] = useState(false);
+  const [usuario, setUsuario] = useState();
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const handleClickOpen = (params) => {
     setUsuario(params.row);
@@ -37,29 +39,25 @@ export const ListAllUsuarios = ({}) => {
     setEditModal(true);
   };
 
-  const handleAcceptDelete = (id) => {
-    deleteUserById(id).then((res) => {
-      if (res) {
-        toast.success('Usuario eliminado con éxito');
-        // getAllItems();
-        setDeleteModal(false);
-      } else {
-        toast.error('Hubo un problema eliminado al usuario');
-      }
-    });
-  };
-
   const handleClose = () => {
     setDeleteModal(false);
   };
   const handleCloseEdit = () => {
     setEditModal(false);
   };
-
   const handleAcceptAdmin = (usuarioAdmin) => {
-    setUserToAdmin(usuarioAdmin);
+    changeUserRol(usuarioAdmin);
     setEditModal(false);
-    location.reload();
+  };
+
+  const handleAcceptDelete = async (id) => {
+    try {
+      await deleteUser(id);
+      setDeleteModal(false);
+      toast.success('Usuario eliminado con éxito');
+    } catch (error) {
+      toast.error('Hubo un problema eliminado al usuario');
+    }
   };
 
   const renderActions = (params) => {
@@ -89,11 +87,12 @@ export const ListAllUsuarios = ({}) => {
   };
 
   return (
-    <AdminLayout title={'Todos los productos'}>
+    <AdminLayout title={''}>
+      {isLoading && <CircularProgress />}
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box sx={{ width: '90%' }}>
           <DataGrid
-            rows={itemState.usuarios}
+            rows={userState.users}
             columns={[
               { field: 'id', headerName: 'ID', width: 50 },
               { field: 'nombre', headerName: 'Nombre', width: 100 },
@@ -113,7 +112,7 @@ export const ListAllUsuarios = ({}) => {
             ]}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
+                paginationModel: { pageSize: 10 },
               },
             }}
             pageSizeOptions={[5, 10]}
@@ -177,7 +176,7 @@ export const ListAllUsuarios = ({}) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-description' fontWeight={600}>
-              Esta acción modificara a {usuario.nombre} sus permisos de
+              Esta acción modificara a {usuario?.nombre} sus permisos de
               Administrador
             </DialogContentText>
           </DialogContent>
