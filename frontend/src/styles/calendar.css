@@ -1,86 +1,85 @@
 /*es una copia del estilo .red por defecto*/
 
+
 :root {
-  --rmdp-primary-orange: #ff5000;
-  --rmdp-secondary-orange: #121312;
-  --rmdp-shadow-orange: #cfb6b6;
-  --rmdp-today-orange: #ff8800;
-  --rmdp-hover-orange: #ff9f72;
-  --rmdp-deselect-orange: #af1738;
-}
+    --rmdp-primary-orange: #ff5000;
+    --rmdp-secondary-orange: #121312;
+    --rmdp-shadow-orange: #cfb6b6;
+    --rmdp-today-orange: #ff8800;
+    --rmdp-hover-orange: #ff9f72;
+    --rmdp-deselect-orange: #af1738;
+  }
+  
+  .orange .rmdp-wrapper {
+    border: 1px solid var(--rmdp-secondary-orange);
+    box-shadow: 0 0 5px var(--rmdp-secondary-orange);
+  }
+  
+  .orange .rmdp-panel-body li {
+    background-color: var(--rmdp-primary-orange);
+    box-shadow: 0 0 2px var(--rmdp-secondary-orange);
+  }
+  
+  .orange .rmdp-week-day {
+    color: var(--rmdp-primary-orange);
+  }
+  
+  .orange .rmdp-day.rmdp-deactive {
+    color: var(--rmdp-secondary-orange);
+  }
+  
+  .orange .rmdp-range {
+    background-color: var(--rmdp-primary-orange);
+    box-shadow: 0 0 3px var(--rmdp-shadow-orange);
+  }
+  
+  .orange .rmdp-arrow {
+    border: solid var(--rmdp-primary-orange);
+    border-width: 0 2px 2px 0;
+  }
+  
+  .orange .rmdp-arrow-container:hover {
+    background-color: var(--rmdp-primary-orange);
+    box-shadow: 0 0 3px var(--rmdp-secondary-orange);
+  }
+  
+  .orange .rmdp-panel-body::-webkit-scrollbar-thumb {
+    background: var(--rmdp-primary-orange);
+  }
+  
+  .orange .rmdp-day.rmdp-today span {
+    background-color: var(--rmdp-today-orange);
+  }
+  
+  .orange .rmdp-rtl .rmdp-panel {
+    border-left: unset;
+    border-right: 1px solid var(--rmdp-secondary-orange);
+  }
+  
+  .orange .rmdp-day.rmdp-selected span:not(.highlight) {
+    background-color: var(--rmdp-primary-orange);
+    box-shadow: 0 0 3px var(--rmdp-shadow-orange);
+  }
+  
+  .orange .rmdp-day:not(.rmdp-day-hidden) span:hover {
+    background-color: var(--rmdp-hover-orange) !important;
+  }
+  
+  .orange .b-deselect {
+    color: var(--rmdp-deselect-orange);
+    background-color: white;
+  }
+  
+  .orange .rmdp-action-button {
+    color: var(--rmdp-primary-orange);
+  }
+  
+  .orange .rmdp-button:not(.rmdp-action-button) {
+    background-color: var(--rmdp-primary-orange);
+  }
+  
+  .orange .rmdp-button:not(.rmdp-action-button):hover {
+    background-color: var(--rmdp-deselect-orange);
+  }
+  
 
-.orange .rmdp-wrapper {
-  border: 1px solid var(--rmdp-secondary-orange);
-  box-shadow: 0 0 5px var(--rmdp-secondary-orange);
-}
-
-.orange .rmdp-panel-body li {
-  background-color: var(--rmdp-primary-orange);
-  box-shadow: 0 0 2px var(--rmdp-secondary-orange);
-}
-
-.orange .rmdp-week-day {
-  color: var(--rmdp-primary-orange);
-}
-
-.orange .rmdp-day.rmdp-deactive {
-  color: var(--rmdp-secondary-orange);
-}
-
-.orange .rmdp-range {
-  background-color: var(--rmdp-primary-orange);
-  box-shadow: 0 0 3px var(--rmdp-shadow-orange);
-}
-
-.orange .rmdp-arrow {
-  border: solid var(--rmdp-primary-orange);
-  border-width: 0 2px 2px 0;
-}
-
-.orange .rmdp-arrow-container:hover {
-  background-color: var(--rmdp-primary-orange);
-  box-shadow: 0 0 3px var(--rmdp-secondary-orange);
-}
-
-.orange .rmdp-panel-body::-webkit-scrollbar-thumb {
-  background: var(--rmdp-primary-orange);
-}
-
-.orange .rmdp-day.rmdp-today span {
-  background-color: var(--rmdp-today-orange);
-}
-
-.orange .rmdp-rtl .rmdp-panel {
-  border-left: unset;
-  border-right: 1px solid var(--rmdp-secondary-orange);
-}
-
-.orange .rmdp-day.rmdp-selected span:not(.highlight) {
-  background-color: var(--rmdp-primary-orange);
-  box-shadow: 0 0 3px var(--rmdp-shadow-orange);
-}
-
-.orange .rmdp-day:not(.rmdp-day-hidden) span:hover {
-  background-color: var(--rmdp-hover-orange) !important;
-}
-
-.orange .b-deselect {
-  color: var(--rmdp-deselect-orange);
-  background-color: white;
-}
-
-.orange .rmdp-action-button {
-  color: var(--rmdp-primary-orange);
-}
-
-.orange .rmdp-button:not(.rmdp-action-button) {
-  background-color: var(--rmdp-primary-orange);
-}
-
-.orange .rmdp-button:not(.rmdp-action-button):hover {
-  background-color: var(--rmdp-deselect-orange);
-}
-
-.rmdp-range:has(.reserved) {
-  background-color: #666;
-}
