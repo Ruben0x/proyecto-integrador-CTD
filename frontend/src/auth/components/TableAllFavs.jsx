@@ -20,6 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const TableAllFavs = () => {
   const { getAllFavoritos, isLoading, favState, deleteFavs } = useFavoritos();
@@ -44,6 +45,8 @@ export const TableAllFavs = () => {
 
   const handleAcceptDelete = (user, producto) => {
     deleteFavs(user, producto);
+    toast.success('Eliminado de favoritos');
+
     setDeleteModal(false);
   };
 
@@ -97,28 +100,7 @@ export const TableAllFavs = () => {
                     </Box>
                   }
                 />
-                {/* <ListItemText
-                  primary={
-                    <Link
-                      to={`/instrumentos/${fav.producto.id}`}
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                      <Typography
-                        variant='body1'
-                        component='span'
-                        fontWeight='bold'
-                      >
-                        {fav.producto.nombre}
-                      </Typography>
-                    </Link>
-                  }
-                  secondary={
-                    <Box>
-                      <Typography variant='body2'>{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
-                      <Typography variant='body2'>{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
-                    </Box>
-                  }
-                /> */}
+
                 <Button
                   size='small'
                   variant='contained'

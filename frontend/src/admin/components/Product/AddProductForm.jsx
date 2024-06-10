@@ -14,15 +14,18 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { SimpleDialog } from '../SelectorCategorias';
+import { SimpleDialog } from '../Categories/SelectorCategorias';
 import { ItemsContext } from '../../../context/ItemsContext';
 import { AdminLayout } from '../../layout/AdminLayout';
 import { useCategorias } from '../../../context/store/CategoriasProvider';
+import { useMarcas } from '../../../context/store/MarcasProvider';
 
 export const AddProductForm = ({ item = '' }) => {
   const { postCreateItem, postEditItem, getCaracteristicas, itemState } =
     useContext(ItemsContext);
+
   const { getAllCategorias, isLoading, categoryState } = useCategorias();
+  const { getAllMarcas, marcaState } = useMarcas();
   const [caracteristicas, setCaracteristicas] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
@@ -31,6 +34,7 @@ export const AddProductForm = ({ item = '' }) => {
   useEffect(() => {
     getAllCategorias();
     getCaracteristicas();
+    getAllMarcas();
   }, []);
 
   useEffect(() => {
@@ -156,16 +160,11 @@ export const AddProductForm = ({ item = '' }) => {
                 onBlur={formik.handleBlur}
                 error={formik.touched.marcaId && Boolean(formik.errors.marcaId)}
               >
-                <MenuItem value={1}>Casio</MenuItem>
-                <MenuItem value={2}>Yamaha</MenuItem>
-                <MenuItem value={3}>Fender</MenuItem>
-                <MenuItem value={4}>Zildjian</MenuItem>
-                <MenuItem value={5}>Jackson</MenuItem>
-                <MenuItem value={6}>Gretsch</MenuItem>
-                <MenuItem value={7}>Hohner</MenuItem>
-                <MenuItem value={8}>DAddario</MenuItem>
-                <MenuItem value={9}>Gibraltar</MenuItem>
-                <MenuItem value={10}>Pearl</MenuItem>
+                {marcaState.marcas.map((m) => (
+                  <MenuItem key={m.id} value={m.id}>
+                    {m.nombre}
+                  </MenuItem>
+                ))}
               </Select>
               {!!formik.errors.marcaId && (
                 <FormHelperText id='marcaId' sx={{ color: 'red' }}>

@@ -42,6 +42,24 @@ export const useFavoritos = create((set) => ({
       }))
     );
   },
+
+  addFavoritos: (usuarioId, productoId) => {
+    set(() => ({
+      isLoading: true,
+    }));
+
+    const data = {
+      usuarioId,
+      productoId,
+    };
+    axios.post(`${apiUrl}/favoritos`, data).then(
+      (res) =>
+        set((state) => ({
+          isLoading: false,
+        }))
+      // console.log(res)
+    );
+  },
 }));
 
 export const addFavoritos = (usuarioId, productoId) => {

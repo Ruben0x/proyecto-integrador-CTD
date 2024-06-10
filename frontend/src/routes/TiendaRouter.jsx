@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import { Route, Routes } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage';
@@ -10,13 +10,19 @@ import { ProductPage } from '../products/pages/ProductPage';
 import { Ruben } from '../components/Ruben';
 import { ProductCatPage } from '../pages/ProductCatPage';
 import { useUsers } from '../context/store/UsersProvider';
+import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 
 export const TiendaRouter = () => {
-  const { getAnonToken, isLoading } = useUsers();
+  const { getAnonToken, isLoading, userState } = useUsers();
+  const { isLogged } = useContext(GlobalUserDataContext);
 
   useEffect(() => {
-    getAnonToken();
+    if (!isLogged) {
+      getAnonToken();
+    }
   }, []);
+
+  console.log(userState.token.accessToken);
 
   if (isLoading) return 'Cargando...';
   return (
