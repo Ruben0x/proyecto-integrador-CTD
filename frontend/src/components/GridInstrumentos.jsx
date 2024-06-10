@@ -1,28 +1,30 @@
-import { useEffect } from 'react';
-import { ItemsContext } from '../context/ItemsContext';
+import { useEffect, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';
 import { userProductos } from '../context/store/ProductosProvider';
 import { useUsers } from '../context/store/UsersProvider';
 
 export const GridInstrumentos = () => {
-  // const { itemState } = useContext(ItemsContext);
-  // const [productos, setProductos] = useState([]);
   const { userState } = useUsers();
 
   const accessToken = userState.token.accessToken;
+  const loggedToken = sessionStorage.getItem('token');
 
   const { getProductosRandoms, productoState } = userProductos();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    getProductosRandoms(accessToken);
-  }, []);
+    if (loggedToken) {
+      getProductosRandoms(loggedToken);
+      // console.log(loggedToken);
+    } else {
+      getProductosRandoms(accessToken);
+    }
+  }, [refresh]);
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+  };
 
-  // useEffect(() => {
-  //   if (itemState.itemsRandoms) {
-  //     setProductos(itemState.itemsRandoms);
-  //   }
-  // }, [itemState]);
   return (
     <Box
       pt={4}
@@ -41,6 +43,7 @@ export const GridInstrumentos = () => {
             <InstrumentCardResponsive
               key={instrument.id}
               instrument={instrument}
+              onFavChange={handleRefresh}
             />
           </Grid>
         ))}

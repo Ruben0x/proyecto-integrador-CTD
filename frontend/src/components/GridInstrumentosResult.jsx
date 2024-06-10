@@ -1,10 +1,13 @@
-import React, {  useEffect  } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';
 
 //recibe cualquir array y renderiza las cards
-export const GridInstrumentosResult = ({productos}) => {
-
+export const GridInstrumentosResult = ({ productos, onFavChange }) => {
+  const [refresh, setRefresh] = useState(false);
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+  };
   /*useEffect(() => {
   }, [productos]);*/
   return (
@@ -25,6 +28,7 @@ export const GridInstrumentosResult = ({productos}) => {
             <InstrumentCardResponsive
               key={instrument.id}
               instrument={instrument}
+              onFavChange={handleRefresh}
             />
           </Grid>
         ))}

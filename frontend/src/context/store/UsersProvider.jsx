@@ -7,6 +7,14 @@ export const useUsers = create((set) => ({
   isLoading: false,
   userState: {
     users: [],
+    isLogged: false,
+    loggedUser: {
+      usuarioId: '',
+      nombre: '',
+      apellido: '',
+      email: '',
+      rol: '',
+    },
     token: {
       accessToken: '',
       refreshToken: '',
@@ -113,5 +121,33 @@ export const useUsers = create((set) => ({
           isLoading: false,
         }));
       });
+  },
+
+  userLogin: (email, password, rememberme) => {
+    set((state) => ({
+      isLoading: false,
+    }));
+
+    const data = {
+      email,
+      password,
+    };
+
+    axios.post(`${apiUrl}/usuarios/login`, data).then((res) => {
+      set((state) => ({
+        userState: {
+          ...state.userState,
+          isLogged: true,
+          loggedUser: {
+            usuarioId: res.data.usuarioId,
+            rol: res.data.rol,
+          },
+          token: {
+            accessToken: res.data.token.accessToken,
+            refreshToken: res.data.token.refreshToken,
+          },
+        },
+      }));
+    });
   },
 }));

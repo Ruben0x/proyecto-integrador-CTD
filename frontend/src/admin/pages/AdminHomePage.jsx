@@ -1,8 +1,8 @@
 import React from 'react';
 import { AdminLayout } from '../layout/AdminLayout';
 import { Grid } from '@mui/material';
-import { TableLastUsers } from '../components/TableLastUsers';
-import { TableLastProducts } from '../components/TableLastProducts';
+import { TableLastUsers } from '../components/Users/TableLastUsers';
+import { TableLastProducts } from '../components/Product/TableLastProducts';
 
 export const AdminHomePage = () => {
   return (
