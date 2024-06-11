@@ -1,12 +1,6 @@
 import React, { useContext, useState } from "react";
 import "../../styles/Calendar.css";
-import {
-  Button,
-  Container,
-  Grid,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import { GlobalUserDataContext } from "../../auth/helpers/globalUserData";
 import { Calendar, DateObject } from "react-multi-date-picker";
 import { useTheme } from "@emotion/react";

@@ -1,6 +1,6 @@
 //https://www.npmjs.com/package/react-multi-date-picker
 
-import "../styles/Calendar.css";
+import "../styles/calendar.css";
 import React, { useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";

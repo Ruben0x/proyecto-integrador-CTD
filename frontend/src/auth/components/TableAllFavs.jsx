@@ -20,6 +20,7 @@ import Avatar from "@mui/material/Avatar";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 export const TableAllFavs = () => {
   const { getAllFavoritos, isLoading, favState, deleteFavs } = useFavoritos();
@@ -44,6 +45,8 @@ export const TableAllFavs = () => {
 
   const handleAcceptDelete = (user, producto) => {
     deleteFavs(user, producto);
+    toast.success("Eliminado de favoritos");
+
     setDeleteModal(false);
   };
 

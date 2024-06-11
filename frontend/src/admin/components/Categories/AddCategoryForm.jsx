@@ -11,7 +11,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createCategory } from '../../../context/store/CategoriasProvider';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 export const AddCategoryForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 

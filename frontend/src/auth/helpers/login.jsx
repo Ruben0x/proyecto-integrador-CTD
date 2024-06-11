@@ -44,6 +44,7 @@ export const login = async (
         } else {
           sessionStorage.setItem('isLogged', JSON.stringify(true));
           sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
+          sessionStorage.setItem('token', loginResponse.token.accessToken);
         }
 
         setTimeout(() => {

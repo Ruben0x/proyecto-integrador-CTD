@@ -24,7 +24,7 @@ import { ListAllProducts } from './components/Product/ListAllProducts';
 import { ListAllUsuarios } from './components/Users/ListAllUsuarios';
 import { AddCategoryForm } from './components/Categories/AddCategoryForm';
 import { AddProductForm } from './components/Product/AddProductForm';
-
+import { AddMarcaForm } from './components/Marcas/AddMarcaForm';
 const drawerWidth = '20%';
 
 export const Sidenav = () => {
@@ -158,6 +158,23 @@ export const Sidenav = () => {
               <ListItemText primary='Agregar Categorías' />
             </ListItemButton>
           </ListItem>
+          <ListItem onClick={() => setMenuData('AgregarMarca')}>
+            <ListItemButton
+              selected={menuData === 'AgregarMarca'}
+              sx={{
+                '&.Mui-selected, &.Mui-selected:hover ': {
+                  backgroundColor: 'primary.main',
+                },
+                backgroundColor: '#898989',
+                ':hover': { backgroundColor: 'primary.main' },
+              }}
+            >
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
+              <ListItemText primary='Agregar Marca' />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
         <Container
@@ -189,6 +206,7 @@ export const Sidenav = () => {
         {menuData == 'TodosUsuarios' && <ListAllUsuarios />}
         {menuData == 'AdministrarCaracteristicas' && <ListAllCaracteristicas />}
         {menuData == 'AgregarCategorias' && <AddCategoryForm />}
+        {menuData == 'AgregarMarca' && <AddMarcaForm />}
       </Box>
     </Box>
   );

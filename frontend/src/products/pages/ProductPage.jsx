@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Grid,
   IconButton,
@@ -15,7 +14,6 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Characteristics } from '../components/Characteristics';
-import DateRangePickerComponent from '../components/DateRangePickerComponent';
 import { GridImagenes } from '../components/GridImagenes';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
 import { ProductCalendar } from '../components/ProductCalendar';
@@ -176,8 +174,12 @@ export const ProductPage = () => {
                 textTransform={'uppercase'}
                 fontWeight={600}
                 textAlign={'center'}
+                paddingY={3}
               >
-                Selecciona las fechas que necesitas y reserva <span>ahora</span>
+                Selecciona las fechas que necesitas y reserva{' '}
+                <Box component={'span'} color={'primary.main'}>
+                  ahora
+                </Box>
               </Typography>
               <ProductCalendar />
             </Grid>
