@@ -4,6 +4,7 @@ import { Autocomplete, Box, TextField } from '@mui/material';
 
 import BaseHardcoded from '../../src/helpers/baseProductosHardcode.json';
 import { userProductos } from '../context/store/ProductosProvider';
+import { useUsers } from '../context/store/UsersProvider';
 
 export const BarraAutocompletado = ({ formik }) => {
   // const { itemState } = useContext(ItemsContext);
@@ -12,8 +13,11 @@ export const BarraAutocompletado = ({ formik }) => {
 
   const loggedToken = sessionStorage.getItem('token');
   const { getAllProducts, isLoading, productoState } = userProductos();
+  const { userState } = useUsers();
   useEffect(() => {
-    getAllProducts(loggedToken);
+    loggedToken
+      ? getAllProducts(loggedToken)
+      : getAllProducts(userState.token.accessToken);
   }, []);
 
   const productos = productoState.todosProductos;

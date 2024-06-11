@@ -19,31 +19,35 @@ import { ItemsContext } from '../../../context/ItemsContext';
 import { AdminLayout } from '../../layout/AdminLayout';
 import { useCategorias } from '../../../context/store/CategoriasProvider';
 import { useMarcas } from '../../../context/store/MarcasProvider';
+import { useCaracteristicas } from '../../../context/store/CaracteristicasProvider';
 
 export const AddProductForm = ({ item = '' }) => {
-  const { postCreateItem, postEditItem, getCaracteristicas, itemState } =
-    useContext(ItemsContext);
+  const { postCreateItem, postEditItem } = useContext(ItemsContext);
 
-  const { getAllCategorias, isLoading, categoryState } = useCategorias();
+  const { getAllCategorias, categoryState } = useCategorias();
+  const { getAllCaracteristicas, caracteristicasState } = useCaracteristicas();
   const { getAllMarcas, marcaState } = useMarcas();
-  const [caracteristicas, setCaracteristicas] = useState([]);
+  // const [caracteristicas, setCaracteristicas] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedId, setSelectedId] = useState('');
 
   useEffect(() => {
     getAllCategorias();
-    getCaracteristicas();
+    // getCaracteristicas();
     getAllMarcas();
+    getAllCaracteristicas();
   }, []);
 
-  useEffect(() => {
-    if (itemState?.caracteristicas) {
-      setCaracteristicas(itemState.caracteristicas);
-    } else {
-      setCaracteristicas([]);
-    }
-  }, [itemState]);
+  const caracteristicas = caracteristicasState?.caracteristicas;
+
+  // useEffect(() => {
+  //   if (caracteristicasState?.caracteristicas) {
+  //     setCaracteristicas(caracteristicasState.caracteristicas);
+  //   } else {
+  //     setCaracteristicas([]);
+  //   }
+  // }, [caracteristicasState]);
 
   useEffect(() => {
     if (categoryState?.categorias?.length > 0) {
@@ -111,7 +115,7 @@ export const AddProductForm = ({ item = '' }) => {
     formik.setFieldValue('categoriaId', selectedId);
   }, [selectedId]);
 
-  if (isLoading) return 'Cargando ...';
+  // if (isLoading) return 'Cargando ...';
 
   return (
     <AdminLayout>

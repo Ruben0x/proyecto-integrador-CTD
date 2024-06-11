@@ -31,7 +31,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import SettingsIcon from '@mui/icons-material/Settings';
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
-const drawerWidth = '20%';
+// const drawerWidth = '20%';
+const drawerWidth = '22%';
 
 export const Sidenav = () => {
   const [menuData, setMenuData] = useState('Home');
@@ -83,7 +84,7 @@ export const Sidenav = () => {
         <Toolbar />
         <Divider />
         {/* <SideAcordeon /> */}
-        <List sx={{ paddingX: '16px' }}>
+        <List sx={{ paddingX: '20px' }}>
           <ListItem onClick={() => setMenuData('Home')}>
             <ListItemButton
               selected={menuData === 'Home'}
@@ -95,13 +96,12 @@ export const Sidenav = () => {
                 ':hover': { backgroundColor: 'primary.main' },
               }}
             >
-              <ListItemIcon>
+              <ListItemIcon sx={{ minWidth: '35px' }}>
                 <HomeIcon />
               </ListItemIcon>
               <ListItemText primary='Home' />
             </ListItemButton>
           </ListItem>
-
           {/* //PRODUCTOS */}
           <ListItem>
             <ListItemButton
@@ -114,7 +114,7 @@ export const Sidenav = () => {
                 ':hover': { backgroundColor: 'primary.main' },
               }}
             >
-              <ListItemIcon>
+              <ListItemIcon sx={{ minWidth: '35px' }}>
                 <MusicNoteIcon />
               </ListItemIcon>
               <ListItemText primary='Productos' />
@@ -136,7 +136,7 @@ export const Sidenav = () => {
                   }}
                   onClick={() => setMenuData('Agregar')}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: '35px' }}>
                     <AddIcon />
                   </ListItemIcon>
                   <ListItemText primary='Agregar' />
@@ -154,7 +154,7 @@ export const Sidenav = () => {
                     marginRight: 2,
                   }}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: '35px' }}>
                     <FormatListBulletedIcon />
                   </ListItemIcon>
                   <ListItemText primary='Listar Productos' />
@@ -162,7 +162,6 @@ export const Sidenav = () => {
               </ListItem>
             </List>
           </Collapse>
-
           {/* //USUARIOS */}
           <ListItem>
             <ListItemButton
@@ -175,7 +174,7 @@ export const Sidenav = () => {
                 ':hover': { backgroundColor: 'primary.main' },
               }}
             >
-              <ListItemIcon>
+              <ListItemIcon sx={{ minWidth: '35px' }}>
                 <RecentActorsIcon />
               </ListItemIcon>
               <ListItemText primary='Usuarios' />
@@ -197,7 +196,7 @@ export const Sidenav = () => {
                   }}
                   onClick={() => setMenuData('TodosUsuarios')}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: '35px' }}>
                     <FormatListBulletedIcon />
                   </ListItemIcon>
                   <ListItemText primary='Lista de Usuarios' />
@@ -205,7 +204,6 @@ export const Sidenav = () => {
               </ListItem>
             </List>
           </Collapse>
-
           {/* CATEGORIAS */}
           <ListItem>
             <ListItemButton
@@ -218,14 +216,13 @@ export const Sidenav = () => {
                 ':hover': { backgroundColor: 'primary.main' },
               }}
             >
-              <ListItemIcon>
+              <ListItemIcon sx={{ minWidth: '35px' }}>
                 <CategoryIcon />
               </ListItemIcon>
               <ListItemText primary='Categorias' />
               {openCategorias ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           </ListItem>
-
           <Collapse in={openCategorias} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
               <ListItem>
@@ -241,7 +238,7 @@ export const Sidenav = () => {
                   }}
                   onClick={() => setMenuData('AgregarCategorias')}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: '35px' }}>
                     <AddIcon />
                   </ListItemIcon>
                   <ListItemText primary='Agregar' />
@@ -261,14 +258,13 @@ export const Sidenav = () => {
                 ':hover': { backgroundColor: 'primary.main' },
               }}
             >
-              <ListItemIcon>
+              <ListItemIcon sx={{ minWidth: '35px' }}>
                 <QueueMusicIcon />
               </ListItemIcon>
               <ListItemText primary='Marcas' />
               {openMarca ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           </ListItem>
-
           <Collapse in={openMarca} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
               <ListItem>
@@ -284,7 +280,7 @@ export const Sidenav = () => {
                   }}
                   onClick={() => setMenuData('AgregarMarca')}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: '35px' }}>
                     <AddIcon />
                   </ListItemIcon>
                   <ListItemText primary='Agregar' />
@@ -292,7 +288,7 @@ export const Sidenav = () => {
               </ListItem>
             </List>
           </Collapse>
-          {/* //CARACTERISTICAS */}
+          {/* //CARACTERISTICAS
           <ListItem>
             <ListItemButton
               onClick={handleCaracteristicas}
@@ -311,7 +307,6 @@ export const Sidenav = () => {
               {openCaracteristicas ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           </ListItem>
-
           <Collapse in={openCaracteristicas} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
               <ListItem>
@@ -334,7 +329,7 @@ export const Sidenav = () => {
                 </ListItemButton>
               </ListItem>
             </List>
-          </Collapse>
+          </Collapse> */}
         </List>
         <Divider />
         <Container

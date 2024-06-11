@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SearchSection from './SearchSection';
 import { userProductos } from '../context/store/ProductosProvider';
+import { useUsers } from '../context/store/UsersProvider';
 
 const ItemsSearch = () => {
   const location = useLocation();
@@ -15,8 +16,11 @@ const ItemsSearch = () => {
 
   const loggedToken = sessionStorage.getItem('token');
   const { getAllProducts, isLoading, productoState } = userProductos();
+  const { userState } = useUsers();
   useEffect(() => {
-    getAllProducts(loggedToken);
+    loggedToken
+      ? getAllProducts(loggedToken)
+      : getAllProducts(userState.token.accessToken);
   }, []);
 
   const productos = productoState.todosProductos;

@@ -19,24 +19,29 @@ import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { AddProductForm } from '../Product/AddProductForm';
+import { useCaracteristicas } from '../../../context/store/CaracteristicasProvider';
+import { userProductos } from '../../../context/store/ProductosProvider';
 
 export const ListAllCaracteristicas = ({}) => {
-  const { itemState } = useContext(ItemsContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [item, setItem] = useState('');
   const [editView, setEditView] = useState(false);
-  const [caracteristicas, setCaracteristicas] = useState([]);
+  const { getAllCaracteristicas, isLoading, caracteristicasState } =
+    useCaracteristicas();
+  const { deleteProducto } = userProductos();
 
   useEffect(() => {
-    setCaracteristicas(itemState.caracteristicas);
+    getAllCaracteristicas();
   }, []);
+
+  const caracteristicas = caracteristicasState.caracteristicas;
 
   const handleClickOpen = (params) => {
     setItem(params.row);
     setDeleteModal(true);
   };
   const handleAcceptDelete = (id) => {
-    deleteProductbyId(id).then((res) => {
+    deleteProducto(id).then((res) => {
       if (res) {
         toast.success('Producto eliminado con éxito');
         // getAllItems();

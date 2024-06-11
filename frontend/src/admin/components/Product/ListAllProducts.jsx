@@ -10,11 +10,9 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { useContext, useEffect } from 'react';
-import { ItemsContext } from '../../../context/ItemsContext';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { toast } from 'sonner';
 import { AdminLayout } from '../../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
@@ -23,15 +21,16 @@ import { AddProductForm } from './AddProductForm';
 import { userProductos } from '../../../context/store/ProductosProvider';
 
 export const ListAllProducts = ({}) => {
-  const { deleteProductbyId } = useContext(ItemsContext);
-
   const [deleteModal, setDeleteModal] = useState(false);
   const [item, setItem] = useState('');
   const [editView, setEditView] = useState(false);
 
   const loggedToken = sessionStorage.getItem('token');
-  const { getAllProducts, isLoading, productoState } = userProductos();
+  const { getAllProducts, isLoading, productoState, deleteProducto } =
+    userProductos();
+  // const { userState } = useUsers();
   useEffect(() => {
+    // console.log(userState);
     getAllProducts(loggedToken);
   }, []);
 
@@ -39,16 +38,10 @@ export const ListAllProducts = ({}) => {
     setItem(params.row);
     setDeleteModal(true);
   };
+
   const handleAcceptDelete = (id) => {
-    deleteProductbyId(id).then((res) => {
-      if (res) {
-        toast.success('Producto eliminado con éxito');
-        // getAllItems();
-        setDeleteModal(false);
-      } else {
-        console.log('ERROR');
-      }
-    });
+    deleteProducto(id);
+    setDeleteModal(false);
   };
 
   const handleClose = () => {

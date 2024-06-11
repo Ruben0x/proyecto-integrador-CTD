@@ -4,6 +4,7 @@ import { Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
 import { Calendar, DateObject } from 'react-multi-date-picker';
 import { useTheme } from '@emotion/react';
+import { toast } from 'sonner';
 
 const reserved = [
   [new DateObject().setDay(1).format(), new DateObject().setDay(5).format()],
@@ -58,7 +59,7 @@ export const ProductCalendar = () => {
         console.log(`${element[0].format()} hasta ${element[1].format()}`);
       });
     } else {
-      alert('Debes estar logueado, asi que registrate');
+      toast.warning('Debes estar logueado, asi que registrate');
     }
   };
   return (
