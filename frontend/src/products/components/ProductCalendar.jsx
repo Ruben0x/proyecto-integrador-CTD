@@ -23,6 +23,30 @@ export const ProductCalendar = () => {
   const [viewError, setViewError] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
 
+  const dias = [
+    ['Domingo', 'Do'],
+    ['Lunes', 'Lu'],
+    ['Martes', 'Ma'],
+    ['Miércoles', 'Mi'],
+    ['Jueves', 'Ju'],
+    ['Viernes', 'Vi'],
+    ['Sábado', 'Sá'],
+  ];
+  const meses = [
+    ['Enero', 'Ene'],
+    ['Febrero', 'Feb'],
+    ['Marzo', 'Mar'],
+    ['Abril', 'Abr'],
+    ['Mayo', 'May'],
+    ['Junio', 'Jun'],
+    ['Julio', 'Jul'],
+    ['Agosto', 'Ago'],
+    ['Septiembre', 'Sep'],
+    ['Octubre', 'Oct'],
+    ['Noviembre', 'Nov'],
+    ['Diciembre', 'Dic'],
+  ];
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -57,6 +81,9 @@ export const ProductCalendar = () => {
               range
               rangeHover
               numberOfMonths={2}
+              weekStartDayIndex={1}
+              weekDays={dias}
+              months={meses}
               value={values}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
@@ -95,6 +122,9 @@ export const ProductCalendar = () => {
               range
               rangeHover
               numberOfMonths={1}
+              weekStartDayIndex={1}
+              weekDays={dias}
+              months={meses}
               value={values}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(

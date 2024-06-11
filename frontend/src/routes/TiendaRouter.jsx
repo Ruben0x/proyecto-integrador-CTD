@@ -22,7 +22,7 @@ export const TiendaRouter = () => {
     }
   }, []);
 
-  console.log(userState.token.accessToken);
+  // console.log(userState.token.accessToken);
 
   if (isLoading) return 'Cargando...';
   return (
