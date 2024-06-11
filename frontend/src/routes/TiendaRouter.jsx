@@ -7,7 +7,6 @@ import { RegisterPage } from '../auth/RegisterPage';
 import { LogInPage } from '../auth/LogInPage';
 import { UserInfoPage } from '../auth/UserInfoPage';
 import { ProductPage } from '../products/pages/ProductPage';
-import { Ruben } from '../components/Ruben';
 import { ProductCatPage } from '../pages/ProductCatPage';
 import { useUsers } from '../context/store/UsersProvider';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
@@ -23,7 +22,7 @@ export const TiendaRouter = () => {
     }
   }, []);
 
-  console.log(userState.token.accessToken);
+  // console.log(userState.token.accessToken);
 
   if (isLoading) return 'Cargando...';
   return (
@@ -38,7 +37,6 @@ export const TiendaRouter = () => {
           <Route element={<ProductPage />} path='/instrumentos/:id' />
           <Route element={<ProductCatPage />} path='/instrumentos/cat/:id' />
           <Route element={<ProductSearchPage />} path='/search' />
-          <Route element={<Ruben />} path='/ruben' />
         </Routes>
       </div>
       <Footer />
