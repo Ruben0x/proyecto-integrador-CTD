@@ -7,7 +7,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import ShareIcon from "@mui/icons-material/Share";
 import { toast } from "sonner";
-
 import {
   Box,
   Button,
@@ -22,19 +21,7 @@ import {
 import { Link } from "react-router-dom";
 import { GlobalUserDataContext } from "../auth/helpers/globalUserData";
 import { useFavoritos } from "../context/store/FavoritosProvider";
-
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import React, { useContext, useState } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
-import ShareIcon from "@mui/icons-material/Share";
-import { Box, CardActions, IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
-import { GlobalUserDataContext } from "../auth/helpers/globalUserData";
 import { addFavoritos } from "../context/store/FavoritosProvider";
 
 export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
