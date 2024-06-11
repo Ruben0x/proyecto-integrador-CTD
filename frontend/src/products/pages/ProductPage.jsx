@@ -18,6 +18,7 @@ import { GridImagenes } from '../components/GridImagenes';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
 import { ProductCalendar } from '../components/ProductCalendar';
 import Politicas from '../components/Politicas';
+import { useUsers } from '../../context/store/UsersProvider';
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -28,16 +29,33 @@ export const ProductPage = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const { userState } = useUsers();
+
+  const accessToken = userState.token.accessToken;
+  const loggedToken = sessionStorage.getItem('token');
+
   useEffect(() => {
-    axios(`${apiUrl}/productos/` + id)
+    if (loggedToken) {
+      getItemById(loggedToken);
+    } else {
+      getItemById(accessToken);
+    }
+  }, []);
+
+  const getItemById = (token) => {
+    axios(`${apiUrl}/productos/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         setInstrumento(res.data);
         setListaImagenes(res.data.imagenes || []);
       })
       .catch((err) => {
-        console.log(err);
+        console.log('Error ' + err.message);
       });
-  }, [id]);
+  };
 
   if (!instrumento) {
     return <Navigate to={'/'} />;

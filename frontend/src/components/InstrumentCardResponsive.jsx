@@ -22,6 +22,7 @@ import {
 import { Link } from 'react-router-dom';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { useFavoritos } from '../context/store/FavoritosProvider';
+import { FacebookShare, FacebookCount } from 'react-share-kit';
 
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
@@ -31,6 +32,9 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
 
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const { deleteFavs, isLoading, addFavoritos } = useFavoritos();
+
+  const shareUrl = 'https://github.com/ayda-tech/react-share-kit';
+  const title = 'Check out this awesome website!';
 
   const {
     id,
@@ -98,6 +102,7 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
           >
             <IconButton aria-label='share'>
               <ShareIcon color='primary' />
+              {/* <FacebookShare url={shareUrl} /> */}
             </IconButton>
 
             {favs ? (

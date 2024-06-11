@@ -14,7 +14,6 @@ import { useFormik } from 'formik';
 import { login } from './helpers/login';
 import { GlobalUserDataContext } from './helpers/globalUserData';
 import { ItemsContext } from '../context/ItemsContext';
-import { useUsers } from '../context/store/UsersProvider';
 
 /*Data para POST:
 'Checkbox recuerdame' :[booleano]
@@ -25,7 +24,6 @@ export const LogInPage = () => {
   const { getUserById } = useContext(ItemsContext);
   const { setIsLogged, setGlobalUserData } = useContext(GlobalUserDataContext);
 
-  const { userLogin, isLoading } = useUsers();
   const validationSchema = Yup.object({
     email: Yup.string('Ingrese su correo')
       .email('Correo Invalido')
