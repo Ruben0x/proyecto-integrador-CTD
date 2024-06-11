@@ -11,6 +11,7 @@ import { ProductCatPage } from '../pages/ProductCatPage';
 import { useUsers } from '../context/store/UsersProvider';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { ProductSearchPage } from '../pages/ProductSearchPage';
+import { Toaster } from 'sonner';
 
 export const TiendaRouter = () => {
   const { getAnonToken, isLoading, userState } = useUsers();
@@ -28,6 +29,7 @@ export const TiendaRouter = () => {
   return (
     <>
       <ResponsiveAppBar />
+      <Toaster position='bottom-right' richColors />
       <div>
         <Routes>
           <Route element={<HomePage />} path='/' />

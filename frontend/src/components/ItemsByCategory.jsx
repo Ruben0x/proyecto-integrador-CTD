@@ -1,48 +1,50 @@
 //import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import {  Grid, Link,  } from '@mui/material';
+import { Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { GridInstrumentosResult } from './GridInstrumentosResult';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CategoriasSectionXS from './CategoriasSectionXS';
-
+import { useUsers } from '../context/store/UsersProvider';
 
 const ItemsByCategory = () => {
-
   const { id } = useParams();
   const [productos, setProductos] = useState([]);
+  const { userState } = useUsers();
 
+  const accessToken = userState.token.accessToken;
+  const loggedToken = sessionStorage.getItem('token');
+  const token = loggedToken || accessToken;
 
   useEffect(() => {
-    axios('http://localhost:3000/categorias/' + id+'/productos')
+    axios('http://localhost:3000/categorias/' + id + '/productos', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         const transformedData = res.data.map((producto) => {
           return {
-           ...producto,
+            ...producto,
             imagenes: producto.imagenes.map((imagen) => imagen.url),
           };
         });
         setProductos(transformedData);
-        
       })
       .catch((err) => {
         console.log(err);
       });
-      
   }, [id]);
 
   if (!productos) {
     return <Navigate to={'/'} />;
-  } 
-  const tituloCategoria = productos[0]?.nombreCategoria.toUpperCase();  
-
-
+  }
+  const tituloCategoria = productos[0]?.nombreCategoria.toUpperCase();
 
   return (
-    
     <div
       style={{
         display: 'flex',
@@ -56,9 +58,8 @@ const ItemsByCategory = () => {
           width: '100%',
         }}
       >
-
         {/*Seccion categorias del Body*/}
-        <CategoriasSectionXS/>
+        <CategoriasSectionXS />
 
         {/*Seccion recomendados del Body*/}
         <Container
@@ -90,10 +91,8 @@ const ItemsByCategory = () => {
                 EN TODAS SUS VARIEDADES
               </Typography>
             </Grid>
-            <Grid item>
-            </Grid>
+            <Grid item></Grid>
           </Grid>
-
 
           <GridInstrumentosResult productos={productos} />
         </Container>
