@@ -8,13 +8,19 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useContext } from 'react';
-import { ItemsContext } from '../../../context/ItemsContext';
+import React, { useContext, useEffect } from 'react';
+import { userProductos } from '../../../context/store/ProductosProvider';
 
 export const TableLastProducts = () => {
-  const { itemState } = useContext(ItemsContext);
+  const loggedToken = sessionStorage.getItem('token');
+  const { getAllProducts, isLoading, productoState } = userProductos();
+  useEffect(() => {
+    getAllProducts(loggedToken);
+  }, []);
 
-  const productos = itemState.items;
+  const productos = productoState.todosProductos;
+
+  if (isLoading) return 'Cargando ...';
   return (
     <>
       <Typography variant='h5' textAlign={'center'}>

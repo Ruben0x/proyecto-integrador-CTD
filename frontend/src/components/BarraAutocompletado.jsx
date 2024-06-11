@@ -1,31 +1,41 @@
-import { useContext, useState } from "react";
-import { ItemsContext } from "../context/ItemsContext";
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { useContext, useEffect, useState } from 'react';
+import { ItemsContext } from '../context/ItemsContext';
+import { Autocomplete, Box, TextField } from '@mui/material';
 
-import BaseHardcoded from "../../src/helpers/baseProductosHardcode.json";
+import BaseHardcoded from '../../src/helpers/baseProductosHardcode.json';
+import { userProductos } from '../context/store/ProductosProvider';
 
 export const BarraAutocompletado = ({ formik }) => {
-  const { itemState } = useContext(ItemsContext);
-  const [inputValue, setInputValue] = useState("");
+  // const { itemState } = useContext(ItemsContext);
+  const [inputValue, setInputValue] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
+
+  const loggedToken = sessionStorage.getItem('token');
+  const { getAllProducts, isLoading, productoState } = userProductos();
+  useEffect(() => {
+    getAllProducts(loggedToken);
+  }, []);
+
+  const productos = productoState.todosProductos;
+
+  if (isLoading) return 'Cargando ...';
 
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
-    formik.setFieldValue("searchField", newInputValue);
+    formik.setFieldValue('searchField', newInputValue);
   };
 
   const handleChange = (event, newValue) => {
     if (newValue) {
       setSelectedValue(newValue);
-      formik.setFieldValue("searchField", newValue.nombre);
+      formik.setFieldValue('searchField', newValue.nombre);
     } else {
       setSelectedValue(null);
-      formik.setFieldValue("searchField", "");
+      formik.setFieldValue('searchField', '');
     }
   };
-  const options = itemState.items.length > 0 ? itemState.items : BaseHardcoded;
+  const options = productos.length > 0 ? productos : BaseHardcoded;
 
-  // console.log(itemState.items);
   const filterOptions = (options, { inputValue }) => {
     return options.filter((option) => {
       const combinedText =
@@ -40,11 +50,11 @@ export const BarraAutocompletado = ({ formik }) => {
   return (
     <Box
       sx={{
-        width: "100%",
-        backgroundColor: "white",
-        borderRadius: "4px",
-        padding: "0",
-        height: "56px",
+        width: '100%',
+        backgroundColor: 'white',
+        borderRadius: '4px',
+        padding: '0',
+        height: '56px',
       }}
     >
       <Autocomplete
@@ -59,8 +69,8 @@ export const BarraAutocompletado = ({ formik }) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant="outlined"
-            placeholder="BUSCA ACÁ TU INSTRUMENTO"
+            variant='outlined'
+            placeholder='BUSCA ACÁ TU INSTRUMENTO'
           />
         )}
       />
