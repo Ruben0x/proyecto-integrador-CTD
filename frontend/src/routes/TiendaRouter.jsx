@@ -29,11 +29,7 @@ export const TiendaRouter = () => {
   return (
     <>
       <ResponsiveAppBar />
-<<<<<<< HEAD
-      <Toaster position='bottom-right' richColors />
-=======
       <Toaster position="bottom-right" richColors />
->>>>>>> eecb77d (update repo)
       <div>
         <Routes>
           <Route element={<HomePage />} path="/" />
