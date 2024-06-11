@@ -39,7 +39,7 @@ export const ProductCalendar = () => {
         console.log(`${element[0].format()} hasta ${element[1].format()}`);
       });
     } else {
-      alert("Debes estar logueado");
+      alert("Debes estar logueado, asi que registrate");
     }
   };
   return (
