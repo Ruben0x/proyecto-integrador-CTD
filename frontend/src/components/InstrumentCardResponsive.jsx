@@ -7,7 +7,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import ShareIcon from '@mui/icons-material/Share';
 import { toast } from 'sonner';
-
 import {
   Box,
   Button,
@@ -45,6 +44,24 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
     precio,
     imagenes,
   } = instrument;
+
+  // Función para obtener la URL de la imagen
+  const obtenerUrlImagen = () => {
+    let imageUrl = '';
+
+    if (imagenes && imagenes.length > 0) {
+      imageUrl = imagenes[0];
+    } else if (imagenes && imagenes[0] && imagenes[0].url) {
+      imageUrl = imagenes[0].url;
+    }
+
+    // Verificar si imageUrl es un objeto y extraer la URL de la propiedad "url"
+    if (typeof imageUrl === 'object' && imageUrl.url) {
+      imageUrl = imageUrl.url;
+    }
+
+    return imageUrl;
+  };
 
   const handleAddFavs = () => {
     addFavoritos(globalUserData.id, id);
@@ -138,7 +155,7 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
             <CardMedia
               component='img'
               sx={{ width: '300px', height: '300px' }}
-              image={imagenes[0]}
+              image={obtenerUrlImagen()}
               alt='Instrumento'
             />
             <Box sx={stripStyles}>

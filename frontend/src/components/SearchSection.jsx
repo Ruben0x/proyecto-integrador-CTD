@@ -19,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 const SearchSection = (props) => {
   const navigate = useNavigate(); //permitirá redirigir a la pagina /search
 
-
   const formik = useFormik({
     initialValues: {
       searchField: "",
@@ -27,8 +26,7 @@ const SearchSection = (props) => {
     },
     //validationSchema: validationSchema,
     onSubmit: (values) => {
-      navigate('/search', { state: { query: values } });
-      
+      navigate("/search", { state: { query: values } });
     },
   });
 
@@ -48,7 +46,7 @@ const SearchSection = (props) => {
         justifyContent: "center",
       }}
     >
-      <Box maxWidth={"1440px"} width={"100%"}>
+      <Box maxWidth={"1440px"} width={"100%"} sx={{ marginTop: "20px" }}>
         <Grid container columnSpacing={1}>
           <Grid item>
             <Typography color={"#FFFFFF"} variant="body1" fontSize={32}>
@@ -74,9 +72,9 @@ const SearchSection = (props) => {
         </Typography>
 
         <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ marginTop: "20px" }}>
             <Grid item xs={12} sm={5}>
-             <BarraAutocompletado
+              <BarraAutocompletado
                 id="searchField"
                 name="searchField"
                 label="buscar"
@@ -97,6 +95,9 @@ const SearchSection = (props) => {
                 variant="contained"
                 fullWidth
                 color="primary"
+                sx={{
+                  height: "52px", // Ajustar la altura para que coincida con otros componentes
+                }}
               >
                 BUSCAR
               </Button>
