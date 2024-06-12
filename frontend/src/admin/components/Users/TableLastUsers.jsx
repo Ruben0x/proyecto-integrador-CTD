@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   Container,
   Paper,
   Table,
@@ -20,7 +21,7 @@ export const TableLastUsers = () => {
     getAllUsers();
   }, []);
 
-  if (isLoading) return 'Cargando...';
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>

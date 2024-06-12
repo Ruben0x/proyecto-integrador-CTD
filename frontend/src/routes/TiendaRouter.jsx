@@ -12,6 +12,7 @@ import { useUsers } from '../context/store/UsersProvider';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { ProductSearchPage } from '../pages/ProductSearchPage';
 import { Toaster } from 'sonner';
+import { CircularProgress } from '@mui/material';
 
 export const TiendaRouter = () => {
   const { getAnonToken, isLoading, userState } = useUsers();
@@ -25,7 +26,7 @@ export const TiendaRouter = () => {
 
   // console.log(userState.token.accessToken);
 
-  if (isLoading) return 'Cargando...';
+  if (isLoading) return <CircularProgress />;
   return (
     <>
       <ResponsiveAppBar />

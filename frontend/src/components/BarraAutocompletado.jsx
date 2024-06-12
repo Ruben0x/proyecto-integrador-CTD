@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { ItemsContext } from '../context/ItemsContext';
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
 
 import BaseHardcoded from '../../src/helpers/baseProductosHardcode.json';
 import { userProductos } from '../context/store/ProductosProvider';
@@ -22,7 +22,7 @@ export const BarraAutocompletado = ({ formik }) => {
 
   const productos = productoState.todosProductos;
 
-  if (isLoading) return 'Cargando ...';
+  if (isLoading) return <CircularProgress />;
 
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);

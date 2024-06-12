@@ -7,8 +7,8 @@ import { useTheme } from '@emotion/react';
 import { toast } from 'sonner';
 
 const reserved = [
-  [new DateObject().setDay(1).format(), new DateObject().setDay(5).format()],
-  [new DateObject().setDay(7).format(), new DateObject().setDay(8).format()],
+  [new DateObject().setDay(1).format(), new DateObject().setDay(10).format()],
+  [new DateObject().setDay(15).format(), new DateObject().setDay(25).format()],
 ];
 
 const reservas = reserved.length;
@@ -86,6 +86,7 @@ export const ProductCalendar = () => {
               weekDays={dias}
               months={meses}
               value={values}
+              minDate={new DateObject()}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
                   ([start, end]) =>
@@ -125,6 +126,7 @@ export const ProductCalendar = () => {
               numberOfMonths={1}
               weekStartDayIndex={1}
               weekDays={dias}
+              minDate={new DateObject()}
               months={meses}
               value={values}
               onChange={(ranges) => {
