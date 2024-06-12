@@ -6,24 +6,24 @@ import { useUsers } from '../context/store/UsersProvider';
 
 export const GridInstrumentos = () => {
   const { userState } = useUsers();
-
   const accessToken = userState.token.accessToken;
   const loggedToken = sessionStorage.getItem('token');
 
-  const { getProductosRandoms, productoState } = userProductos();
+  const { getProductosRandoms, productoState, isLoading } = userProductos();
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    if (loggedToken) {
-      getProductosRandoms(loggedToken);
-      // console.log(loggedToken);
-    } else {
-      getProductosRandoms(accessToken);
+    const token = loggedToken || accessToken;
+    if (token) {
+      getProductosRandoms(token);
     }
-  }, [refresh]);
+  }, [loggedToken, accessToken, refresh]); // Add dependencies to useEffect
+
   const handleRefresh = () => {
-    setRefresh(!refresh);
+    setRefresh((prev) => !prev); // Toggle refresh state
   };
+
+  if (isLoading) return 'Cargando...';
 
   return (
     <Box
@@ -41,7 +41,6 @@ export const GridInstrumentos = () => {
         {productoState.productosRandoms.map((instrument) => (
           <Grid item xs={4} sm={6} md={6} key={instrument.id}>
             <InstrumentCardResponsive
-              key={instrument.id}
               instrument={instrument}
               onFavChange={handleRefresh}
             />

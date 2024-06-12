@@ -5,12 +5,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
-import ShareIcon from '@mui/icons-material/Share';
 import { toast } from 'sonner';
 import {
   Box,
   Button,
   CardActions,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,9 +21,8 @@ import {
 import { Link } from 'react-router-dom';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { useFavoritos } from '../context/store/FavoritosProvider';
-import { FacebookShare, FacebookCount } from 'react-share-kit';
-
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import SimplePopup from './SharePopup';
 
 export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
   const [favs, setFavs] = useState(instrument.esFavorito);
@@ -31,9 +30,6 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
 
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const { deleteFavs, isLoading, addFavoritos } = useFavoritos();
-
-  const shareUrl = 'https://github.com/ayda-tech/react-share-kit';
-  const title = 'Check out this awesome website!';
 
   const {
     id,
@@ -45,6 +41,9 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
     imagenes,
   } = instrument;
 
+  const shareUrl = `http://localhost:4000/instrumentos/${instrument.id}`;
+
+  const title = 'Mira este fabuloso instrumento! ';
   // Función para obtener la URL de la imagen
   const obtenerUrlImagen = () => {
     let imageUrl = '';
@@ -69,6 +68,7 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
     setFavs(true);
     onFavChange();
   };
+
   const handleClickOpen = (favorito) => {
     setDeleteModal(true);
   };
@@ -84,7 +84,8 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
     setDeleteModal(false);
     onFavChange();
   };
-  if (isLoading) return 'Cargando...';
+
+  if (isLoading) return <CircularProgress />;
 
   const stripStyles = {
     position: 'absolute',
@@ -112,17 +113,13 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
           position: 'relative',
         }}
       >
-        {isLogged && (
-          <CardActions
-            disableSpacing
-            sx={{ position: 'absolute', top: 8, left: 8, zIndex: 1 }}
-          >
-            <IconButton aria-label='share'>
-              <ShareIcon color='primary' />
-              {/* <FacebookShare url={shareUrl} /> */}
-            </IconButton>
-
-            {favs ? (
+        <CardActions
+          disableSpacing
+          sx={{ position: 'absolute', top: 8, left: 8, zIndex: 1 }}
+        >
+          <SimplePopup url={shareUrl} title={title} />
+          {isLogged &&
+            (favs ? (
               <IconButton
                 size='large'
                 aria-label='add to favorites'
@@ -138,9 +135,8 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
               >
                 <FavoriteTwoToneIcon color='warning' />
               </IconButton>
-            )}
-          </CardActions>
-        )}
+            ))}
+        </CardActions>
         <Link
           to={`/instrumentos/${id}`}
           style={{

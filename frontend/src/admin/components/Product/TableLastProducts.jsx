@@ -1,4 +1,5 @@
 import {
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -20,7 +21,7 @@ export const TableLastProducts = () => {
 
   const productos = productoState.todosProductos;
 
-  if (isLoading) return 'Cargando ...';
+  if (isLoading) return <CircularProgress />;
   return (
     <>
       <Typography variant='h5' textAlign={'center'}>

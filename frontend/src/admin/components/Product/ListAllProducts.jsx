@@ -2,6 +2,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -53,7 +54,7 @@ export const ListAllProducts = ({}) => {
     setEditView(true);
   };
 
-  if (isLoading) return 'Cargando ...';
+  if (isLoading) return <CircularProgress />;
 
   const renderActions = (params) => {
     return (

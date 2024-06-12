@@ -28,6 +28,7 @@ import { useUsers } from '../../context/store/UsersProvider';
 import { useFavoritos } from '../../context/store/FavoritosProvider';
 import { toast } from 'sonner';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import SimplePopup from '../../components/SharePopup';
 
 export const ProductPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -44,6 +45,10 @@ export const ProductPage = () => {
     userState?.token?.accessToken || sessionStorage.getItem('token');
 
   const [favs, setFavs] = useState(false);
+
+  const shareUrl = `http://localhost:4000/instrumentos/${id}`;
+
+  const title = 'Mira este fabuloso instrumento! ';
 
   useEffect(() => {
     if (accessToken) {
@@ -134,12 +139,10 @@ export const ProductPage = () => {
           <span style={{ color: '#000000' }}> {instrumento.nombre}</span>
         </Typography>
         <Box>
-          {isLogged && (
-            <Box sx={{ position: 'absolute' }}>
-              <IconButton aria-label='share'>
-                <ShareIcon color='primary' />
-              </IconButton>
-              {favs ? (
+          <Box sx={{ position: 'absolute' }}>
+            <SimplePopup url={shareUrl} title={title} />
+            {isLogged &&
+              (favs ? (
                 <IconButton
                   size='large'
                   aria-label='add to favorites'
@@ -155,9 +158,8 @@ export const ProductPage = () => {
                 >
                   <FavoriteTwoToneIcon color='warning' />
                 </IconButton>
-              )}
-            </Box>
-          )}
+              ))}
+          </Box>
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
         <Grid item xs={12} sm container alignItems='stretch'>
