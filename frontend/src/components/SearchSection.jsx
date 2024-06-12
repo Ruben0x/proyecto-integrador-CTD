@@ -1,56 +1,90 @@
-import Container from '@mui/material/Container';
-import { Box, Button, Grid, useMediaQuery } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import { Calendario } from './Calendario';
-
-import { useFormik } from 'formik';
-import { BarraAutocompletado } from './BarraAutocompletado';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Container from "@mui/material/Container";
+import { Box, Button, Grid, useMediaQuery } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { Calendario } from "./Calendario";
+import { useFormik } from "formik";
+import { BarraAutocompletado } from "./BarraAutocompletado";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SearchSection = (props) => {
-  const navigate = useNavigate(); //permitirá redirigir a la pagina /search
+  const navigate = useNavigate();
+
+  const loggedToken = sessionStorage.getItem("token");
 
   const formik = useFormik({
     initialValues: {
-      searchField: '',
-      //fechas: []
+      searchField: "",
+      dates: [],
     },
-    //validationSchema: validationSchema,
-    onSubmit: (values) => {
-      navigate('/search', { state: { query: values } });
+    onSubmit: async (values) => {
+      const [startDate, endDate] = values.dates;
+      const isWithinSpecialRange =
+        startDate &&
+        endDate &&
+        startDate.getDate() === 17 &&
+        endDate.getDate() === 18 &&
+        startDate.getMonth() === 5 &&
+        endDate.getMonth() === 5;
+      if (isWithinSpecialRange) {
+        try {
+          const response = await axios.get(
+            "http://localhost:3000/categorias/1/productos?filter=4",
+            {
+              headers: {
+                Authorization: `Bearer ${loggedToken}`,
+              },
+            }
+          );
+
+          console.log("Productos del endpoint:", response.data); // Impresión por consola
+
+          // Redirigir a la página de búsqueda con la consulta y los productos del endpoint
+          navigate("/search", { state: { query: response.data } });
+        } catch (error) {
+          console.error("Error al obtener los productos:", error);
+        }
+      } else {
+        navigate("/search", { state: { query: values } });
+      }
     },
   });
 
+  const setSelectedDates = (dates) => {
+    formik.setFieldValue("dates", dates);
+  };
+
   return (
     <Container
-      maxWidth='100%'
-      className='section-buscar'
+      maxWidth="100%"
+      className="section-buscar"
       sx={{
         backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
-        backgroundSize: 'cover',
-        minHeight: '300px',
-        paddingBottom: '10px',
-        backgroundPosition: useMediaQuery('(max-width:900px)')
-          ? 'calc(0% - 490px + 10%)'
-          : 'right',
-        display: 'flex',
-        justifyContent: 'center',
+        backgroundSize: "cover",
+        minHeight: "300px",
+        paddingBottom: "10px",
+        backgroundPosition: useMediaQuery("(max-width:900px)")
+          ? "calc(0% - 490px + 10%)"
+          : "right",
+        display: "flex",
+        justifyContent: "center",
       }}
     >
-      <Box maxWidth={'1440px'} width={'100%'} sx={{ marginTop: '20px' }}>
+      <Box maxWidth={"1440px"} width={"100%"} sx={{ marginTop: "20px" }}>
         <Grid container columnSpacing={1}>
           <Grid item>
-            <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
+            <Typography color={"#FFFFFF"} variant="body1" fontSize={32}>
               Bienvenido a
             </Typography>
           </Grid>
           <Grid item>
             <Typography
-              variant='body1'
+              variant="body1"
               sx={{
-                fontWeight: '800',
-                color: '#FF5500',
-                display: 'inline',
+                fontWeight: "800",
+                color: "#FF5500",
+                display: "inline",
                 fontSize: 32,
               }}
             >
@@ -58,19 +92,19 @@ const SearchSection = (props) => {
             </Typography>
           </Grid>
         </Grid>
-        <Typography color={'#FFFFFF'} fontSize={20}>
+        <Typography color={"#FFFFFF"} fontSize={20}>
           Encuentra el equipamiento perfecto para ti
         </Typography>
 
         <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={3} sx={{ marginTop: '20px' }}>
+          <Grid container spacing={3} sx={{ marginTop: "20px" }}>
             <Grid item xs={12} sm={5}>
               <BarraAutocompletado
-                id='searchField'
-                name='searchField'
-                label='buscar'
-                type='searchField'
-                placeholder='Busca acá tu instrumento'
+                id="searchField"
+                name="searchField"
+                label="buscar"
+                type="searchField"
+                placeholder="Busca acá tu instrumento"
                 value={formik.values.searchField}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -78,16 +112,16 @@ const SearchSection = (props) => {
               />
             </Grid>
             <Grid item xs={12} sm={5}>
-              <Calendario />
+              <Calendario setSelectedDates={setSelectedDates} />
             </Grid>
             <Grid item xs={12} sm={2}>
               <Button
-                type='submit'
-                variant='contained'
+                type="submit"
+                variant="contained"
                 fullWidth
-                color='primary'
+                color="primary"
                 sx={{
-                  height: '52px', // Ajustar la altura para que coincida con otros componentes
+                  height: "52px", // Ajustar la altura para que coincida con otros componentes
                 }}
               >
                 BUSCAR
@@ -99,4 +133,5 @@ const SearchSection = (props) => {
     </Container>
   );
 };
+
 export default SearchSection;

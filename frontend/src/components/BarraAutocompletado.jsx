@@ -7,13 +7,13 @@ import { userProductos } from '../context/store/ProductosProvider';
 import { useUsers } from '../context/store/UsersProvider';
 
 export const BarraAutocompletado = ({ formik }) => {
-  // const { itemState } = useContext(ItemsContext);
   const [inputValue, setInputValue] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
 
   const loggedToken = sessionStorage.getItem('token');
   const { getAllProducts, isLoading, productoState } = userProductos();
   const { userState } = useUsers();
+
   useEffect(() => {
     loggedToken
       ? getAllProducts(loggedToken)
@@ -38,9 +38,9 @@ export const BarraAutocompletado = ({ formik }) => {
       formik.setFieldValue('searchField', '');
     }
   };
-  const options = productos.length > 0 ? productos : BaseHardcoded;
 
   const filterOptions = (options, { inputValue }) => {
+    if (!inputValue) return [];
     return options.filter((option) => {
       const combinedText =
         `${option.nombre} ${option.nombreCategoria} ${option.nombreMarca} ${option.descripcion}`.toLowerCase();
@@ -50,6 +50,16 @@ export const BarraAutocompletado = ({ formik }) => {
 
   const getOptionLabel = (option) =>
     `${option.nombre} (${option.nombreCategoria}, ${option.nombreMarca}), ${option.descripcion}`;
+
+  const renderOption = (props, option) => (
+    <li {...props}>
+      <Box component='span' sx={{ fontWeight: 'bold' }}>
+        {option.nombre}
+      </Box>
+      &nbsp;({option.nombreCategoria}, {option.nombreMarca}),{' '}
+      {option.descripcion}
+    </li>
+  );
 
   return (
     <Box
@@ -63,13 +73,15 @@ export const BarraAutocompletado = ({ formik }) => {
     >
       <Autocomplete
         freeSolo
+        autoHighlight
         value={selectedValue}
         onChange={handleChange}
         inputValue={inputValue}
         onInputChange={handleInputChange}
-        options={options}
+        options={inputValue ? productos : []}
         filterOptions={filterOptions}
         getOptionLabel={getOptionLabel}
+        renderOption={renderOption}
         renderInput={(params) => (
           <TextField
             {...params}
