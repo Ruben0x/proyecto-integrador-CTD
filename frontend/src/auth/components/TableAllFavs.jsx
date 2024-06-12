@@ -22,9 +22,11 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { userProductos } from '../../context/store/ProductosProvider';
 
 export const TableAllFavs = () => {
   const { getAllFavoritos, isLoading, favState, deleteFavs } = useFavoritos();
+  const { deleteFav } = userProductos();
   const { globalUserData } = useContext(GlobalUserDataContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [favorito, setFavorito] = useState();
@@ -42,14 +44,13 @@ export const TableAllFavs = () => {
     setDeleteModal(false);
   };
 
-  if (isLoading) return <CircularProgress />;
-
   const handleAcceptDelete = (user, producto) => {
     deleteFavs(user, producto);
+    deleteFav(producto);
     toast.success('Eliminado de favoritos');
-
     setDeleteModal(false);
   };
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>

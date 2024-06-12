@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';
 import { userProductos } from '../context/store/ProductosProvider';
 import { useUsers } from '../context/store/UsersProvider';
@@ -17,13 +17,13 @@ export const GridInstrumentos = () => {
     if (token) {
       getProductosRandoms(token);
     }
-  }, [loggedToken, accessToken, refresh]); // Add dependencies to useEffect
+  }, []);
 
   const handleRefresh = () => {
     setRefresh((prev) => !prev); // Toggle refresh state
   };
 
-  if (isLoading) return 'Cargando...';
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Box

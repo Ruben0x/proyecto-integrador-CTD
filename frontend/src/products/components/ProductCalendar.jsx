@@ -129,7 +129,6 @@ export const ProductCalendar = () => {
               minDate={new DateObject()}
               months={meses}
               value={values}
-              minDate={new DateObject()}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
                   ([start, end]) =>
