@@ -1,12 +1,12 @@
-import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import { Grid, Typography } from '@mui/material';
-import { GridInstrumentosResult } from './GridInstrumentosResult';
-import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import SearchSection from './SearchSection';
-import { userProductos } from '../context/store/ProductosProvider';
-import { useUsers } from '../context/store/UsersProvider';
+import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
+import { Grid, Typography } from "@mui/material";
+import { GridInstrumentosResult } from "./GridInstrumentosResult";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import SearchSection from "./SearchSection";
+import { userProductos } from "../context/store/ProductosProvider";
+import { useUsers } from "../context/store/UsersProvider";
 
 const ItemsSearch = () => {
   const location = useLocation();
@@ -14,7 +14,7 @@ const ItemsSearch = () => {
 
   // const [productos, setProductos] = useState([]);
 
-  const loggedToken = sessionStorage.getItem('token');
+  const loggedToken = sessionStorage.getItem("token");
   const { getAllProducts, isLoading, productoState } = userProductos();
   const { userState } = useUsers();
   useEffect(() => {
@@ -28,13 +28,15 @@ const ItemsSearch = () => {
   // if (isLoading) return 'Cargando ...';
 
   const handleFormSubmit = (values) => {
-    console.log('data recibida');
+    console.log("data recibida");
     // console.log(values);
     // Aquí puedes realizar alguna acción con los valores del formulario si es necesario
   };
 
   const filterProductos = () => {
-    if (query.searchField) {
+    if (Array.isArray(query)) {
+      return query;
+    } else if (query.searchField) {
       const keyWord = query.searchField.toLowerCase();
       return productos.filter((producto) => {
         return (
@@ -54,15 +56,15 @@ const ItemsSearch = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <Stack
         spacing={0}
         sx={{
-          width: '100%',
+          width: "100%",
         }}
       >
         {/* Sección buscador */}
@@ -70,30 +72,30 @@ const ItemsSearch = () => {
 
         {/* Sección de resultados */}
         <Container
-          className='section-categorias-result'
+          className="section-categorias-result"
           sx={{
-            width: '100%',
-            minHeight: '300px',
-            height: '100%',
-            textAlign: 'center',
-            padding: '30px',
-            marginTop: '50px',
-            marginBottom: '50px',
+            width: "100%",
+            minHeight: "300px",
+            height: "100%",
+            textAlign: "center",
+            padding: "30px",
+            marginTop: "50px",
+            marginBottom: "50px",
           }}
         >
-          <Grid container justifyContent='center' columnSpacing={1}>
+          <Grid container justifyContent="center" columnSpacing={1}>
             <Grid item>
               <Typography
-                fontWeight='800'
+                fontWeight="800"
                 sx={{
                   fontSize: { xs: 30, md: 40 },
-                  '& span': {
-                    color: '#ff5500',
+                  "& span": {
+                    color: "#ff5500",
                   },
                 }}
               >
                 {`Resultados para `}
-                <span>{query.searchField}</span>
+                <span>{query.searchField || "productos seleccionados"}</span>
               </Typography>
             </Grid>
           </Grid>
