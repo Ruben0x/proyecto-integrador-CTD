@@ -94,4 +94,39 @@ export const userProductos = create((set) => ({
       }));
     }
   },
+
+  deleteFav: (id) => {
+    set(() => ({
+      isLoading: true,
+    }));
+    set((state) => ({
+      productoState: {
+        ...state.productoState,
+        todosProductos: state.productoState.todosProductos.map((p) =>
+          p.id === id ? { ...p, esFavorito: false } : p
+        ),
+        productosRandoms: state.productoState.productosRandoms.map((p) =>
+          p.id === id ? { ...p, esFavorito: false } : p
+        ),
+      },
+      isLoading: false,
+    }));
+  },
+  addFav: (id) => {
+    set(() => ({
+      isLoading: true,
+    }));
+    set((state) => ({
+      productoState: {
+        ...state.productoState,
+        todosProductos: state.productoState.todosProductos.map((p) =>
+          p.id === id ? { ...p, esFavorito: true } : p
+        ),
+        productosRandoms: state.productoState.productosRandoms.map((p) =>
+          p.id === id ? { ...p, esFavorito: true } : p
+        ),
+      },
+      isLoading: false,
+    }));
+  },
 }));

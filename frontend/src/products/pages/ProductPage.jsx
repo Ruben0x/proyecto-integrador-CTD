@@ -29,6 +29,7 @@ import { useFavoritos } from '../../context/store/FavoritosProvider';
 import { toast } from 'sonner';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import SimplePopup from '../../components/SharePopup';
+import { userProductos } from '../../context/store/ProductosProvider';
 
 export const ProductPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -40,6 +41,7 @@ export const ProductPage = () => {
   const [refresh, setRefresh] = useState(false);
   const { userState } = useUsers();
   const apiUrl = import.meta.env.VITE_API_URL;
+  const { addFav, deleteFav } = userProductos();
 
   const accessToken =
     userState?.token?.accessToken || sessionStorage.getItem('token');
@@ -87,6 +89,7 @@ export const ProductPage = () => {
 
   const handleAddFavs = () => {
     addFavoritos(globalUserData.id, instrumento.id);
+    addFav(instrumento.id);
     toast.success('Agregado a favoritos');
     setFavs(true);
     handleRefresh();
@@ -102,6 +105,7 @@ export const ProductPage = () => {
 
   const handleAcceptDelete = (user, producto) => {
     deleteFavs(user, producto);
+    deleteFav(producto);
     toast.success('Eliminado de favoritos');
     setFavs(false);
     setDeleteModal(false);

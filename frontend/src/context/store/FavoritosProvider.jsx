@@ -61,15 +61,3 @@ export const useFavoritos = create((set) => ({
     );
   },
 }));
-
-export const addFavoritos = (usuarioId, productoId) => {
-  const data = {
-    usuarioId,
-    productoId,
-  };
-  try {
-    axios.post(`${apiUrl}/favoritos`, data).then((res) => console.log(res));
-  } catch (error) {
-    console.log(error);
-  }
-};
