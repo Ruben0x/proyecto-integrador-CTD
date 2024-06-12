@@ -1,7 +1,7 @@
-//https://www.npmjs.com/package/react-multi-date-picker
+// //https://www.npmjs.com/package/react-multi-date-picker
 
 import "../styles/calendar.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 
@@ -29,8 +29,15 @@ const meses = [
   ["Diciembre", "Dic"],
 ];
 
-export const Calendario = () => {
-  const [values, setValues] = useState([,]);
+export const Calendario = ({ setSelectedDates }) => {
+  const [values, setValues] = useState([]);
+
+  useEffect(() => {
+    setSelectedDates(
+      values.map((date) => (date instanceof DateObject ? date.toDate() : date))
+    );
+  }, [values]);
+
   return (
     <DatePicker
       className="bg-dark orange"
@@ -48,12 +55,8 @@ export const Calendario = () => {
         width: "100%",
         backgroundColor: "neutralColor",
         height: "52px",
-        // borderRadius: "4px",
         fontSize: "16px",
         padding: 0,
-        // border: 0,
-        // margin: 0,
-        // minHeight: "40px",
       }}
       containerStyle={{
         width: "100%",
