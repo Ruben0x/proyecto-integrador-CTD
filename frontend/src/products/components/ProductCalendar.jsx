@@ -86,6 +86,7 @@ export const ProductCalendar = () => {
               weekDays={dias}
               months={meses}
               value={values}
+              minDate={new DateObject()}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
                   ([start, end]) =>
@@ -127,6 +128,7 @@ export const ProductCalendar = () => {
               weekDays={dias}
               months={meses}
               value={values}
+              minDate={new DateObject()}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
                   ([start, end]) =>

@@ -1,9 +1,11 @@
 //https://www.npmjs.com/package/react-multi-date-picker
 
+import { useMediaQuery, useTheme } from "@mui/material";
 import "../styles/calendar.css";
 import React, { useState } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
+
 
 const dias = [
   ["Domingo", "Do"],
@@ -29,7 +31,13 @@ const meses = [
   ["Diciembre", "Dic"],
 ];
 
+
 export const Calendario = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  
+
+
   const [values, setValues] = useState([,]);
   return (
     <DatePicker
@@ -37,7 +45,7 @@ export const Calendario = () => {
       value={values}
       onChange={setValues}
       range
-      numberOfMonths={2}
+      numberOfMonths={!isSmallScreen ? 2:1}
       weekStartDayIndex={1}
       weekDays={dias}
       months={meses}
