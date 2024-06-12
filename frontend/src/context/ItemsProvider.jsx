@@ -17,47 +17,12 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export const ItemsProvider = ({ children }) => {
   const [itemState, dispatch] = useReducer(itemReducer, initialState);
 
-  const getAllItems = useCallback(() => {
-    axios
-      .get(`${apiUrl}/productos`)
-      .then((res) => dispatch({ type: types.getItems, payload: res.data }));
-  }, []);
-
-  const getCaracteristicas = () => {
-    axios
-      .get(`${apiUrl}/caracteristicas`)
-      .then((res) => {
-        // console.log(res.data);
-        dispatch({ type: types.getCaracteristicas, payload: res.data });
-      })
-      .catch((err) => console.log('Error:', err));
-  };
-
   const getAllCategorias = useCallback(() => {
     axios.get(`${apiUrl}/categorias`).then((res) => {
       // console.log(res.data);
       dispatch({ type: types.getCategorias, payload: res.data });
     });
   }, []);
-
-  const deleteProductbyId = async (id) => {
-    try {
-      const response = await fetch(`${apiUrl}/productos/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        dispatch({ type: types.deleteItem, payload: id });
-        return true;
-      } else {
-        console.error(response.statusText);
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  };
 
   const getUserById = async (id) => {
     try {
@@ -173,10 +138,15 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
-  const getItemsByCategories = async (categoryIds) => {
+  const getItemsByCategories = async (categoryIds, token) => {
     try {
       const response = await fetch(
-        `${apiUrl}/categorias/${categoryIds[0]}/productos?filter=${categoryIds.slice(1).join('%2C')}`
+        `${apiUrl}/categorias/${categoryIds[0]}/productos?filter=${categoryIds.slice(1).join('%2C')}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const data = await response.json();
       dispatch({ type: types.getItemsByCategories, payload: data });
@@ -185,24 +155,14 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getAllItems();
-  }, [getAllItems]);
-
-  useEffect(() => {
-    getCaracteristicas();
-  }, []);
-
   return (
     <ItemsContext.Provider
       value={{
         itemState,
         dispatch,
         postCreateItem,
-        deleteProductbyId,
+        // deleteProductbyId,
         getUserById,
-        getAllItems,
-        getCaracteristicas,
         postEditItem,
         getAllCategorias,
         getItemsByCategories,

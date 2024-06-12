@@ -4,6 +4,7 @@ import { GlobalUserDataContext } from '../helpers/globalUserData';
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -20,6 +21,7 @@ import Avatar from '@mui/material/Avatar';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const TableAllFavs = () => {
   const { getAllFavoritos, isLoading, favState, deleteFavs } = useFavoritos();
@@ -40,10 +42,12 @@ export const TableAllFavs = () => {
     setDeleteModal(false);
   };
 
-  if (isLoading) return 'Cargando...';
+  if (isLoading) return <CircularProgress />;
 
   const handleAcceptDelete = (user, producto) => {
     deleteFavs(user, producto);
+    toast.success('Eliminado de favoritos');
+
     setDeleteModal(false);
   };
 
@@ -61,76 +65,70 @@ export const TableAllFavs = () => {
         <Typography variant='h5' gutterBottom>
           FAVORITOS
         </Typography>
-        <Box sx={{ width: '100%' }}>
-          <List>
-            {favState.favoritos.map((fav) => (
-              <ListItem
-                key={fav.producto.id}
-                sx={{ display: 'flex', alignItems: 'center' }}
-              >
-                <ListItemAvatar>
-                  <Avatar
-                    src={fav.producto.imagenUrl}
-                    alt={fav.producto.nombre}
-                    sx={{ width: 50, height: 50 }}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    <Typography
-                      variant='body1'
-                      component='span'
-                      fontWeight='bold'
-                    >
-                      <Link
-                        to={`/instrumentos/${fav.producto.id}`}
-                        style={{ textDecoration: 'none', color: 'inherit' }}
-                      >
-                        {fav.producto.nombre}
-                      </Link>
-                    </Typography>
-                  }
-                  secondary={
-                    <Box>
-                      <Typography variant='body2'>{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
-                      <Typography variant='body2'>{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
-                    </Box>
-                  }
-                />
-                {/* <ListItemText
-                  primary={
-                    <Link
-                      to={`/instrumentos/${fav.producto.id}`}
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
+        <Box sx={{ width: '100%', textAlign: 'center' }}>
+          {favState.favoritos.length === 0 ? (
+            <Typography variant='body1' color='textSecondary'>
+              Tu lista de favoritos se encuentra vacía
+            </Typography>
+          ) : (
+            <List>
+              {favState.favoritos.map((fav) => (
+                <ListItem
+                  key={fav.producto.id}
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      src={fav.producto.imagenUrl}
+                      alt={fav.producto.nombre}
+                      sx={{ width: 50, height: 50 }}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
                       <Typography
                         variant='body1'
                         component='span'
                         fontWeight='bold'
                       >
-                        {fav.producto.nombre}
+                        <Link
+                          to={`/instrumentos/${fav.producto.id}`}
+                          style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                          {fav.producto.nombre}
+                        </Link>
                       </Typography>
-                    </Link>
-                  }
-                  secondary={
-                    <Box>
-                      <Typography variant='body2'>{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
-                      <Typography variant='body2'>{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
-                    </Box>
-                  }
-                /> */}
-                <Button
-                  size='small'
-                  variant='contained'
-                  color='buttonRed'
-                  onClick={() => handleClickOpen(fav.producto)}
-                  startIcon={<DeleteOutlineOutlinedIcon />}
-                >
-                  <Typography fontWeight={600}>Eliminar</Typography>
-                </Button>
-              </ListItem>
-            ))}
-          </List>
+                    }
+                    secondary={
+                      <span>
+                        <Typography
+                          variant='body2'
+                          component='span'
+                        >{`Categoría: ${fav.producto.categoriaS.nombre}`}</Typography>
+                        <Typography
+                          variant='body2'
+                          component='span'
+                        >{`Marca: ${fav.producto.marcaS.nombre}`}</Typography>
+                      </span>
+                    }
+                  />
+                  <Button
+                    size='small'
+                    variant='contained'
+                    color='buttonRed'
+                    onClick={() => handleClickOpen(fav.producto)}
+                    startIcon={
+                      <DeleteOutlineOutlinedIcon style={{ color: 'white' }} />
+                    }
+                  >
+                    <Typography fontWeight={600} style={{ color: 'white' }}>
+                      Eliminar
+                    </Typography>
+                  </Button>
+                </ListItem>
+              ))}
+            </List>
+          )}
         </Box>
       </Container>
       {deleteModal && (
@@ -160,10 +158,16 @@ export const TableAllFavs = () => {
               color='buttonGreen'
               onClick={() => handleAcceptDelete(globalUserData.id, favorito.id)}
               autoFocus
+              sx={{ color: 'white' }}
             >
               ELIMINAR
             </Button>
-            <Button variant='contained' color='buttonRed' onClick={handleClose}>
+            <Button
+              variant='contained'
+              color='buttonRed'
+              onClick={handleClose}
+              sx={{ color: 'white' }}
+            >
               CANCELAR
             </Button>
           </DialogActions>

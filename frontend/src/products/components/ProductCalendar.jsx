@@ -1,20 +1,16 @@
 import React, { useContext, useState } from 'react';
 import '../../styles/calendar.css';
-import {
-  Button,
-  Container,
-  Grid,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
 import { Calendar, DateObject } from 'react-multi-date-picker';
 import { useTheme } from '@emotion/react';
+import { toast } from 'sonner';
 
 const reserved = [
-  [new DateObject().setDay(1).format(), new DateObject().setDay(5).format()],
-  [new DateObject().setDay(7).format(), new DateObject().setDay(8).format()],
+  [new DateObject().setDay(1).format(), new DateObject().setDay(10).format()],
+  [new DateObject().setDay(15).format(), new DateObject().setDay(25).format()],
 ];
+
 const reservas = reserved.length;
 
 const initialValue = [...reserved];
@@ -28,6 +24,30 @@ export const ProductCalendar = () => {
   const [viewError, setViewError] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
 
+  const dias = [
+    ['Domingo', 'Do'],
+    ['Lunes', 'Lu'],
+    ['Martes', 'Ma'],
+    ['Miércoles', 'Mi'],
+    ['Jueves', 'Ju'],
+    ['Viernes', 'Vi'],
+    ['Sábado', 'Sá'],
+  ];
+  const meses = [
+    ['Enero', 'Ene'],
+    ['Febrero', 'Feb'],
+    ['Marzo', 'Mar'],
+    ['Abril', 'Abr'],
+    ['Mayo', 'May'],
+    ['Junio', 'Jun'],
+    ['Julio', 'Jul'],
+    ['Agosto', 'Ago'],
+    ['Septiembre', 'Sep'],
+    ['Octubre', 'Oct'],
+    ['Noviembre', 'Nov'],
+    ['Diciembre', 'Dic'],
+  ];
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -39,7 +59,7 @@ export const ProductCalendar = () => {
         console.log(`${element[0].format()} hasta ${element[1].format()}`);
       });
     } else {
-      alert('Debes estar logueado');
+      toast.warning('Debes estar logueado, asi que registrate');
     }
   };
   return (
@@ -62,7 +82,11 @@ export const ProductCalendar = () => {
               range
               rangeHover
               numberOfMonths={2}
+              weekStartDayIndex={1}
+              weekDays={dias}
+              months={meses}
               value={values}
+              minDate={new DateObject()}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
                   ([start, end]) =>
@@ -100,7 +124,12 @@ export const ProductCalendar = () => {
               range
               rangeHover
               numberOfMonths={1}
+              weekStartDayIndex={1}
+              weekDays={dias}
+              minDate={new DateObject()}
+              months={meses}
               value={values}
+              minDate={new DateObject()}
               onChange={(ranges) => {
                 const isClickedOutsideUnAvailbleDates = initialValue.every(
                   ([start, end]) =>

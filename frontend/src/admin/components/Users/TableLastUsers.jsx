@@ -1,4 +1,7 @@
 import {
+  Box,
+  CircularProgress,
+  Container,
   Paper,
   Table,
   TableBody,
@@ -8,17 +11,22 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useContext } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
+import { useEffect } from 'react';
+import { useUsers } from '../../../context/store/UsersProvider';
 
-export const TableLastProducts = () => {
-  const { itemState } = useContext(ItemsContext);
+export const TableLastUsers = () => {
+  const { getAllUsers, isLoading, userState } = useUsers();
 
-  const productos = itemState.items;
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  if (isLoading) return <CircularProgress />;
+
   return (
     <>
       <Typography variant='h5' textAlign={'center'}>
-        Últimos Productos
+        Últimos Usuarios
       </Typography>
       <TableContainer component={Paper} sx={{ maxWidth: '95%' }}>
         <Table sx={{ minWidth: 300 }} aria-label='simple table'>
@@ -26,12 +34,13 @@ export const TableLastProducts = () => {
             <TableRow>
               <TableCell>id</TableCell>
               <TableCell align='left'>Nombre</TableCell>
-              <TableCell align='left'>Categoría</TableCell>
-              <TableCell align='left'>Marca</TableCell>
+              <TableCell align='left'>Apellido</TableCell>
+              <TableCell align='left'>Email</TableCell>
+              <TableCell align='left'>Rol</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {productos.map((row) => (
+            {userState.users.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -40,8 +49,9 @@ export const TableLastProducts = () => {
                   {row.id}
                 </TableCell>
                 <TableCell align='left'>{row.nombre}</TableCell>
-                <TableCell align='left'>{row.nombreCategoria}</TableCell>
-                <TableCell align='left'>{row.nombreMarca}</TableCell>
+                <TableCell align='left'>{row.apellido}</TableCell>
+                <TableCell align='left'>{row.email}</TableCell>
+                <TableCell align='left'>{row.rol}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -2,6 +2,11 @@ import {
   Box,
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   IconButton,
   Link,
@@ -15,43 +20,96 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Characteristics } from '../components/Characteristics';
-import DateRangePickerComponent from '../components/DateRangePickerComponent';
 import { GridImagenes } from '../components/GridImagenes';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
 import { ProductCalendar } from '../components/ProductCalendar';
 import Politicas from '../components/Politicas';
+import { useUsers } from '../../context/store/UsersProvider';
+import { useFavoritos } from '../../context/store/FavoritosProvider';
+import { toast } from 'sonner';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import SimplePopup from '../../components/SharePopup';
 
 export const ProductPage = () => {
+  const [deleteModal, setDeleteModal] = useState(false);
   const { id } = useParams();
-  const [instrumento, setInstrumento] = useState([]);
+  const [instrumento, setInstrumento] = useState(null);
   const [listaImagenes, setListaImagenes] = useState([]);
-  const [favs, setFavs] = useState(false);
-  const { isLogged } = useContext(GlobalUserDataContext);
-
+  const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
+  const { deleteFavs, addFavoritos } = useFavoritos();
+  const [refresh, setRefresh] = useState(false);
+  const { userState } = useUsers();
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const accessToken =
+    userState?.token?.accessToken || sessionStorage.getItem('token');
+
+  const [favs, setFavs] = useState(false);
+
+  const shareUrl = `http://localhost:4000/instrumentos/${id}`;
+
+  const title = 'Mira este fabuloso instrumento! ';
+
   useEffect(() => {
-    axios(`${apiUrl}/productos/` + id)
+    if (accessToken) {
+      getItemById(accessToken);
+    }
+  }, [accessToken, refresh]);
+
+  useEffect(() => {
+    if (instrumento) {
+      setFavs(instrumento.esFavorito);
+    }
+  }, [instrumento]);
+
+  const getItemById = (token) => {
+    axios(`${apiUrl}/productos/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => {
         setInstrumento(res.data);
         setListaImagenes(res.data.imagenes || []);
       })
       .catch((err) => {
-        console.log(err);
+        console.log('Error ' + err.message);
       });
-  }, [id]);
+  };
+
+  if (instrumento === null) {
+    return <div>Loading...</div>;
+  }
 
   if (!instrumento) {
     return <Navigate to={'/'} />;
   }
 
-  const handleAddFav = (params) => {
-    setFavs(!favs);
-    console.log(instrumento);
+  const handleAddFavs = () => {
+    addFavoritos(globalUserData.id, instrumento.id);
+    toast.success('Agregado a favoritos');
+    setFavs(true);
+    handleRefresh();
   };
 
-  const handleReserva = () => {
-    !isLogged ? alert('Debes estar logueado') : alert('hola');
+  const handleClickOpen = () => {
+    setDeleteModal(true);
+  };
+
+  const handleClose = () => {
+    setDeleteModal(false);
+  };
+
+  const handleAcceptDelete = (user, producto) => {
+    deleteFavs(user, producto);
+    toast.success('Eliminado de favoritos');
+    setFavs(false);
+    setDeleteModal(false);
+    handleRefresh();
+  };
+
+  const handleRefresh = () => {
+    setRefresh(!refresh);
   };
 
   return (
@@ -81,24 +139,27 @@ export const ProductPage = () => {
           <span style={{ color: '#000000' }}> {instrumento.nombre}</span>
         </Typography>
         <Box>
-          {isLogged && (
-            <Box sx={{ position: 'absolute' }}>
-              <IconButton
-                size='large'
-                aria-label='add to favorites'
-                onClick={handleAddFav}
-              >
-                {favs ? (
+          <Box sx={{ position: 'absolute' }}>
+            <SimplePopup url={shareUrl} title={title} />
+            {isLogged &&
+              (favs ? (
+                <IconButton
+                  size='large'
+                  aria-label='add to favorites'
+                  onClick={handleClickOpen}
+                >
                   <FavoriteIcon color='buttonRed' />
-                ) : (
+                </IconButton>
+              ) : (
+                <IconButton
+                  size='large'
+                  aria-label='add to favorites'
+                  onClick={handleAddFavs}
+                >
                   <FavoriteTwoToneIcon color='warning' />
-                )}
-              </IconButton>
-              <IconButton aria-label='share'>
-                <ShareIcon color='primary' />
-              </IconButton>
-            </Box>
-          )}
+                </IconButton>
+              ))}
+          </Box>
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
         <Grid item xs={12} sm container alignItems='stretch'>
@@ -157,11 +218,10 @@ export const ProductPage = () => {
               fontWeight={800}
               textAlign={'center'}
             >
-              políticas de reserva
+              Políticas de reserva
             </Typography>
             <Politicas />
           </Grid>
-
           <Grid
             item
             xs={12}
@@ -176,21 +236,56 @@ export const ProductPage = () => {
                 textTransform={'uppercase'}
                 fontWeight={600}
                 textAlign={'center'}
+                paddingY={3}
               >
-                Selecciona las fechas que necesitas y reserva <span>ahora</span>
+                Selecciona las fechas que necesitas y reserva{' '}
+                <Box component={'span'} color={'primary.main'}>
+                  ahora
+                </Box>
               </Typography>
               <ProductCalendar />
             </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={6}
-            display={'flex'}
-            flexDirection={'column'}
-          ></Grid>
         </Grid>
       </Box>
+      {deleteModal && (
+        <Dialog
+          open={deleteModal}
+          onClose={handleClose}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+          fullWidth={true}
+          maxWidth={'xs'}
+          sx={{ textAlign: 'center' }}
+        >
+          <DialogContent>
+            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color='primary' />
+          </DialogContent>
+          <DialogTitle id='alert-dialog-title' fontWeight={600}>
+            {'¿Estás seguro?'}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id='alert-dialog-description' fontWeight={600}>
+              Esta acción eliminará al producto de sus Favoritos
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions sx={{ justifyContent: 'center' }}>
+            <Button
+              variant='contained'
+              color='buttonGreen'
+              onClick={() =>
+                handleAcceptDelete(globalUserData.id, instrumento.id)
+              }
+              autoFocus
+            >
+              ELIMINAR
+            </Button>
+            <Button variant='contained' color='buttonRed' onClick={handleClose}>
+              CANCELAR
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </Container>
   );
 };

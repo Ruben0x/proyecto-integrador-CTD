@@ -1,28 +1,30 @@
-import { useEffect } from 'react';
-import { ItemsContext } from '../context/ItemsContext';
+import { useEffect, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';
 import { userProductos } from '../context/store/ProductosProvider';
 import { useUsers } from '../context/store/UsersProvider';
 
 export const GridInstrumentos = () => {
-  // const { itemState } = useContext(ItemsContext);
-  // const [productos, setProductos] = useState([]);
   const { userState } = useUsers();
-
   const accessToken = userState.token.accessToken;
+  const loggedToken = sessionStorage.getItem('token');
 
-  const { getProductosRandoms, productoState } = userProductos();
+  const { getProductosRandoms, productoState, isLoading } = userProductos();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    getProductosRandoms(accessToken);
-  }, []);
+    const token = loggedToken || accessToken;
+    if (token) {
+      getProductosRandoms(token);
+    }
+  }, [loggedToken, accessToken, refresh]); // Add dependencies to useEffect
 
-  // useEffect(() => {
-  //   if (itemState.itemsRandoms) {
-  //     setProductos(itemState.itemsRandoms);
-  //   }
-  // }, [itemState]);
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev); // Toggle refresh state
+  };
+
+  if (isLoading) return 'Cargando...';
+
   return (
     <Box
       pt={4}
@@ -39,8 +41,8 @@ export const GridInstrumentos = () => {
         {productoState.productosRandoms.map((instrument) => (
           <Grid item xs={4} sm={6} md={6} key={instrument.id}>
             <InstrumentCardResponsive
-              key={instrument.id}
               instrument={instrument}
+              onFavChange={handleRefresh}
             />
           </Grid>
         ))}
