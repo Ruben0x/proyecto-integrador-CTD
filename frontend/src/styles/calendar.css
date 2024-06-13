@@ -1,5 +1,7 @@
 /*es una copia del estilo .red por defecto*/
-
+* {
+  font-family: roboto;
+}
 :root {
   --rmdp-primary-orange: #ff5000;
   --rmdp-secondary-orange: #121312;
