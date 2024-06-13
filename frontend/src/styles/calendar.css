@@ -1,7 +1,15 @@
 /*es una copia del estilo .red por defecto*/
+<<<<<<< HEAD
 * {
   font-family: roboto;
 }
+=======
+
+* {
+  font-family: roboto;
+}
+
+>>>>>>> 66bfd18 (agrega font en index.html)
 :root {
   --rmdp-primary-orange: #ff5000;
   --rmdp-secondary-orange: #121312;
