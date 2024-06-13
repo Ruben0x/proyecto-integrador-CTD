@@ -6,9 +6,12 @@ import { Box, Button, sliderClasses,  } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 export default function MediaCardXS({ imagen, categoria, idCategoria, onClick,
-  arrayFilter,}) {
-  const [seleccion, setSeleccion] = useState(false);
- 
+  arrayFilter, seleccionState}) {
+
+  const [seleccion, setSeleccion] = useState(seleccionState);
+
+
+
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {

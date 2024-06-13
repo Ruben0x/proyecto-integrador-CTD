@@ -19,6 +19,9 @@ const ItemsByCategory = () => {
   const loggedToken = sessionStorage.getItem('token');
   const token = loggedToken || accessToken;
 
+  const [arrayFilter, setArrayFilter] = useState([id]); // el arrayfilter se llena desde el CategoriasSectionXS
+
+//primer fetch: al llegar a la pagina de items por catgoria
   useEffect(() => {
     axios('http://localhost:3000/categorias/' + id + '/productos', {
       headers: {
@@ -39,10 +42,54 @@ const ItemsByCategory = () => {
       });
   }, [id]);
 
+//resto de los fetch: al interactuar con las cardsXS
+const handleFilterChange = (newArray) => {
+  setArrayFilter(newArray);
+
+  if (newArray.length === 1) {
+    axios(`http://localhost:3000/categorias/${newArray[0]}/productos`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        const transformedData = res.data.map((producto) => {
+          return {
+            ...producto,
+            imagenes: producto.imagenes.map((imagen) => imagen.url),
+          };
+        });
+        setProductos(transformedData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    axios(`http://localhost:3000/categorias/${newArray[0]}/productos?filter=${newArray.slice(1).join(',')}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        const transformedData = res.data.map((producto) => {
+          return {
+            ...producto,
+            imagenes: producto.imagenes.map((imagen) => imagen.url),
+          };
+        });
+        setProductos(transformedData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+};
+
+ 
   if (!productos) {
     return <Navigate to={'/'} />;
   }
-  const tituloCategoria = productos[0]?.nombreCategoria.toUpperCase();
+  const tituloCategoria = [...new Set(productos.map((producto) => producto.nombreCategoria.toUpperCase()))].join(', ');
 
   return (
     <div
@@ -59,7 +106,7 @@ const ItemsByCategory = () => {
         }}
       >
         {/*Seccion categorias del Body*/}
-        <CategoriasSectionXS />
+        <CategoriasSectionXS id={id} onFilterChange={handleFilterChange}/>
 
         {/*Seccion recomendados del Body*/}
         <Container
