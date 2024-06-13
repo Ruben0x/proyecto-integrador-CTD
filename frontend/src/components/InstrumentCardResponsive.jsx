@@ -26,7 +26,6 @@ import SimplePopup from './SharePopup';
 
 export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
   const [favs, setFavs] = useState(instrument.esFavorito);
-  const [deleteModal, setDeleteModal] = useState(false);
 
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const { deleteFavs, isLoading, addFavoritos } = useFavoritos();
@@ -69,19 +68,10 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
     onFavChange();
   };
 
-  const handleClickOpen = (favorito) => {
-    setDeleteModal(true);
-  };
-
-  const handleClose = () => {
-    setDeleteModal(false);
-  };
-
-  const handleAcceptDelete = (user, producto) => {
-    deleteFavs(user, producto);
+  const handleAcceptDelete = () => {
+    deleteFavs(globalUserData.id, id);
     toast.success(nombre + ' eliminado de favoritos');
     setFavs(false);
-    setDeleteModal(false);
     onFavChange();
   };
 
@@ -123,7 +113,7 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
               <IconButton
                 size='large'
                 aria-label='add to favorites'
-                onClick={handleClickOpen}
+                onClick={handleAcceptDelete}
               >
                 <FavoriteIcon color='buttonRed' />
               </IconButton>
@@ -195,42 +185,6 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
           </Box>
         </Link>
       </Card>
-      {deleteModal && (
-        <Dialog
-          open={deleteModal}
-          onClose={handleClose}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-          fullWidth={true}
-          maxWidth={'xs'}
-          sx={{ textAlign: 'center' }}
-        >
-          <DialogContent>
-            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color='primary' />
-          </DialogContent>
-          <DialogTitle id='alert-dialog-title' fontWeight={600}>
-            {'¿Estas seguro?'}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description' fontWeight={600}>
-              Esta acción eliminará al producto de sus Favoritos
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions sx={{ justifyContent: 'center' }}>
-            <Button
-              variant='contained'
-              color='buttonGreen'
-              onClick={() => handleAcceptDelete(globalUserData.id, id)}
-              autoFocus
-            >
-              ELIMINAR
-            </Button>
-            <Button variant='contained' color='buttonRed' onClick={handleClose}>
-              CANCELAR
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
     </>
   );
 };
