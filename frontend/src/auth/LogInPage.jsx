@@ -13,39 +13,39 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { login } from './helpers/login';
 import { GlobalUserDataContext } from './helpers/globalUserData';
-
-
+import { ItemsContext } from '../context/ItemsContext';
 
 /*Data para POST:
 'Checkbox recuerdame' :[booleano]
 */
 const label = { inputProps: { 'aria-label': 'Checkbox recuerdame' } };
 
-
 export const LogInPage = () => {
+  const { getUserById } = useContext(ItemsContext);
   const { setIsLogged, setGlobalUserData } = useContext(GlobalUserDataContext);
+
   const validationSchema = Yup.object({
     email: Yup.string('Ingrese su correo')
       .email('Correo Invalido')
       .required('Correo es obligatorio'),
-    password: Yup.string('Ingrese su contraseña')
-    .required('Debe ingresar una contraseña'),
+    password: Yup.string('Ingrese su contraseña').required(
+      'Debe ingresar una contraseña'
+    ),
   });
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      rememberme:false,
+      rememberme: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      login(values, setIsLogged, setGlobalUserData);
+      login(values, setIsLogged, setGlobalUserData, getUserById);
     },
   });
   return (
     <AuthLayout title='Bienvenid@' subtitle=' ingresa al sitio'>
-
       <Grid
         container
         spacing={0}
@@ -98,33 +98,45 @@ export const LogInPage = () => {
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
                   helperText={formik.touched.password && formik.errors.password}
                   fullWidth
                 />
               </Grid>
               <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
                 <Grid item xs={12}>
-                  <Typography 
+                  <Typography
                     fontWeight={600}
                     sx={{ mr: 1, paddingBottom: '15px' }}
                   >
-                    <Checkbox {...label} 
-                    id='rememberme'
-                    name='rememberme'
-                    value={formik.values.rememberme}
-                    onChange={formik.handleChange}
+                    <Checkbox
+                      {...label}
+                      id='rememberme'
+                      name='rememberme'
+                      value={formik.values.rememberme}
+                      onChange={formik.handleChange}
                     />
                     Recuerdame
                   </Typography>
-                  <Button type='submit' variant='contained' fullWidth color='secondary'>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    fullWidth
+                    color='secondary'
+                  >
                     INGRESA
                   </Button>
                 </Grid>
               </Grid>
               <Grid container direction='row' justifyContent='end'>
                 <Typography sx={{ mr: 1 }}>¿No tienes cuenta?</Typography>
-                <Link component={RouterLink} color='inherit' to='/auth/registro'>
+                <Link
+                  component={RouterLink}
+                  color='inherit'
+                  to='/auth/registro'
+                >
                   Regístrate aquí
                 </Link>
               </Grid>
@@ -132,7 +144,6 @@ export const LogInPage = () => {
           </form>
         </Grid>
       </Grid>
-
     </AuthLayout>
   );
 };

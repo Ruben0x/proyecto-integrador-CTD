@@ -1,21 +1,21 @@
 //import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import { Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import MediaCard from './MediaCard';
 import { GridInstrumentos } from './GridInstrumentos';
-
-//===HARDCODEO DE CATEGORIAS
-export const arrayCategorias = [
-  { id: 1, nombre: 'cuerdas', img: '/images/cuerdas-categorias.png' },
-  { id: 2, nombre: 'percusiones', img: '/images/percusiones-categorias.png' },
-  { id: 3, nombre: 'teclas', img: '/images/teclas-categorias.png' },
-  { id: 4, nombre: 'vientos', img: '/images/vientos-categoria.png' },
-];
+import SearchSection from './SearchSection';
+import CategoriasSectionMain from './CategoriasSectionMain';
 
 const ResponsiveBody = () => {
+  const handleFormSubmit = (values) => {
+    console.log("data recibida");
+    console.log(values);
+    // Use and manage the values as needed
+  
+  
+  };
+
   return (
     <div
       style={{
@@ -31,107 +31,10 @@ const ResponsiveBody = () => {
         }}
       >
         {/*Seccion Buscador del Body*/}
-        <Container
-          maxWidth='100%'
-          className='section-buscar'
-          sx={{
-            backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
-            backgroundSize: 'cover',
-            height: '300px',
-            backgroundPosition: useMediaQuery('(max-width:900px)')
-              ? 'calc(0% - 490px + 10%)'
-              : 'right',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Box maxWidth={'1440px'} width={'100%'}>
-            <Grid container columnSpacing={1}>
-              <Grid item>
-                <Typography color={'#FFFFFF'} variant='body1' fontSize={32}>
-                  Bienvenido a
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant='body1'
-                  sx={{
-                    fontWeight: '800',
-                    color: '#FF5500',
-                    display: 'inline',
-                    fontSize: 32,
-                  }}
-                >
-                  PORTAL SONORO
-                </Typography>
-              </Grid>
-            </Grid>
-            <Typography color={'#FFFFFF'} fontSize={20}>
-              Encuentra el equipamiento perfecto para ti
-            </Typography>
-            <SearchBar maxWidth='733px' />
-          </Box>
-        </Container>
+        <SearchSection onSubmit={handleFormSubmit}/>
 
         {/*Seccion categorias del Body*/}
-        <Container
-          maxWidth='false'
-          className='section-categorias'
-          sx={{
-            backgroundColor: '#F9E9DE',
-            paddingTop: '50px',
-            paddingBottom: '100px',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Box maxWidth={'1440px'} width={'100%'}>
-            <Grid container justifyContent={'center'}>
-              <Typography fontWeight='bold' fontSize={20}>
-                Revisa las categorías - Reserva tus opciones
-              </Typography>
-              <Grid
-                container
-                columnSpacing={1}
-                justifyContent={'center'}
-                alignItems={'baseline'}
-              >
-                <Grid item>
-                  <Typography fontSize={40}>ENCUENTRA TU </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    fontWeight='800'
-                    fontSize={40}
-                    color={'#FF5500'}
-                    display={'inline'}
-                  >
-                    EQUIPAMIENTO
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            {/*/contenedor de tarjeta: **esta hardcodeado***/}
-            <Container
-              sx={{
-                minWidth: '100%',
-                display: 'flex',
-                justifyContent: 'space-around',
-
-                flexWrap: 'wrap',
-              }}
-            >
-              {arrayCategorias.map((item) => (
-                <MediaCard
-                  imagen={item.img}
-                  categoria={item.nombre}
-                  key={item.id}
-                />
-              ))}
-            </Container>
-          </Box>
-        </Container>
+        <CategoriasSectionMain />
 
         {/*Seccion recomendados del Body*/}
         <Container

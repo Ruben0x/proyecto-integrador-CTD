@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -11,37 +11,38 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { useContext } from 'react';
-import { ItemsContext } from '../../context/ItemsContext';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { toast } from 'sonner';
-import { AdminLayout } from '../layout/AdminLayout';
+import { AdminLayout } from '../../layout/AdminLayout';
 import WestIcon from '@mui/icons-material/West';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { AddProductFormcopy } from './AddProductFormcopy';
+import { AddProductForm } from './AddProductForm';
+import { userProductos } from '../../../context/store/ProductosProvider';
 
 export const ListAllProducts = ({}) => {
-  const { itemState, deleteProductbyId } = useContext(ItemsContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [item, setItem] = useState('');
   const [editView, setEditView] = useState(false);
+
+  const loggedToken = sessionStorage.getItem('token');
+  const { getAllProducts, isLoading, productoState, deleteProducto } =
+    userProductos();
+  // const { userState } = useUsers();
+  useEffect(() => {
+    // console.log(userState);
+    getAllProducts(loggedToken);
+  }, []);
 
   const handleClickOpen = (params) => {
     setItem(params.row);
     setDeleteModal(true);
   };
+
   const handleAcceptDelete = (id) => {
-    deleteProductbyId(id).then((res) => {
-      if (res) {
-        toast.success('Producto eliminado con éxito');
-        // getAllItems();
-        setDeleteModal(false);
-      } else {
-        console.log('ERROR');
-      }
-    });
+    deleteProducto(id);
+    setDeleteModal(false);
   };
 
   const handleClose = () => {
@@ -52,6 +53,9 @@ export const ListAllProducts = ({}) => {
     setItem(param.row);
     setEditView(true);
   };
+
+  if (isLoading) return <CircularProgress />;
+
   const renderActions = (params) => {
     return (
       <>
@@ -84,7 +88,7 @@ export const ListAllProducts = ({}) => {
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ width: '90%' }}>
             <DataGrid
-              rows={itemState.items}
+              rows={productoState.todosProductos}
               columns={[
                 { field: 'id', headerName: 'ID', width: 70 },
                 { field: 'nombre', headerName: 'Nombre', width: 180 },
@@ -108,10 +112,10 @@ export const ListAllProducts = ({}) => {
               ]}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
+                  paginationModel: { pageSize: 10 },
                 },
               }}
-              pageSizeOptions={[5, 10]}
+              pageSizeOptions={[10, 20]}
               // checkboxSelection
             />
           </Box>
@@ -125,7 +129,7 @@ export const ListAllProducts = ({}) => {
           >
             Volver al listado de productos
           </Button>
-          <AddProductFormcopy item={item} />
+          <AddProductForm item={item} />
         </>
       )}
       {deleteModal && (

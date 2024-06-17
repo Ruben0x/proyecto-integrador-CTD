@@ -1,17 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ItemsContext } from '../context/ItemsContext';
-import { Box, Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import { InstrumentCardResponsive } from './InstrumentCardResponsive';
+import { userProductos } from '../context/store/ProductosProvider';
+import { useUsers } from '../context/store/UsersProvider';
 
 export const GridInstrumentos = () => {
-  const { itemState } = useContext(ItemsContext);
-  const [productos, setProductos] = useState([]);
+  const { userState } = useUsers();
+  const accessToken = userState.token.accessToken;
+  const loggedToken = sessionStorage.getItem('token');
+
+  const { getProductosRandoms, productoState, isLoading } = userProductos();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    if (itemState.itemsRandoms) {
-      setProductos(itemState.itemsRandoms);
+    const token = loggedToken || accessToken;
+    if (token) {
+      getProductosRandoms(token);
     }
-  }, [itemState]);
+  }, []);
+
+  const handleRefresh = () => {
+    setRefresh((prev) => !prev); // Toggle refresh state
+  };
+
+  if (isLoading) return <CircularProgress />;
+
   return (
     <Box
       pt={4}
@@ -25,11 +38,11 @@ export const GridInstrumentos = () => {
         columns={{ xs: 4, sm: 8, md: 12 }}
         justifyContent={'center'}
       >
-        {productos.map((instrument) => (
+        {productoState.productosRandoms.map((instrument) => (
           <Grid item xs={4} sm={6} md={6} key={instrument.id}>
             <InstrumentCardResponsive
-              key={instrument.id}
               instrument={instrument}
+              onFavChange={handleRefresh}
             />
           </Grid>
         ))}

@@ -4,86 +4,43 @@ import { itemReducer } from './itemsReducer';
 import axios from 'axios';
 import { types } from './types';
 import { toast } from 'sonner';
-import { clearWarningsCache } from '@mui/x-data-grid/internals';
 
 const initialState = {
   items: [],
   usuarios: [],
   caracteristicas: [],
+  categorias: [],
 };
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const ItemsProvider = ({ children }) => {
   const [itemState, dispatch] = useReducer(itemReducer, initialState);
 
-  const getAllItems = useCallback(() => {
-    axios
-      .get('http://localhost:3000/productos')
-      .then((res) => dispatch({ type: types.getItems, payload: res.data }));
-  }, []);
-  const getAllUsuarios = useCallback(() => {
-    axios.get('http://localhost:3000/usuarios').then((res) =>
-      // console.log(res.data)
-      dispatch({ type: types.getUsuarios, payload: res.data })
-    );
-  }, []);
-  const getCaracteristicas = () => {
-    axios
-      .get('http://localhost:3000/caracteristicas')
-      .then((res) => {
-        // console.log(res.data);
-        dispatch({ type: types.getCaracteristicas, payload: res.data });
-      })
-      .catch((err) => console.log('Error:', err));
-  };
-
   const getAllCategorias = useCallback(() => {
-    axios.get('http://localhost:3000/categorias').then((res) =>
-      // console.log(res.data)
-      dispatch({ type: types.getCategorias, payload: res.data })
-    );
+    axios.get(`${apiUrl}/categorias`).then((res) => {
+      // console.log(res.data);
+      dispatch({ type: types.getCategorias, payload: res.data });
+    });
   }, []);
 
-  const getItemsRandoms = () => {
-    axios
-      .get('http://localhost:3000/productos/random')
-      .then((res) => dispatch({ type: types.getRandoms, payload: res.data }))
-      .catch((err) => toast(err));
-  };
-
-  const deleteProductbyId = async (id) => {
+  const getUserById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/productos/${id}`, {
-        method: 'DELETE',
+      const response = await fetch(`${apiUrl}/usuarios/${id}`, {
+        method: 'GET',
       });
 
       if (response.ok) {
-        dispatch({ type: types.deleteItem, payload: id });
-        return true;
+        const userData = await response.json();
+        dispatch({ type: types.getUser, payload: userData });
+        return userData;
       } else {
         console.error(response.statusText);
-        return false;
+        return null;
       }
     } catch (error) {
       console.error(error);
-      return false;
-    }
-  };
-  const deleteUserById = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
-        dispatch({ type: types.deleteUser, payload: id });
-        return true;
-      } else {
-        console.error(response.statusText);
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
+      return null;
     }
   };
 
@@ -115,7 +72,7 @@ export const ItemsProvider = ({ children }) => {
     // console.log(formData);
 
     try {
-      const response = await fetch('http://localhost:3000/productos', {
+      const response = await fetch(`${apiUrl}/productos`, {
         method: 'POST',
         body: formData,
       });
@@ -163,7 +120,7 @@ export const ItemsProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/productos/' + id, {
+      const response = await fetch(`${apiUrl}/productos/` + id, {
         method: 'PATCH',
         body: formData,
       });
@@ -181,19 +138,22 @@ export const ItemsProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getAllItems();
-  }, [getAllItems]);
-
-  useEffect(() => {
-    getAllUsuarios();
-  }, [getAllUsuarios]);
-  useEffect(() => {
-    getCaracteristicas();
-  }, []);
-  useEffect(() => {
-    getItemsRandoms();
-  }, []);
+  const getItemsByCategories = async (categoryIds, token) => {
+    try {
+      const response = await fetch(
+        `${apiUrl}/categorias/${categoryIds[0]}/productos?filter=${categoryIds.slice(1).join('%2C')}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      dispatch({ type: types.getItemsByCategories, payload: data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <ItemsContext.Provider
@@ -201,13 +161,11 @@ export const ItemsProvider = ({ children }) => {
         itemState,
         dispatch,
         postCreateItem,
-        deleteProductbyId,
-        deleteUserById,
-        getAllItems,
-        getAllUsuarios,
-        getCaracteristicas,
+        // deleteProductbyId,
+        getUserById,
         postEditItem,
         getAllCategorias,
+        getItemsByCategories,
       }}
     >
       {children}

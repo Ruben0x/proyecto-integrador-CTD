@@ -1,0 +1,301 @@
+[
+  {
+    "id": 6,
+    "nombre": "Guitarra C40",
+    "descripcion": "Guitarra versátil que se adapta a una gran variedad de estilos musicales",
+    "categoriaId": 1,
+    "nombreCategoria": "Cuerdas",
+    "marcaId": 2,
+    "nombreMarca": "Yamaha",
+    "precio": 149990,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 11, "url": "http://localhost:3000/images/guitarra-c40_1" },
+      { "id": 12, "url": "http://localhost:3000/images/guitarra-c40_2" }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 1,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Acústico"
+      },
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 2,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Eléctrico"
+      },
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 3,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Electroacústico"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "Platillo Hi Hat S14mpr",
+    "descripcion": "Los HiHats Mastersound cuentan con un platillo inferior de borde exterior martillado",
+    "categoriaId": 2,
+    "nombreCategoria": "Percusiones",
+    "marcaId": 4,
+    "nombreMarca": "Zildjian",
+    "precio": 249580,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 13, "url": "http://localhost:3000/images/platillo_hihat_1" }
+    ],
+    "caracteristicas": []
+  },
+  {
+    "id": 8,
+    "nombre": "Guitarra Electrica Squier",
+    "descripcion": "Sonidos fuertes y firmes con un estilo propio",
+    "categoriaId": 1,
+    "nombreCategoria": "Cuerdas",
+    "marcaId": 3,
+    "nombreMarca": "Fender",
+    "precio": 289990,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 14, "url": "http://localhost:3000/images/guitarra_squier_1" }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 2,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Eléctrico"
+      },
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 3,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Electroacústico"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "nombre": "Armonica Special 20 Tono D",
+    "descripcion": "----",
+    "categoriaId": 4,
+    "nombreCategoria": "Vientos",
+    "marcaId": 7,
+    "nombreMarca": "Hohner",
+    "precio": 65000,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 15, "url": "http://localhost:3000/images/armonica_20_1" },
+      { "id": 16, "url": "http://localhost:3000/images/armonica_20_2" },
+      { "id": 17, "url": "http://localhost:3000/images/armonica_20_3" },
+      { "id": 18, "url": "http://localhost:3000/images/armonica_20_4" },
+      { "id": 19, "url": "http://localhost:3000/images/armonica_20_5" }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 1,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Acústico"
+      },
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 3,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Electroacústico"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "nombre": "Guitarra G2655",
+    "descripcion": "Está diseñada para tres cosas simples: alto rendimiento amigable con la ganancia, facilidad de ejecución y estilo espectacular",
+    "categoriaId": 1,
+    "nombreCategoria": "Cuerdas",
+    "marcaId": 6,
+    "nombreMarca": "Gretsch",
+    "precio": 686000,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 20, "url": "http://localhost:3000/images/guitarra_g2655_1" },
+      { "id": 21, "url": "http://localhost:3000/images/guitarra_g2655_2" },
+      { "id": 22, "url": "http://localhost:3000/images/guitarra_g2655_3" }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 3,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Electroacústico"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "nombre": "Teclado CTK-3500",
+    "descripcion": "Calidad de sonido mejorada y la sensación de estar tocando un teclado de verdad",
+    "categoriaId": 3,
+    "nombreCategoria": "Teclas",
+    "marcaId": 1,
+    "nombreMarca": "Casio",
+    "precio": 203991,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 23, "url": "http://localhost:3000/images/teclado_ctk3500_1" },
+      { "id": 24, "url": "http://localhost:3000/images/teclado_ctk3500_2" },
+      { "id": 25, "url": "http://localhost:3000/images/teclado_ctk3500_3" },
+      { "id": 26, "url": "http://localhost:3000/images/teclado_ctk3500_4" }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 2,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Eléctrico"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "nombre": "Cuerdas de guitarra eléctrica Exl125",
+    "descripcion": "Cuerda de acero.",
+    "categoriaId": 1,
+    "nombreCategoria": "Cuerdas",
+    "marcaId": 8,
+    "nombreMarca": "DAddario",
+    "precio": 7990,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 27, "url": "http://localhost:3000/images/cuerdas-exl125_1" }
+    ],
+    "caracteristicas": []
+  },
+  {
+    "id": 13,
+    "nombre": "Bateria acustica Exx 725",
+    "descripcion": "El diseño de accesorio de tres vías del sistema de montaje Opti-Loc de Pearl utiliza isloadores de caucho en dos puntos de ajuste y otro en uno de los dos orificios de ventilación del tambor",
+    "categoriaId": 2,
+    "nombreCategoria": "Percusiones",
+    "marcaId": 10,
+    "nombreMarca": "Pearl",
+    "precio": 999900,
+    "esFavorito": false,
+    "imagenes": [
+      { "id": 28, "url": "http://localhost:3000/images/bateria_exx725_1" }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 1,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Acústico"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "nombre": "Platillos",
+    "descripcion": "TZZZ",
+    "categoriaId": 2,
+    "nombreCategoria": "Percusiones",
+    "marcaId": 6,
+    "nombreMarca": "Gretsch",
+    "precio": 1990,
+    "esFavorito": false,
+    "imagenes": [
+      {
+        "id": 29,
+        "url": "http://localhost:3000/images/37171939-d667-4ecf-8e38-113340c0f1b2"
+      }
+    ],
+    "caracteristicas": [
+      {
+        "caracteristicaId": 1,
+        "caracteristicaTipoCaracteristicaId": 1,
+        "nombre": "Acero",
+        "icono": "i-acero",
+        "descripcion": "Cuerdas de acero",
+        "valor": "Acústico"
+      },
+      {
+        "caracteristicaId": 2,
+        "caracteristicaTipoCaracteristicaId": 7,
+        "nombre": "Madera de roble",
+        "icono": "i-madera-roble",
+        "descripcion": "Material madera de roble",
+        "valor": "Dorado"
+      },
+      {
+        "caracteristicaId": 3,
+        "caracteristicaTipoCaracteristicaId": 29,
+        "nombre": "Aluminio",
+        "icono": "i-aluminio",
+        "descripcion": "Cuerpo de aluminio",
+        "valor": "2.5"
+      },
+      {
+        "caracteristicaId": 4,
+        "caracteristicaTipoCaracteristicaId": 69,
+        "nombre": "TIPO DE INSTRUMENTO",
+        "icono": "default_icon",
+        "descripcion": "default_description",
+        "valor": "103 x 38 x 10"
+      },
+      {
+        "caracteristicaId": 5,
+        "caracteristicaTipoCaracteristicaId": 105,
+        "nombre": "COLOR",
+        "icono": "default_icon",
+        "descripcion": "default_description",
+        "valor": "Latón"
+      },
+      {
+        "caracteristicaId": 6,
+        "caracteristicaTipoCaracteristicaId": 114,
+        "nombre": "PESO (KG)",
+        "icono": "default_icon",
+        "descripcion": "default_description",
+        "valor": "Ruedas de modulación y pitch"
+      },
+      {
+        "caracteristicaId": 7,
+        "caracteristicaTipoCaracteristicaId": 125,
+        "nombre": "DIMENSIONES (CM)",
+        "icono": "default_icon",
+        "descripcion": "default_description",
+        "valor": "Banco, pedal de sustain"
+      },
+      {
+        "caracteristicaId": 8,
+        "caracteristicaTipoCaracteristicaId": 138,
+        "nombre": "MATERIAL",
+        "icono": "default_icon",
+        "descripcion": "default_description",
+        "valor": "Nuevo"
+      }
+    ]
+  }
+]
