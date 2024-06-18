@@ -48,7 +48,7 @@ export const ProductPage = () => {
 
   const [favs, setFavs] = useState(false);
 
-  const shareUrl = `http://localhost:4000/instrumentos/${id}`;
+  const shareUrl = `${import.meta.env.VITE_LOCAL_URL}/instrumentos/${id}`;
 
   const title = 'Mira este fabuloso instrumento! ';
 

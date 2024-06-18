@@ -21,9 +21,9 @@ const ItemsByCategory = () => {
 
   const [arrayFilter, setArrayFilter] = useState([id]); // el arrayfilter se llena desde el CategoriasSectionXS
 
-//primer fetch: al llegar a la pagina de items por catgoria
+  //primer fetch: al llegar a la pagina de items por catgoria
   useEffect(() => {
-    axios('http://localhost:3000/categorias/' + id + '/productos', {
+    axios(`${import.meta.env.VITE_API_URL}/categorias/${id}/productos`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -42,54 +42,63 @@ const ItemsByCategory = () => {
       });
   }, [id]);
 
-//resto de los fetch: al interactuar con las cardsXS
-const handleFilterChange = (newArray) => {
-  setArrayFilter(newArray);
+  //resto de los fetch: al interactuar con las cardsXS
+  const handleFilterChange = (newArray) => {
+    setArrayFilter(newArray);
 
-  if (newArray.length === 1) {
-    axios(`http://localhost:3000/categorias/${newArray[0]}/productos`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        const transformedData = res.data.map((producto) => {
-          return {
-            ...producto,
-            imagenes: producto.imagenes.map((imagen) => imagen.url),
-          };
+    if (newArray.length === 1) {
+      axios(
+        `${import.meta.env.VITE_API_URL}/categorias/${newArray[0]}/productos`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          const transformedData = res.data.map((producto) => {
+            return {
+              ...producto,
+              imagenes: producto.imagenes.map((imagen) => imagen.url),
+            };
+          });
+          setProductos(transformedData);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setProductos(transformedData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } else {
-    axios(`http://localhost:3000/categorias/${newArray[0]}/productos?filter=${newArray.slice(1).join(',')}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        const transformedData = res.data.map((producto) => {
-          return {
-            ...producto,
-            imagenes: producto.imagenes.map((imagen) => imagen.url),
-          };
+    } else {
+      axios(
+        `${import.meta.env.VITE_API_URL}/categorias/${newArray[0]}/productos?filter=${newArray.slice(1).join(',')}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => {
+          const transformedData = res.data.map((producto) => {
+            return {
+              ...producto,
+              imagenes: producto.imagenes.map((imagen) => imagen.url),
+            };
+          });
+          setProductos(transformedData);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setProductos(transformedData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-};
+    }
+  };
 
- 
   if (!productos) {
     return <Navigate to={'/'} />;
   }
-  const tituloCategoria = [...new Set(productos.map((producto) => producto.nombreCategoria.toUpperCase()))].join(', ');
+  const tituloCategoria = [
+    ...new Set(
+      productos.map((producto) => producto.nombreCategoria.toUpperCase())
+    ),
+  ].join(', ');
 
   return (
     <div
@@ -106,7 +115,7 @@ const handleFilterChange = (newArray) => {
         }}
       >
         {/*Seccion categorias del Body*/}
-        <CategoriasSectionXS id={id} onFilterChange={handleFilterChange}/>
+        <CategoriasSectionXS id={id} onFilterChange={handleFilterChange} />
 
         {/*Seccion recomendados del Body*/}
         <Container
