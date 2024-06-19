@@ -27,15 +27,29 @@ const ItemsSearch = () => {
   };
 
   const filterProductos = async () => {
-    if (Array.isArray(query)) {
-      return query;
-    } else if (query.searchField) {
-      const keyWord = query.searchField.toLowerCase();
-      const productos = await searchProducts({ token: loggedToken || userState.token.accessToken, text: keyWord })
-      setProductos(productos)
-    } else {
-      return productos;
+    const keyWord = query?.searchField?.toLowerCase();
+    const payload = { token: loggedToken || userState.token.accessToken }
+
+    if(keyWord) payload.text = keyWord
+    
+    if(query.dates.length === 2) {
+      const year1 = query.dates[0].getFullYear();
+      const month1 = String(query.dates[0].getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+      const day1 = String(query.dates[0].getDate()).padStart(2, '0'); // Los días van de 1 a 31
+
+      const year2 = query.dates[1].getFullYear();
+      const month2 = String(query.dates[1].getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+      const day2 = String(query.dates[1].getDate()).padStart(2, '0'); // Los días van de 1 a 31
+
+      const fechaDesde = `${year1}-${month1}-${day1}`;
+      const fechaHasta = `${year2}-${month2}-${day2}`;
+      
+      payload.date1 = fechaDesde
+      payload.date2 = fechaHasta
     }
+    
+    const productos = await searchProducts(payload)
+    setProductos(productos)
   };
 
   
