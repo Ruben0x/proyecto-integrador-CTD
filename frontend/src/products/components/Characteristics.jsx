@@ -31,16 +31,7 @@ export const Characteristics = ({ instrumento }) => {
   }
   return (
     <>
-      <Typography
-        paddingBottom={2}
-        textTransform={'uppercase'}
-        fontWeight={600}
-        sx={{ typography: { xs: 'h5' } }}
-        textAlign={'center'}
-      >
-        Características
-      </Typography>
-      <Grid container columns={{ xs: 1, sm: 12 }} rowSpacing={2}>
+      <Grid container columns={{ xs: 12, sm: 12 }} rowSpacing={1}>
         {caracteristicas.map((caracteristica, index) => {
           const IconComponent =
             iconMapping[caracteristica.nombre.toUpperCase()] || TuneIcon;
@@ -55,9 +46,14 @@ export const Characteristics = ({ instrumento }) => {
               key={index}
             >
               <IconComponent />
-              <Typography paddingLeft={2}>
-                {caracteristica.nombre.toUpperCase()}: {caracteristica.valor}
-              </Typography>
+              <Grid>
+                <Typography paddingLeft={2} fontWeight={600}>
+                  {caracteristica.nombre.toUpperCase()}:
+                </Typography>
+                <Typography variant='subtitle1' paddingLeft={2}>
+                  {caracteristica.valor}
+                </Typography>
+              </Grid>
             </Grid>
           );
         })}

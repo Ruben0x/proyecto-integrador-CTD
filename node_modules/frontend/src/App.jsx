@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { TiendaRouter } from './routes/TiendaRouter';
 import { AdminPage } from './pages/AdminPage';
 import { PrivateRoute } from './routes/PrivateRoute';

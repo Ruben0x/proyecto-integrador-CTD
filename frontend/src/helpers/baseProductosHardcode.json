@@ -10,8 +10,14 @@
     "precio": 149990,
     "esFavorito": false,
     "imagenes": [
-      { "id": 11, "url": "http://localhost:3000/images/guitarra-c40_1" },
-      { "id": 12, "url": "http://localhost:3000/images/guitarra-c40_2" }
+      {
+        "id": 11,
+        "url": "${import.meta.env.VITE_API_URL}/images/guitarra-c40_1"
+      },
+      {
+        "id": 12,
+        "url": "${import.meta.env.VITE_API_URL}/images/guitarra-c40_2"
+      }
     ],
     "caracteristicas": [
       {
@@ -51,7 +57,10 @@
     "precio": 249580,
     "esFavorito": false,
     "imagenes": [
-      { "id": 13, "url": "http://localhost:3000/images/platillo_hihat_1" }
+      {
+        "id": 13,
+        "url": "${import.meta.env.VITE_API_URL}/images/platillo_hihat_1"
+      }
     ],
     "caracteristicas": []
   },
@@ -66,7 +75,10 @@
     "precio": 289990,
     "esFavorito": false,
     "imagenes": [
-      { "id": 14, "url": "http://localhost:3000/images/guitarra_squier_1" }
+      {
+        "id": 14,
+        "url": "${import.meta.env.VITE_API_URL}/images/guitarra_squier_1"
+      }
     ],
     "caracteristicas": [
       {
@@ -98,11 +110,26 @@
     "precio": 65000,
     "esFavorito": false,
     "imagenes": [
-      { "id": 15, "url": "http://localhost:3000/images/armonica_20_1" },
-      { "id": 16, "url": "http://localhost:3000/images/armonica_20_2" },
-      { "id": 17, "url": "http://localhost:3000/images/armonica_20_3" },
-      { "id": 18, "url": "http://localhost:3000/images/armonica_20_4" },
-      { "id": 19, "url": "http://localhost:3000/images/armonica_20_5" }
+      {
+        "id": 15,
+        "url": "${import.meta.env.VITE_API_URL}/images/armonica_20_1"
+      },
+      {
+        "id": 16,
+        "url": "${import.meta.env.VITE_API_URL}/images/armonica_20_2"
+      },
+      {
+        "id": 17,
+        "url": "${import.meta.env.VITE_API_URL}/images/armonica_20_3"
+      },
+      {
+        "id": 18,
+        "url": "${import.meta.env.VITE_API_URL}/images/armonica_20_4"
+      },
+      {
+        "id": 19,
+        "url": "${import.meta.env.VITE_API_URL}/images/armonica_20_5"
+      }
     ],
     "caracteristicas": [
       {
@@ -134,9 +161,18 @@
     "precio": 686000,
     "esFavorito": false,
     "imagenes": [
-      { "id": 20, "url": "http://localhost:3000/images/guitarra_g2655_1" },
-      { "id": 21, "url": "http://localhost:3000/images/guitarra_g2655_2" },
-      { "id": 22, "url": "http://localhost:3000/images/guitarra_g2655_3" }
+      {
+        "id": 20,
+        "url": "${import.meta.env.VITE_API_URL}/images/guitarra_g2655_1"
+      },
+      {
+        "id": 21,
+        "url": "${import.meta.env.VITE_API_URL}/images/guitarra_g2655_2"
+      },
+      {
+        "id": 22,
+        "url": "${import.meta.env.VITE_API_URL}/images/guitarra_g2655_3"
+      }
     ],
     "caracteristicas": [
       {
@@ -160,10 +196,22 @@
     "precio": 203991,
     "esFavorito": false,
     "imagenes": [
-      { "id": 23, "url": "http://localhost:3000/images/teclado_ctk3500_1" },
-      { "id": 24, "url": "http://localhost:3000/images/teclado_ctk3500_2" },
-      { "id": 25, "url": "http://localhost:3000/images/teclado_ctk3500_3" },
-      { "id": 26, "url": "http://localhost:3000/images/teclado_ctk3500_4" }
+      {
+        "id": 23,
+        "url": "${import.meta.env.VITE_API_URL}/images/teclado_ctk3500_1"
+      },
+      {
+        "id": 24,
+        "url": "${import.meta.env.VITE_API_URL}/images/teclado_ctk3500_2"
+      },
+      {
+        "id": 25,
+        "url": "${import.meta.env.VITE_API_URL}/images/teclado_ctk3500_3"
+      },
+      {
+        "id": 26,
+        "url": "${import.meta.env.VITE_API_URL}/images/teclado_ctk3500_4"
+      }
     ],
     "caracteristicas": [
       {
@@ -187,7 +235,10 @@
     "precio": 7990,
     "esFavorito": false,
     "imagenes": [
-      { "id": 27, "url": "http://localhost:3000/images/cuerdas-exl125_1" }
+      {
+        "id": 27,
+        "url": "${import.meta.env.VITE_API_URL}/images/cuerdas-exl125_1"
+      }
     ],
     "caracteristicas": []
   },
@@ -202,7 +253,10 @@
     "precio": 999900,
     "esFavorito": false,
     "imagenes": [
-      { "id": 28, "url": "http://localhost:3000/images/bateria_exx725_1" }
+      {
+        "id": 28,
+        "url": "${import.meta.env.VITE_API_URL}/images/bateria_exx725_1"
+      }
     ],
     "caracteristicas": [
       {
@@ -228,7 +282,7 @@
     "imagenes": [
       {
         "id": 29,
-        "url": "http://localhost:3000/images/37171939-d667-4ecf-8e38-113340c0f1b2"
+        "url": "${import.meta.env.VITE_API_URL}/images/37171939-d667-4ecf-8e38-113340c0f1b2"
       }
     ],
     "caracteristicas": [

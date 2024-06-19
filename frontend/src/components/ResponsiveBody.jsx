@@ -9,11 +9,9 @@ import CategoriasSectionMain from './CategoriasSectionMain';
 
 const ResponsiveBody = () => {
   const handleFormSubmit = (values) => {
-    console.log("data recibida");
+    console.log('data recibida');
     console.log(values);
     // Use and manage the values as needed
-  
-  
   };
 
   return (
@@ -31,7 +29,7 @@ const ResponsiveBody = () => {
         }}
       >
         {/*Seccion Buscador del Body*/}
-        <SearchSection onSubmit={handleFormSubmit}/>
+        <SearchSection onSubmit={handleFormSubmit} />
 
         {/*Seccion categorias del Body*/}
         <CategoriasSectionMain />

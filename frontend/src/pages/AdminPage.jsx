@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Sidenav } from '../admin/Sidenav';
-import { Error404 } from './Error404';
+import { ErrorAdmin } from './ErrorAdmin';
 
 export const AdminPage = () => {
   const [isMobile, setIsMobile] = useState(
@@ -23,7 +23,7 @@ export const AdminPage = () => {
   return (
     <>
       {isMobile ? (
-        <Error404 />
+        <ErrorAdmin />
       ) : (
         <>
           <Sidenav />
