@@ -129,4 +129,27 @@ export const userProductos = create((set) => ({
       isLoading: false,
     }));
   },
+
+  searchProducts: async ({ token, text, date1, date2, autocomplete = false }) => {
+    if (!token) return;
+
+    try {
+      const result = await axios.post(`${apiUrl}/productos/barraBuscador`,
+        {
+          texto: text,
+          fechaDesde: date1,
+          fechaHasta: date2,
+          autocomplete
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      return result.data
+    } catch (error) {
+      console.error('Error fetching random products:', error.message);
+    }
+  },
 }));
