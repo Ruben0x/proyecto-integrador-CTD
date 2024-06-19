@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { HomePage } from '../pages/HomePage';
 import { Footer } from '../components/Footer';
 import { RegisterPage } from '../auth/RegisterPage';
@@ -13,9 +13,10 @@ import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { ProductSearchPage } from '../pages/ProductSearchPage';
 import { Toaster } from 'sonner';
 import { CircularProgress } from '@mui/material';
+import { Error404 } from '../pages/Error404';
 
 export const TiendaRouter = () => {
-  const { getAnonToken, isLoading, userState } = useUsers();
+  const { getAnonToken, isLoading } = useUsers();
   const { isLogged } = useContext(GlobalUserDataContext);
 
   useEffect(() => {
@@ -40,6 +41,8 @@ export const TiendaRouter = () => {
           <Route element={<ProductPage />} path='/instrumentos/:id' />
           <Route element={<ProductCatPage />} path='/instrumentos/cat/:id' />
           <Route element={<ProductSearchPage />} path='/search' />
+          <Route element={<Error404 />} path='/404' />
+          <Route path='*' element={<Navigate to='/404' />} />
         </Routes>
       </div>
       <Footer />
