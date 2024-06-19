@@ -11,20 +11,15 @@ export const BarraAutocompletado = ({ formik }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   const loggedToken = sessionStorage.getItem('token');
-  const { getAllProducts, isLoading, productoState } = userProductos();
+  const { isLoading, searchProducts } = userProductos();
   const { userState } = useUsers();
-
-  useEffect(() => {
-    loggedToken
-      ? getAllProducts(loggedToken)
-      : getAllProducts(userState.token.accessToken);
-  }, []);
-
-  const productos = productoState.todosProductos;
+  const [options, setOptions] = useState([]);
 
   if (isLoading) return <CircularProgress />;
 
-  const handleInputChange = (event, newInputValue) => {
+  const handleInputChange = async (event, newInputValue) => {
+    const productos = await searchProducts({ token: loggedToken || userState.token.accessToken, text: newInputValue, autocomplete: true })
+    setOptions(productos)
     setInputValue(newInputValue);
     formik.setFieldValue('searchField', newInputValue);
   };
@@ -48,8 +43,7 @@ export const BarraAutocompletado = ({ formik }) => {
     });
   };
 
-  const getOptionLabel = (option) =>
-    `${option.nombre} (${option.nombreCategoria}, ${option.nombreMarca}), ${option.descripcion}`;
+  const getOptionLabel = (option) => option.nombre
 
   const renderOption = (props, option) => (
     <li {...props}>
@@ -78,7 +72,7 @@ export const BarraAutocompletado = ({ formik }) => {
         onChange={handleChange}
         inputValue={inputValue}
         onInputChange={handleInputChange}
-        options={inputValue ? productos : []}
+        options={options}
         filterOptions={filterOptions}
         getOptionLabel={getOptionLabel}
         renderOption={renderOption}
