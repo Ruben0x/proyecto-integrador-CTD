@@ -31,9 +31,6 @@ export const Characteristics = ({ instrumento }) => {
   }
   return (
     <>
-      
-      
-      
       <Grid container columns={{ xs: 12, sm: 12 }} rowSpacing={1}>
         {caracteristicas.map((caracteristica, index) => {
           const IconComponent =
@@ -49,10 +46,14 @@ export const Characteristics = ({ instrumento }) => {
               key={index}
             >
               <IconComponent />
-              <Typography paddingLeft={2} fontFamily={'comic sans'} fontWeight={600} >
-                {caracteristica.nombre.toUpperCase()}:
-                <Typography py={1} fontFamily={'comic sans'}> {caracteristica.valor}</Typography>
-              </Typography>
+              <Grid>
+                <Typography paddingLeft={2} fontWeight={600}>
+                  {caracteristica.nombre.toUpperCase()}:
+                </Typography>
+                <Typography variant='subtitle1' paddingLeft={2}>
+                  {caracteristica.valor}
+                </Typography>
+              </Grid>
             </Grid>
           );
         })}
