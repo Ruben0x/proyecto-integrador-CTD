@@ -45,7 +45,6 @@
 
 li {
   display: inline-block;
-  /* margin-left: 2rem; */
   font-size: 10px;
 }
 
@@ -64,7 +63,6 @@ li:first-child {
 .footer-social-media {
   display: flex;
   justify-content: space-between;
-
   font-size: 2rem;
   cursor: pointer;
 }

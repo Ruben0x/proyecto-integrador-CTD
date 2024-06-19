@@ -24,7 +24,7 @@ export const GridImagenes = ({ listaImagenes = [] }) => {
   const renderImages = useMemo(() => {
     if (!imagenes || imagenes.length === 0) return null;
     return (
-      <Grid container spacing={1} sx={{ marginTop: '50px' }}>
+      <Grid container spacing={1} sx={{ marginTop: '50px'}}>
         <Grid item xs={12} md={6}>
           {imagenes[0] && (
             <img
@@ -35,7 +35,7 @@ export const GridImagenes = ({ listaImagenes = [] }) => {
             />
           )}
         </Grid>
-        <Grid item xs={12} md={6} sm container columnSpacing={1}>
+        <Grid item xs={12} md={6} sm container columnSpacing={1} >
           {imagenes.slice(1, 5).map((imagen, index) => (
             <Grid item xs={12} md={6} key={index}>
               <img
