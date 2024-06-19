@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -16,7 +17,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import WestIcon from '@mui/icons-material/West';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
-import ShareIcon from '@mui/icons-material/Share';
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Characteristics } from '../components/Characteristics';
@@ -30,33 +30,20 @@ import { toast } from 'sonner';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import SimplePopup from '../../components/SharePopup';
 import { userProductos } from '../../context/store/ProductosProvider';
+import { useInstrumento } from '../hooks/useInstrumento';
 
 export const ProductPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const { id } = useParams();
-  const [instrumento, setInstrumento] = useState(null);
-  const [listaImagenes, setListaImagenes] = useState([]);
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const { deleteFavs, addFavoritos } = useFavoritos();
-  const [refresh, setRefresh] = useState(false);
   const { userState } = useUsers();
-  const apiUrl = import.meta.env.VITE_API_URL;
   const { addFav, deleteFav } = userProductos();
-
   const accessToken =
     userState?.token?.accessToken || sessionStorage.getItem('token');
-
+  const { instrumento, listaImagenes, error } = useInstrumento(id, accessToken);
   const [favs, setFavs] = useState(false);
-
-  const shareUrl = `${import.meta.env.VITE_LOCAL_URL}/instrumentos/${id}`;
-
-  const title = 'Mira este fabuloso instrumento! ';
-
-  useEffect(() => {
-    if (accessToken) {
-      getItemById(accessToken);
-    }
-  }, [accessToken, refresh]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     if (instrumento) {
@@ -64,43 +51,23 @@ export const ProductPage = () => {
     }
   }, [instrumento]);
 
-  const getItemById = (token) => {
-    axios(`${apiUrl}/productos/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        setInstrumento(res.data);
-        setListaImagenes(res.data.imagenes || []);
-      })
-      .catch((err) => {
-        console.log('Error ' + err.message);
-      });
-  };
-
+  if (error) {
+    return <Navigate to={'/404'} />;
+  }
   if (instrumento === null) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
+    // return <Navigate to={'/'} />;
   }
 
-  if (!instrumento) {
-    return <Navigate to={'/'} />;
-  }
+  const shareUrl = `${import.meta.env.VITE_LOCAL_URL}/instrumentos/${id}`;
+  const title = 'Mira este fabuloso instrumento! ';
 
   const handleAddFavs = () => {
     addFavoritos(globalUserData.id, instrumento.id);
     addFav(instrumento.id);
     toast.success('Agregado a favoritos');
     setFavs(true);
-    handleRefresh();
-  };
-
-  const handleClickOpen = () => {
-    setDeleteModal(true);
-  };
-
-  const handleClose = () => {
-    setDeleteModal(false);
+    setRefresh(!refresh);
   };
 
   const handleAcceptDelete = (user, producto) => {
@@ -109,12 +76,11 @@ export const ProductPage = () => {
     toast.success('Eliminado de favoritos');
     setFavs(false);
     setDeleteModal(false);
-    handleRefresh();
-  };
-
-  const handleRefresh = () => {
     setRefresh(!refresh);
   };
+  const handleClickOpen = () => setDeleteModal(true);
+
+  const handleClose = () => setDeleteModal(false);
 
   return (
     <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
@@ -145,24 +111,19 @@ export const ProductPage = () => {
         <Box>
           <Box sx={{ position: 'absolute' }}>
             <SimplePopup url={shareUrl} title={title} />
-            {isLogged &&
-              (favs ? (
-                <IconButton
-                  size='large'
-                  aria-label='add to favorites'
-                  onClick={handleClickOpen}
-                >
+            {isLogged && (
+              <IconButton
+                size='large'
+                aria-label='add to favorites'
+                onClick={favs ? handleClickOpen : handleAddFavs}
+              >
+                {favs ? (
                   <FavoriteIcon color='buttonRed' />
-                </IconButton>
-              ) : (
-                <IconButton
-                  size='large'
-                  aria-label='add to favorites'
-                  onClick={handleAddFavs}
-                >
+                ) : (
                   <FavoriteTwoToneIcon color='warning' />
-                </IconButton>
-              ))}
+                )}
+              </IconButton>
+            )}
           </Box>
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
