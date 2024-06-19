@@ -12,18 +12,11 @@ const ItemsSearch = () => {
   const location = useLocation();
   const query = location.state.query;
 
-  // const [productos, setProductos] = useState([]);
-
   const loggedToken = sessionStorage.getItem("token");
-  const { getAllProducts, isLoading, productoState } = userProductos();
+  const { searchProducts } = userProductos();
   const { userState } = useUsers();
-  useEffect(() => {
-    loggedToken
-      ? getAllProducts(loggedToken)
-      : getAllProducts(userState.token.accessToken);
-  }, []);
+  const [productos, setProductos] = useState([])
 
-  const productos = productoState.todosProductos;
 
   // if (isLoading) return 'Cargando ...';
 
@@ -33,25 +26,27 @@ const ItemsSearch = () => {
     // Aquí puedes realizar alguna acción con los valores del formulario si es necesario
   };
 
-  const filterProductos = () => {
+  const filterProductos = async () => {
     if (Array.isArray(query)) {
       return query;
     } else if (query.searchField) {
       const keyWord = query.searchField.toLowerCase();
-      return productos.filter((producto) => {
-        return (
-          producto.nombre.toLowerCase().includes(keyWord) ||
-          producto.descripcion.toLowerCase().includes(keyWord) ||
-          producto.nombreCategoria.toLowerCase().includes(keyWord) ||
-          producto.nombreMarca.toLowerCase().includes(keyWord)
-        );
-      });
+      const productos = await searchProducts({ token: loggedToken || userState.token.accessToken, text: keyWord })
+      setProductos(productos)
     } else {
       return productos;
     }
   };
 
-  const filteredProductos = filterProductos();
+  
+  useEffect(() => {
+    const fetchProductos = async () => {
+      await filterProductos();
+    };
+
+    fetchProductos();
+
+  }, [query])
 
   return (
     <div
@@ -100,7 +95,7 @@ const ItemsSearch = () => {
             </Grid>
           </Grid>
 
-          <GridInstrumentosResult productos={filteredProductos} />
+          <GridInstrumentosResult productos={productos} />
         </Container>
       </Stack>
     </div>
