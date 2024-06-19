@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { ItemsContext } from '../context/ItemsContext';
 import { Autocomplete, Box, CircularProgress, TextField } from '@mui/material';
-
-import BaseHardcoded from '../../src/helpers/baseProductosHardcode.json';
 import { userProductos } from '../context/store/ProductosProvider';
 import { useUsers } from '../context/store/UsersProvider';
 
@@ -18,8 +16,12 @@ export const BarraAutocompletado = ({ formik }) => {
   if (isLoading) return <CircularProgress />;
 
   const handleInputChange = async (event, newInputValue) => {
-    const productos = await searchProducts({ token: loggedToken || userState.token.accessToken, text: newInputValue, autocomplete: true })
-    setOptions(productos)
+    const productos = await searchProducts({
+      token: loggedToken || userState.token.accessToken,
+      text: newInputValue,
+      autocomplete: true,
+    });
+    setOptions(productos);
     setInputValue(newInputValue);
     formik.setFieldValue('searchField', newInputValue);
   };
@@ -43,7 +45,7 @@ export const BarraAutocompletado = ({ formik }) => {
     });
   };
 
-  const getOptionLabel = (option) => option.nombre
+  const getOptionLabel = (option) => option.nombre;
 
   const renderOption = (props, option) => (
     <li {...props}>
