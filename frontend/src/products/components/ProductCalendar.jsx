@@ -74,12 +74,13 @@ export const ProductCalendar = () => {
           </Button>
         </Grid>
       ) : (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={'center'} >
           {!isSmallScreen ? (
-            <Calendar
+            <Calendar 
               className='bg-dark orange'
               multiple
               range
+              marginRight={2}
               rangeHover
               numberOfMonths={2}
               weekStartDayIndex={1}
@@ -109,13 +110,6 @@ export const ProductCalendar = () => {
                 if (className) return { className };
               }}
             >
-              <Button
-                fullWidth
-                variant='contained'
-                onClick={() => handleReserva(values)}
-              >
-                RESERVA
-              </Button>
             </Calendar>
           ) : (
             <Calendar
@@ -151,13 +145,6 @@ export const ProductCalendar = () => {
                 if (className) return { className };
               }}
             >
-              <Button
-                fullWidth
-                variant='contained'
-                onClick={() => handleReserva(values)}
-              >
-                RESERVA
-              </Button>
             </Calendar>
           )}
         </Grid>
