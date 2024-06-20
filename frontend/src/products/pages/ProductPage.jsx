@@ -12,34 +12,34 @@ import {
   IconButton,
   Link,
   Typography,
-} from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import WestIcon from '@mui/icons-material/West';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
-import ShareIcon from '@mui/icons-material/Share';
-import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Characteristics } from '../components/Characteristics';
-import { GridImagenes } from '../components/GridImagenes';
-import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
-import { ProductCalendar } from '../components/ProductCalendar';
-import Politicas from '../components/Politicas';
-import { useUsers } from '../../context/store/UsersProvider';
-import { useFavoritos } from '../../context/store/FavoritosProvider';
-import { toast } from 'sonner';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import SimplePopup from '../../components/SharePopup';
-import { userProductos } from '../../context/store/ProductosProvider';
-import { useInstrumento } from '../hooks/useInstrumento';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import IniciarReserva from '../components/IniciarReserva';
+} from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import WestIcon from "@mui/icons-material/West";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
+import ShareIcon from "@mui/icons-material/Share";
+import { Link as RouterLink, Navigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { Characteristics } from "../components/Characteristics";
+import { GridImagenes } from "../components/GridImagenes";
+import { GlobalUserDataContext } from "../../auth/helpers/globalUserData";
+import { ProductCalendar } from "../components/ProductCalendar";
+import Politicas from "../components/Politicas";
+import { useUsers } from "../../context/store/UsersProvider";
+import { useFavoritos } from "../../context/store/FavoritosProvider";
+import { toast } from "sonner";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import SimplePopup from "../../components/SharePopup";
+import { userProductos } from "../../context/store/ProductosProvider";
+import { useInstrumento } from "../hooks/useInstrumento";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import IniciarReserva from "../components/IniciarReserva";
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const ProductPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -49,7 +49,7 @@ export const ProductPage = () => {
   const { userState } = useUsers();
   const { addFav, deleteFav } = userProductos();
   const accessToken =
-    userState?.token?.accessToken || sessionStorage.getItem('token');
+    userState?.token?.accessToken || sessionStorage.getItem("token");
   const { instrumento, listaImagenes, error } = useInstrumento(id, accessToken);
   const [favs, setFavs] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -60,17 +60,17 @@ export const ProductPage = () => {
     }
   }, [instrumento]);
 
-  if (error) return <Navigate to={'/404'} />;
+  if (error) return <Navigate to={"/404"} />;
 
   if (!instrumento) return <CircularProgress />;
 
   const shareUrl = `${import.meta.env.VITE_LOCAL_URL}/instrumentos/${id}`;
-  const title = 'Mira este fabuloso instrumento! ';
+  const title = "Mira este fabuloso instrumento! ";
 
   const handleAddFavs = () => {
     addFavoritos(globalUserData.id, instrumento.id);
     addFav(instrumento.id);
-    toast.success('Agregado a favoritos');
+    toast.success("Agregado a favoritos");
     setFavs(true);
     setRefresh(!refresh);
   };
@@ -78,7 +78,7 @@ export const ProductPage = () => {
   const handleAcceptDelete = (user, producto) => {
     deleteFavs(user, producto);
     deleteFav(producto);
-    toast.success('Eliminado de favoritos');
+    toast.success("Eliminado de favoritos");
     setFavs(false);
     setDeleteModal(false);
     setRefresh(!refresh);
@@ -88,53 +88,53 @@ export const ProductPage = () => {
   const handleClose = () => setDeleteModal(false);
 
   return (
-    <Container sx={{ minHeight: '90vh', backgroundColor: 'white' }}>
+    <Container sx={{ minHeight: "90vh", backgroundColor: "white" }}>
       <Box>
         <Box paddingY={2}>
           <Link
             component={RouterLink}
-            to='/'
+            to="/"
             sx={{
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <WestIcon fontSize='medium' sx={{ paddingRight: 1 }} />
+            <WestIcon fontSize="medium" sx={{ paddingRight: 1 }} />
             <Typography>Volver al Home</Typography>
           </Link>
         </Box>
         <Typography
-          variant='h3'
+          variant="h3"
           sx={{
-            color: '#ff5000',
-            fontWeight: '600',
-            textTransform: 'uppercase',
+            color: "#ff5000",
+            fontWeight: "600",
+            textTransform: "uppercase",
           }}
         >
           {instrumento.nombreMarca}
-          <span style={{ color: '#000000' }}> {instrumento.nombre}</span>
+          <span style={{ color: "#000000" }}> {instrumento.nombre}</span>
         </Typography>
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{ position: "relative" }}>
           <Box
             sx={{
-              position: 'absolute',
-              margin: '1.5em',
-              background: '#F9E9DE',
-              borderRadius: '3em',
+              position: "absolute",
+              margin: "1.5em",
+              background: "#F9E9DE",
+              borderRadius: "3em",
             }}
           >
             <SimplePopup url={shareUrl} title={title} />
             {isLogged && (
               <IconButton
-                size='large'
-                aria-label='add to favorites'
+                size="large"
+                aria-label="add to favorites"
                 onClick={favs ? handleClickOpen : handleAddFavs}
               >
                 {favs ? (
-                  <FavoriteIcon color='buttonRed' />
+                  <FavoriteIcon color="buttonRed" />
                 ) : (
-                  <FavoriteTwoToneIcon color='warning' />
+                  <FavoriteTwoToneIcon color="warning" />
                 )}
               </IconButton>
             )}
@@ -142,60 +142,60 @@ export const ProductPage = () => {
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
       </Box>
-
+      {/* ----------------------- DATA INSTRUMENTO -------------------------- */}
       <Grid
         container
         sx={{
           padding: 4,
-          backgroundColor: '#121312',
-          color: '#FFFFFF',
-          marginBottom: '10%',
+          backgroundColor: "#121312",
+          color: "#FFFFFF",
+          marginBottom: "10%",
         }}
       >
         <Grid item xs={12}>
-          <Typography variant='subtitle1' fontSize='1.5em'>
-            Categoría:{' '}
+          {/* <Typography variant="subtitle1" fontSize="1.5em">
+            Categoría:{" "}
             <span
               style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
+                color: "#FF5500",
+                textTransform: "uppercase",
               }}
             >
               {instrumento.nombreCategoria}
             </span>
           </Typography>
 
-          <Typography variant='subtitle1' fontSize='3em'>
-            Marca:{' '}
+          <Typography variant="subtitle1" fontSize="3em">
+            Marca:{" "}
             <span
               style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
+                color: "#FF5500",
+                textTransform: "uppercase",
               }}
             >
               {instrumento.nombreMarca}
             </span>
           </Typography>
 
-          <Typography variant='subtitle1' fontSize='1.5em'>
-            Modelo:{' '}
+          <Typography variant="subtitle1" fontSize="1.5em">
+            Modelo:{" "}
             <span
               style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
+                color: "#FF5500",
+                textTransform: "uppercase",
               }}
             >
               {instrumento.nombre}
             </span>
           </Typography>
 
-          <Typography variant='subtitle1' py={1} fontSize='1.5em'>
+          <Typography variant="subtitle1" py={1} fontSize="1.5em">
             Descripción:
             <Box
-              component={'span'}
+              component={"span"}
               style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
+                color: "#FF5500",
+                textTransform: "uppercase",
               }}
             >
               {instrumento.descripcion}
@@ -204,17 +204,133 @@ export const ProductPage = () => {
 
           <Box>
             <Typography
-              variant='subtitle1'
+              variant="subtitle1"
               py={1}
               px={5}
-              fontSize='3em'
-              backgroundColor='#2E2D2D'
+              fontSize="3em"
+              backgroundColor="#2E2D2D"
             >
               Costo de arriendo:
-              <span style={{ color: '#FF5500' }}>
+              <span style={{ color: "#FF5500" }}>
                 ${new Intl.NumberFormat().format(instrumento.precio)} x día
               </span>
             </Typography>
+          </Box> */}
+          {/* DATA */}
+          <Grid
+            container
+            sx={{
+              padding: 4,
+              backgroundColor: "#121312",
+              color: "#FFFFFF",
+            }}
+          >
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Categoría:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <span
+                  style={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.nombreCategoria}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Marca:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <span
+                  style={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.nombreMarca}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Modelo:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <span
+                  style={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.nombre}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Descripción:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <Box
+                  component="span"
+                  sx={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.descripcion}
+                </Box>
+              </Typography>
+            </Grid>
+          </Grid>
+
+          {/* PRECIO */}
+          <Box
+            sx={{
+              padding: 4,
+              backgroundColor: "#444444",
+              color: "#FFFFFF",
+            }}
+          >
+            <Grid container>
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                  Costo de arriendo:
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={9}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                  <span style={{ color: "#FF5500", fontSize: "1.5em" }}>
+                    ${new Intl.NumberFormat().format(instrumento.precio)} x día
+                  </span>
+                </Typography>
+              </Grid>
+            </Grid>
           </Box>
 
           {/* Acordeones */}
@@ -222,75 +338,88 @@ export const ProductPage = () => {
             <Accordion
               sx={{
                 marginTop: 2,
-                padding: 2,
-                backgroundColor: '#F9E9DE',
-                color: '#121312',
+
+                backgroundColor: "#F9E9DE",
+                color: "#121312",
               }}
             >
               <AccordionSummary
                 expandIcon={<ArrowDropDownIcon />}
-                aria-controls='panel1-content'
-                id='panel1-header'
+                aria-controls="panel1-content"
+                id="panel1-header"
               >
                 <Typography
                   sx={{
                     fontSize: 20,
-                    textDecoration: 'underline',
+                    textDecoration: "underline",
                     fontWeight: 600,
+                    padding: 2,
                   }}
                 >
                   CARACTERÍSTICAS
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#ffffff",
+                }}
+              >
                 <Characteristics instrumento={instrumento} />
               </AccordionDetails>
             </Accordion>
-            <Accordion
-              sx={{ padding: 2, backgroundColor: '#FADCAF', color: '#121312' }}
-            >
+            <Accordion sx={{ backgroundColor: "#F9E9DE", color: "#121312" }}>
               <AccordionSummary
                 expandIcon={<ArrowDropDownIcon />}
-                aria-controls='panel2-content'
-                id='panel2-header'
+                aria-controls="panel2-content"
+                id="panel2-header"
               >
                 <Typography
                   sx={{
                     fontSize: 20,
-                    textDecoration: 'underline',
+                    textDecoration: "underline",
                     fontWeight: 600,
+                    padding: 2,
                   }}
                 >
                   POLÍTICAS DE RESERVA
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#ffffff",
+                }}
+              >
                 <Politicas />
               </AccordionDetails>
             </Accordion>
-            <Accordion
-              sx={{ padding: 2, backgroundColor: '#F8CE8F', color: '#121312' }}
-            >
+            <Accordion sx={{ backgroundColor: "#F9E9DE", color: "#121312" }}>
               <AccordionSummary
                 expandIcon={<ArrowDropDownIcon />}
-                aria-controls='panel3-content'
-                id='panel3-header'
+                aria-controls="panel3-content"
+                id="panel3-header"
               >
                 <Typography
                   sx={{
                     fontSize: 20,
-                    textDecoration: 'underline',
+                    textDecoration: "underline",
                     fontWeight: 600,
+                    padding: 2,
                   }}
                 >
                   RESERVA AHORA
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
-                <Grid container display='flex' flexDirection='column'>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Grid container display="flex" flexDirection="column">
                   <ProductCalendar fechasReservadas={instrumento.reserva} />
                 </Grid>
-              
               </AccordionDetails>
             </Accordion>
           </Box>
@@ -301,27 +430,27 @@ export const ProductPage = () => {
       <Dialog
         open={deleteModal}
         onClose={handleClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
         fullWidth
-        maxWidth='xs'
-        sx={{ textAlign: 'center' }}
+        maxWidth="xs"
+        sx={{ textAlign: "center" }}
       >
         <DialogContent>
-          <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color='primary' />
+          <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color="primary" />
         </DialogContent>
-        <DialogTitle id='alert-dialog-title' fontWeight={600}>
+        <DialogTitle id="alert-dialog-title" fontWeight={600}>
           ¿Estás seguro?
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id='alert-dialog-description' fontWeight={600}>
+          <DialogContentText id="alert-dialog-description" fontWeight={600}>
             Esta acción eliminará al producto de sus Favoritos
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
+        <DialogActions sx={{ justifyContent: "center" }}>
           <Button
-            variant='contained'
-            color='buttonGreen'
+            variant="contained"
+            color="buttonGreen"
             onClick={() =>
               handleAcceptDelete(globalUserData.id, instrumento.id)
             }
@@ -329,7 +458,7 @@ export const ProductPage = () => {
           >
             ELIMINAR
           </Button>
-          <Button variant='contained' color='buttonRed' onClick={handleClose}>
+          <Button variant="contained" color="buttonRed" onClick={handleClose}>
             CANCELAR
           </Button>
         </DialogActions>

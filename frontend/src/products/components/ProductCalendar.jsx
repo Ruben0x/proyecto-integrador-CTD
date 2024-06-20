@@ -1,17 +1,17 @@
-import React, { useContext, useState, useEffect } from 'react';
-import '../../styles/calendar.css';
+import React, { useContext, useState, useEffect } from "react";
+import "../../styles/calendar.css";
 import {
   Button,
   Checkbox,
   Grid,
   Typography,
   useMediaQuery,
-} from '@mui/material';
-import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
-import { Calendar, DateObject } from 'react-multi-date-picker';
-import { useTheme } from '@emotion/react';
-import { toast } from 'sonner';
-import { formatDatesArray } from '../../helpers/formattedDate';
+} from "@mui/material";
+import { GlobalUserDataContext } from "../../auth/helpers/globalUserData";
+import { Calendar, DateObject } from "react-multi-date-picker";
+import { useTheme } from "@emotion/react";
+import { toast } from "sonner";
+import { formatDatesArray } from "../../helpers/formattedDate";
 
 export const ProductCalendar = ({ fechasReservadas }) => {
   const [reserved, setReserved] = useState([]);
@@ -35,31 +35,31 @@ export const ProductCalendar = ({ fechasReservadas }) => {
   const { isLogged } = useContext(GlobalUserDataContext);
 
   const dias = [
-    ['Domingo', 'Do'],
-    ['Lunes', 'Lu'],
-    ['Martes', 'Ma'],
-    ['Miércoles', 'Mi'],
-    ['Jueves', 'Ju'],
-    ['Viernes', 'Vi'],
-    ['Sábado', 'Sá'],
+    ["Domingo", "Do"],
+    ["Lunes", "Lu"],
+    ["Martes", "Ma"],
+    ["Miércoles", "Mi"],
+    ["Jueves", "Ju"],
+    ["Viernes", "Vi"],
+    ["Sábado", "Sá"],
   ];
   const meses = [
-    ['Enero', 'Ene'],
-    ['Febrero', 'Feb'],
-    ['Marzo', 'Mar'],
-    ['Abril', 'Abr'],
-    ['Mayo', 'May'],
-    ['Junio', 'Jun'],
-    ['Julio', 'Jul'],
-    ['Agosto', 'Ago'],
-    ['Septiembre', 'Sep'],
-    ['Octubre', 'Oct'],
-    ['Noviembre', 'Nov'],
-    ['Diciembre', 'Dic'],
+    ["Enero", "Ene"],
+    ["Febrero", "Feb"],
+    ["Marzo", "Mar"],
+    ["Abril", "Abr"],
+    ["Mayo", "May"],
+    ["Junio", "Jun"],
+    ["Julio", "Jul"],
+    ["Agosto", "Ago"],
+    ["Septiembre", "Sep"],
+    ["Octubre", "Oct"],
+    ["Noviembre", "Nov"],
+    ["Diciembre", "Dic"],
   ];
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleReserva = (fechas) => {
     const fechasSeleccionadas = fechas.slice(reservas);
@@ -69,26 +69,26 @@ export const ProductCalendar = ({ fechasReservadas }) => {
         console.log(`${element[0].format()} hasta ${element[1].format()}`);
       });
     } else {
-      toast.warning('Debes estar logueado, así que regístrate');
+      toast.warning("Debes estar logueado, así que regístrate");
     }
   };
 
   return (
     <>
       {viewError ? (
-        <Grid container justifyContent={'center'}>
-          <Typography variant='h4' textAlign={'center'}>
+        <Grid container justifyContent={"center"}>
+          <Typography variant="h4" textAlign={"center"}>
             Hubo un problema al obtener las fechas, inténtelo de nuevo más tarde
           </Typography>
-          <Button variant='contained' onClick={() => setViewError(false)}>
+          <Button variant="contained" onClick={() => setViewError(false)}>
             Reintentar
           </Button>
         </Grid>
       ) : (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={"center"}>
           {!isSmallScreen ? (
             <Calendar
-              className='bg-dark orange'
+              className="bg-dark orange"
               multiple
               range
               marginRight={2}
@@ -117,13 +117,13 @@ export const ProductCalendar = ({ fechasReservadas }) => {
                 let className;
                 const strDate = date.format();
 
-                if (isReserved(strDate)) className = 'reserved';
+                if (isReserved(strDate)) className = "reserved";
                 if (className) return { className };
               }}
             ></Calendar>
           ) : (
             <Calendar
-              className='bg-dark orange'
+              className="bg-dark orange"
               multiple
               range
               rangeHover
@@ -151,7 +151,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
                 let className;
                 const strDate = date.format();
 
-                if (isReserved(strDate)) className = 'reserved';
+                if (isReserved(strDate)) className = "reserved";
                 if (className) return { className };
               }}
             ></Calendar>
@@ -160,27 +160,27 @@ export const ProductCalendar = ({ fechasReservadas }) => {
       )}
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           padding: 20,
         }}
       >
         <Button
           fullWidth
-          variant='contained'
+          variant="contained"
           onClick={() => handleReserva(values)}
           sx={{
             fontSize: 20,
             fontWeight: 600,
-            color: '#121312',
-            maxWidth: '250px',
+            color: "#ffffff",
+            maxWidth: "250px",
           }}
         >
           INICIAR RESERVA
         </Button>
-        <div style={{ marginTop: '1em' }}>
+        <div style={{ marginTop: "1em" }}>
           <Checkbox defaultChecked />
           He leído y estoy de acuerdo con las políticas de reserva
         </div>
