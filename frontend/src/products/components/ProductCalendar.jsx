@@ -1,27 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import '../../styles/calendar.css';
-import { Button, Grid, Typography, useMediaQuery } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
 import { Calendar, DateObject } from 'react-multi-date-picker';
 import { useTheme } from '@emotion/react';
 import { toast } from 'sonner';
+import { formatDatesArray } from '../../helpers/formattedDate';
 
-const reserved = [
-  [new DateObject().setDay(1).format(), new DateObject().setDay(10).format()],
-  [new DateObject().setDay(15).format(), new DateObject().setDay(25).format()],
-];
-
-const reservas = reserved.length;
-
-const initialValue = [...reserved];
-
-function isReserved(strDate) {
-  return reserved.some(([start, end]) => strDate >= start && strDate <= end);
-}
-
-export const ProductCalendar = () => {
-  const [values, setValues] = useState(initialValue);
+export const ProductCalendar = ({ fechasReservadas }) => {
+  const [reserved, setReserved] = useState([]);
+  const [values, setValues] = useState([]);
   const [viewError, setViewError] = useState(false);
+
+  useEffect(() => {
+    if (fechasReservadas.length > 0) {
+      const formattedDates = formatDatesArray(fechasReservadas);
+      setReserved(formattedDates);
+      setValues(formattedDates);
+    }
+  }, [fechasReservadas]);
+
+  const reservas = reserved.length;
+
+  function isReserved(strDate) {
+    return reserved.some(([start, end]) => strDate >= start && strDate <= end);
+  }
+
   const { isLogged } = useContext(GlobalUserDataContext);
 
   const dias = [
@@ -59,24 +69,25 @@ export const ProductCalendar = () => {
         console.log(`${element[0].format()} hasta ${element[1].format()}`);
       });
     } else {
-      toast.warning('Debes estar logueado, asi que registrate');
+      toast.warning('Debes estar logueado, así que regístrate');
     }
   };
+
   return (
     <>
       {viewError ? (
-        <Grid container justifyContent={'center'} sx={{}}>
+        <Grid container justifyContent={'center'}>
           <Typography variant='h4' textAlign={'center'}>
-            Hubo un problema al obtener las fechas, intentelo de nuevo mas tarde
+            Hubo un problema al obtener las fechas, inténtelo de nuevo más tarde
           </Typography>
           <Button variant='contained' onClick={() => setViewError(false)}>
             Reintentar
           </Button>
         </Grid>
       ) : (
-        <Grid container justifyContent={'center'} >
+        <Grid container justifyContent={'center'}>
           {!isSmallScreen ? (
-            <Calendar 
+            <Calendar
               className='bg-dark orange'
               multiple
               range
@@ -89,7 +100,7 @@ export const ProductCalendar = () => {
               value={values}
               minDate={new DateObject()}
               onChange={(ranges) => {
-                const isClickedOutsideUnAvailbleDates = initialValue.every(
+                const isClickedOutsideUnAvailbleDates = reserved.every(
                   ([start, end]) =>
                     ranges.some(
                       (range) =>
@@ -109,8 +120,7 @@ export const ProductCalendar = () => {
                 if (isReserved(strDate)) className = 'reserved';
                 if (className) return { className };
               }}
-            >
-            </Calendar>
+            ></Calendar>
           ) : (
             <Calendar
               className='bg-dark orange'
@@ -124,7 +134,7 @@ export const ProductCalendar = () => {
               months={meses}
               value={values}
               onChange={(ranges) => {
-                const isClickedOutsideUnAvailbleDates = initialValue.every(
+                const isClickedOutsideUnAvailbleDates = reserved.every(
                   ([start, end]) =>
                     ranges.some(
                       (range) =>
@@ -144,11 +154,38 @@ export const ProductCalendar = () => {
                 if (isReserved(strDate)) className = 'reserved';
                 if (className) return { className };
               }}
-            >
-            </Calendar>
+            ></Calendar>
           )}
         </Grid>
       )}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 20,
+        }}
+      >
+        <Button
+          fullWidth
+          variant='contained'
+          onClick={() => handleReserva(values)}
+          sx={{
+            fontSize: 20,
+            fontWeight: 600,
+            color: '#121312',
+            maxWidth: '250px',
+          }}
+        >
+          INICIAR RESERVA
+        </Button>
+        <div style={{ marginTop: '1em' }}>
+          <Checkbox defaultChecked />
+          He leído y estoy de acuerdo con las políticas de reserva
+        </div>
+      </div>
     </>
   );
+  7;
 };
