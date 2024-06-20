@@ -15,6 +15,11 @@ import { InstrumentCardResponsiveXS } from './InstrumentCardResponsiveXS';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { DateObject } from 'react-multi-date-picker';
+import moment from 'moment';
+import 'moment/locale/es';
+
+moment.locale('es');
+
 const productoHardCode = {
   id: 1,
   nombre: 'Akai MPK Mini',
@@ -141,13 +146,17 @@ export const Booking = () => {
             history.goBack(); 
           }*/
     console.log(instrumento);
-
     console.log(values);
   }, [
     isLogged,
     //checkAcepta
   ]);
+  const formattedDateInicio = moment(values[0], 'YYYY/MM/DD').format('DD MMM');
+  const formattedDateFin = moment(values[1], 'YYYY/MM/DD').format('DD MMM');
+
   return (
+
+    
     <AuthLayout title='CONFIRMA' subtitle=' TU RESERVA'>
       <Grid
         container
@@ -233,7 +242,7 @@ export const Booking = () => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  fecha inicio
+                  {formattedDateInicio}
                 </Typography>
               </Box>
             </Grid>
@@ -259,7 +268,7 @@ export const Booking = () => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  fecha final
+                  {formattedDateFin}
                 </Typography>
                 <Typography
                   fontWeight='600'
@@ -274,6 +283,8 @@ export const Booking = () => {
             </Grid>
           </Grid>
         </Grid>
+
+
       </Grid>
     </AuthLayout>
   );

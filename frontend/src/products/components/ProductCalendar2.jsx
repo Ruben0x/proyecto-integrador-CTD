@@ -69,6 +69,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
     const [start, end] = values;
     if (isLogged) {
       console.log(`${start.format()} hasta ${end.format()}`);
+      navigate('/booking', { state: { instrumento, values: fechasSeleccionadas } });
     } else {
       toast.warning("Debes estar logueado para realizar la reserva.");
     }
