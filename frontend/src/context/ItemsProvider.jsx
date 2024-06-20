@@ -18,10 +18,14 @@ export const ItemsProvider = ({ children }) => {
   const [itemState, dispatch] = useReducer(itemReducer, initialState);
 
   const getAllCategorias = useCallback(() => {
-    axios.get(`${apiUrl}/categorias`).then((res) => {
-      // console.log(res.data);
-      dispatch({ type: types.getCategorias, payload: res.data });
-    });
+    axios
+      .get(`${apiUrl}/categorias`)
+      .then((res) => {
+        dispatch({ type: types.getCategorias, payload: res.data });
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error.message);
+      });
   }, []);
 
   const getUserById = async (id) => {
@@ -39,7 +43,7 @@ export const ItemsProvider = ({ children }) => {
         return null;
       }
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
       return null;
     }
   };
@@ -69,7 +73,6 @@ export const ItemsProvider = ({ children }) => {
         }
       }
     }
-    // console.log(formData);
 
     try {
       const response = await fetch(`${apiUrl}/productos`, {
@@ -94,8 +97,6 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const postEditItem = async (values, id) => {
-    // console.log(values);
-    // Construir el tipoCaracteristicaId dinámicamente
     const tipoCaracteristicaId = Object.keys(values)
       .filter((key) => key.startsWith('c-') && values[key] !== '')
       .map((key) => values[key])
@@ -151,7 +152,7 @@ export const ItemsProvider = ({ children }) => {
       const data = await response.json();
       dispatch({ type: types.getItemsByCategories, payload: data });
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   };
 

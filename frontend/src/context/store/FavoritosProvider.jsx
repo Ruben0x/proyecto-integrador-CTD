@@ -52,12 +52,10 @@ export const useFavoritos = create((set) => ({
       usuarioId,
       productoId,
     };
-    axios.post(`${apiUrl}/favoritos`, data).then(
-      (res) =>
-        set((state) => ({
-          isLoading: false,
-        }))
-      // console.log(res)
+    axios.post(`${apiUrl}/favoritos`, data).then((res) =>
+      set((state) => ({
+        isLoading: false,
+      }))
     );
   },
 }));

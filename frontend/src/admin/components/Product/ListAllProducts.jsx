@@ -29,9 +29,7 @@ export const ListAllProducts = ({}) => {
   const loggedToken = sessionStorage.getItem('token');
   const { getAllProducts, isLoading, productoState, deleteProducto } =
     userProductos();
-  // const { userState } = useUsers();
   useEffect(() => {
-    // console.log(userState);
     getAllProducts(loggedToken);
   }, []);
 
