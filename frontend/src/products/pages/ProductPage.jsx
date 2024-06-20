@@ -317,6 +317,7 @@ export const ProductPage = () => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
+
                 <Grid item xs={12} sx={{ padding: 2 }}>
                   <Grid item xs={12} display={"flex"} flexDirection={"column"}>
                      <ProductCalendar />
@@ -326,13 +327,14 @@ export const ProductPage = () => {
                       textAlign={"center"}
                     >
                       <div>
-                        <IniciarReserva />
+                        <IniciarReserva/>
                         
                       </div>
                     </Typography>
                    
                   </Grid>
                 </Grid>
+              
               </AccordionDetails>
             </Accordion>
           </div>

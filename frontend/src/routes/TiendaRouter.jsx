@@ -13,6 +13,7 @@ import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { ProductSearchPage } from '../pages/ProductSearchPage';
 import { Toaster } from 'sonner';
 import { CircularProgress } from '@mui/material';
+import { BookingPage } from '../pages/BookingPage';
 
 export const TiendaRouter = () => {
   const { getAnonToken, isLoading, userState } = useUsers();
@@ -40,6 +41,7 @@ export const TiendaRouter = () => {
           <Route element={<ProductPage />} path='/instrumentos/:id' />
           <Route element={<ProductCatPage />} path='/instrumentos/cat/:id' />
           <Route element={<ProductSearchPage />} path='/search' />
+          <Route element={<BookingPage />} path='/booking' />
         </Routes>
       </div>
       <Footer />
