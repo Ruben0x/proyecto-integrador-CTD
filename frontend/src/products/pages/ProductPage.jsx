@@ -17,6 +17,7 @@ import React, { useContext, useEffect, useState } from "react";
 import WestIcon from "@mui/icons-material/West";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
+import ShareIcon from "@mui/icons-material/Share";
 import { Link as RouterLink, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Characteristics } from "../components/Characteristics";
@@ -31,6 +32,16 @@ import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import SimplePopup from "../../components/SharePopup";
 import { userProductos } from "../../context/store/ProductosProvider";
 import { useInstrumento } from "../hooks/useInstrumento";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import IniciarReserva from "../components/IniciarReserva";
+import InstrumentoInfo from "../components/InstrumentoInfo";
+import Precio from "../components/Precio";
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const ProductPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -51,13 +62,9 @@ export const ProductPage = () => {
     }
   }, [instrumento]);
 
-  if (error) {
-    return <Navigate to={"/404"} />;
-  }
-  if (instrumento === null) {
-    return <CircularProgress />;
-    // return <Navigate to={'/'} />;
-  }
+  if (error) return <Navigate to={"/404"} />;
+
+  if (!instrumento) return <CircularProgress />;
 
   const shareUrl = `${import.meta.env.VITE_LOCAL_URL}/instrumentos/${id}`;
   const title = "Mira este fabuloso instrumento! ";
@@ -82,19 +89,55 @@ export const ProductPage = () => {
 
   const handleClose = () => setDeleteModal(false);
 
+  const AccordionSection = ({ title, content }) => (
+    <Accordion sx={{ backgroundColor: "#F9E9DE", color: "#121312" }}>
+      <AccordionSummary
+        expandIcon={<ArrowDropDownIcon />}
+        aria-controls={`${title}-content`}
+        id={`${title}-header`}
+      >
+        <Typography
+          sx={{
+            fontSize: 20,
+            textDecoration: "underline",
+            fontWeight: 600,
+            padding: 2,
+          }}
+        >
+          {title}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails sx={{ padding: 4, backgroundColor: "#FCFBF7" }}>
+        {content}
+      </AccordionDetails>
+    </Accordion>
+  );
+
+  const ReserveSection = () => (
+    <Grid container display="flex" flexDirection="column">
+      <ProductCalendar />
+      <Container>
+        <IniciarReserva />
+      </Container>
+    </Grid>
+  );
+
   return (
     <Container sx={{ minHeight: "90vh", backgroundColor: "white" }}>
+      {/* IMAGENES */}
       <Box>
         <Box paddingY={2}>
           <Link
             component={RouterLink}
-            style={{ textDecoration: "none" }}
-            to={"/"}
+            to="/"
+            sx={{
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+            }}
           >
-            <Typography sx={{ display: "flex", alignItems: "center" }}>
-              <WestIcon fontSize="Medium" sx={{ paddingRight: 1 }} />
-              Volver al Home
-            </Typography>
+            <WestIcon fontSize="medium" sx={{ paddingRight: 1 }} />
+            <Typography>Volver al Home</Typography>
           </Link>
         </Box>
         <Typography
@@ -108,7 +151,7 @@ export const ProductPage = () => {
           {instrumento.nombreMarca}
           <span style={{ color: "#000000" }}> {instrumento.nombre}</span>
         </Typography>
-        <Box>
+        <Box sx={{ position: "relative" }}>
           <Box
             sx={{
               position: "absolute",
@@ -132,239 +175,64 @@ export const ProductPage = () => {
               </IconButton>
             )}
           </Box>
-
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
       </Box>
 
-      {/* DATA */}
-      <Grid
-        item
-        xs={12}
-        md={12}
-        sm
-        container
-        marginBottom={"10%"}
-        sx={{
-          padding: 4,
-          backgroundColor: "#121312",
-          color: "#FFFFFF",
-        }}
-      >
-        <Grid xs={12} md={12}>
-          {/* Card de descripcion de detalle de producto - container  letras naranjas */}
+      {/* DATA INSTRUMENTO */}
+      <InstrumentoInfo instrumento={instrumento} />
+      <Precio precio={instrumento.precio} />
 
-          <Typography variant="subtitle1" fontSize="1.5em">
-            Categoría:{" "}
-            <span
-              style={{
-                color: "#FF5500",
-                textTransform: "uppercase",
-                fontFamily: "comic sans",
-              }}
-            >
-              {" "}
-              {instrumento.nombreCategoria}
-            </span>
-          </Typography>
-
-          <Typography variant="subtitle1" fontSize="3em">
-            Marca:{" "}
-            <span
-              style={{
-                color: "#FF5500",
-                textTransform: "uppercase",
-                fontFamily: "comic sans",
-              }}
-            >
-              {instrumento.nombreMarca}
-            </span>
-          </Typography>
-
-          <Typography variant="subtitle1" fontSize="1.5em">
-            Modelo:{" "}
-            <span
-              style={{
-                color: "#FF5500",
-                textTransform: "uppercase",
-                fontFamily: "comic sans",
-              }}
-            >
-              {instrumento.nombre}
-            </span>
-          </Typography>
-        </Grid>
-
-          <Typography variant="subtitle1" py={1} fontSize="1.5em">
-            Descripción:
-            <span
-              style={{
-                color: "#FF5500",
-                textTransform: "uppercase",
-                fontFamily: "comic sans",
-              }}
-            >
-              {" "}
-              {instrumento.descripcion}
-            </span>
-          </Typography>
-
-          <Box>
-            <Typography
-              variant="subtitle1"
-              py={1}
-              px={5}
-              fontSize="3em"
-              backgroundColor="#2E2D2D"
-            >
-              Costo de arriendo: {"   "}
-              <span style={{ color: "#FF5500", fontFamily: "comic sans" }}>
-                ${new Intl.NumberFormat().format(instrumento.precio)} x día
-              </span>
-            </Typography>
-          </Grid>
-        </Grid>
+      {/* Acordeones */}
+      <Box sx={{ marginBottom: "10%" }}>
+        <AccordionSection
+          title="CARACTERÍSTICAS"
+          content={<Characteristics instrumento={instrumento} />}
+        />
+        <AccordionSection
+          title="POLÍTICAS DE RESERVA"
+          content={<Politicas />}
+        />
+        <AccordionSection title="RESERVA AHORA" content={<ReserveSection />} />
       </Box>
 
-          {/*----------------- Acordeones ---------------------*/}
-
-          <div container alignItems="stretch">
-            <Accordion
-              sx={{
-                marginTop: 2,
-                padding: 2,
-                backgroundColor: "#F9E9DE",
-                color: "#121312",
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    textDecoration: "underline",
-                    fontWeight: 600,
-                  }}
-                >
-                  CARACTERÍSTICAS
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid item xs={12} md={6} sx={{ padding: 2 }}>
-                  <Characteristics instrumento={instrumento} />
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              sx={{
-                padding: 2,
-                backgroundColor: "#FADCAF",
-                color: "#121312",
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon />}
-                aria-controls="panel2-content"
-                id="panel2-header"
-              >
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    textDecoration: "underline",
-                    fontWeight: 600,
-                  }}
-                >
-                  POLÍTICAS DE RESERVA
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Politicas />
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              sx={{
-                padding: 2,
-                backgroundColor: "#F8CE8F",
-                color: "#121312",
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    textDecoration: "underline",
-                    fontWeight: 600,
-                  }}
-                >
-                  RESERVA AHORA
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid item xs={12} sx={{ padding: 2 }}>
-                  <Grid item xs={12} display={"flex"} flexDirection={"column"}>
-                    <ProductCalendar />
-                    <Typography
-                      variant="subtitle1"
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      <div>
-                        <IniciarReserva />
-                      </div>
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </div>
-        </Grid>
-      </Grid>
-
-      {deleteModal && (
-        <Dialog
-          open={deleteModal}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          fullWidth={true}
-          maxWidth={"xs"}
-          sx={{ textAlign: "center" }}
-        >
-          <DialogContent>
-            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color="primary" />
-          </DialogContent>
-          <DialogTitle id="alert-dialog-title" fontWeight={600}>
-            {"¿Estás seguro?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" fontWeight={600}>
-              Esta acción eliminará al producto de sus Favoritos
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions sx={{ justifyContent: "center" }}>
-            <Button
-              variant="contained"
-              color="buttonGreen"
-              onClick={() =>
-                handleAcceptDelete(globalUserData.id, instrumento.id)
-              }
-              autoFocus
-            >
-              ELIMINAR
-            </Button>
-            <Button variant="contained" color="buttonRed" onClick={handleClose}>
-              CANCELAR
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
+      {/* Delete Modal */}
+      <Dialog
+        open={deleteModal}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth
+        maxWidth="xs"
+        sx={{ textAlign: "center" }}
+      >
+        <DialogContent>
+          <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color="primary" />
+        </DialogContent>
+        <DialogTitle id="alert-dialog-title" fontWeight={600}>
+          ¿Estás seguro?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description" fontWeight={600}>
+            Esta acción eliminará al producto de sus Favoritos
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            color="buttonGreen"
+            onClick={() =>
+              handleAcceptDelete(globalUserData.id, instrumento.id)
+            }
+            autoFocus
+          >
+            ELIMINAR
+          </Button>
+          <Button variant="contained" color="buttonRed" onClick={handleClose}>
+            CANCELAR
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
