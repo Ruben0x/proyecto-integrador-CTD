@@ -15,24 +15,18 @@ import { formatDatesArray } from "../../helpers/formattedDate";
 
 export const ProductCalendar = ({ fechasReservadas }) => {
   const [reserved, setReserved] = useState([]);
-  const [values, setValues] = useState([]);
+  const [values, setValues] = useState([null, null]);
   const [viewError, setViewError] = useState(false);
+  const [checkboxChecked, setCheckboxChecked] = useState(true); // Estado para el checkbox
+  const { isLogged } = useContext(GlobalUserDataContext);
 
   useEffect(() => {
     if (fechasReservadas.length > 0) {
       const formattedDates = formatDatesArray(fechasReservadas);
       setReserved(formattedDates);
-      setValues(formattedDates);
+      setValues([null, null]); // Reset selected values if reserved dates change
     }
   }, [fechasReservadas]);
-
-  const reservas = reserved.length;
-
-  function isReserved(strDate) {
-    return reserved.some(([start, end]) => strDate >= start && strDate <= end);
-  }
-
-  const { isLogged } = useContext(GlobalUserDataContext);
 
   const dias = [
     ["Domingo", "Do"],
@@ -61,15 +55,17 @@ export const ProductCalendar = ({ fechasReservadas }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleReserva = (fechas) => {
-    const fechasSeleccionadas = fechas.slice(reservas);
+  const handleReserva = () => {
+    if (!checkboxChecked) {
+      toast.warning("Debes estar de acuerdo con las políticas de reserva.");
+      return;
+    }
 
-    if (isLogged) {
-      fechasSeleccionadas.forEach((element) => {
-        console.log(`${element[0].format()} hasta ${element[1].format()}`);
-      });
+    const [start, end] = values;
+    if (start && end && isLogged) {
+      console.log(`${start.format()} hasta ${end.format()}`);
     } else {
-      toast.warning("Debes estar logueado, así que regístrate");
+      toast.warning("Debes estar logueado para realizar la reserva.");
     }
   };
 
@@ -89,70 +85,88 @@ export const ProductCalendar = ({ fechasReservadas }) => {
           {!isSmallScreen ? (
             <Calendar
               className="bg-dark orange"
-              multiple
               range
               marginRight={2}
-              rangeHover
               numberOfMonths={2}
               weekStartDayIndex={1}
               weekDays={dias}
               months={meses}
               value={values}
               minDate={new DateObject()}
-              onChange={(ranges) => {
-                const isClickedOutsideUnAvailbleDates = reserved.every(
-                  ([start, end]) =>
-                    ranges.some(
-                      (range) =>
-                        range[0]?.format?.() === start &&
-                        range[1]?.format?.() === end
+              onChange={(range) => {
+                const [start, end] = range;
+                const isRangeValid = reserved.every(
+                  ([reservedStart, reservedEnd]) =>
+                    !(
+                      (start &&
+                        end &&
+                        (start.format() === reservedStart ||
+                          end.format() === reservedEnd)) ||
+                      (start.format() < reservedStart &&
+                        end.format() > reservedEnd) ||
+                      (start.format() > reservedStart &&
+                        start.format() < reservedEnd) ||
+                      (end.format() > reservedStart &&
+                        end.format() < reservedEnd)
                     )
                 );
 
-                if (!isClickedOutsideUnAvailbleDates) return false;
-
-                setValues(ranges);
+                if (isRangeValid) {
+                  setValues(range);
+                } else {
+                  toast.warning("Este rango de fechas no está disponible.");
+                }
               }}
               mapDays={({ date }) => {
-                let className;
                 const strDate = date.format();
+                const isDisabled = reserved.some(
+                  ([start, end]) => strDate >= start && strDate <= end
+                );
 
-                if (isReserved(strDate)) className = "reserved";
-                if (className) return { className };
+                if (isDisabled) return { disabled: true };
               }}
             ></Calendar>
           ) : (
             <Calendar
               className="bg-dark orange"
-              multiple
               range
-              rangeHover
               numberOfMonths={1}
               weekStartDayIndex={1}
               weekDays={dias}
-              minDate={new DateObject()}
               months={meses}
+              minDate={new DateObject()}
               value={values}
-              onChange={(ranges) => {
-                const isClickedOutsideUnAvailbleDates = reserved.every(
-                  ([start, end]) =>
-                    ranges.some(
-                      (range) =>
-                        range[0]?.format?.() === start &&
-                        range[1]?.format?.() === end
+              onChange={(range) => {
+                const [start, end] = range;
+                const isRangeValid = reserved.every(
+                  ([reservedStart, reservedEnd]) =>
+                    !(
+                      (start &&
+                        end &&
+                        (start.format() === reservedStart ||
+                          end.format() === reservedEnd)) ||
+                      (start.format() < reservedStart &&
+                        end.format() > reservedEnd) ||
+                      (start.format() > reservedStart &&
+                        start.format() < reservedEnd) ||
+                      (end.format() > reservedStart &&
+                        end.format() < reservedEnd)
                     )
                 );
 
-                if (!isClickedOutsideUnAvailbleDates) return false;
-
-                setValues(ranges);
+                if (isRangeValid) {
+                  setValues(range);
+                } else {
+                  toast.warning("Este rango de fechas no está disponible.");
+                }
               }}
               mapDays={({ date }) => {
-                let className;
                 const strDate = date.format();
+                const isDisabled = reserved.some(
+                  ([start, end]) => strDate >= start && strDate <= end
+                );
 
-                if (isReserved(strDate)) className = "reserved";
-                if (className) return { className };
+                if (isDisabled) return { disabled: true };
               }}
             ></Calendar>
           )}
@@ -170,7 +184,8 @@ export const ProductCalendar = ({ fechasReservadas }) => {
         <Button
           fullWidth
           variant="contained"
-          onClick={() => handleReserva(values)}
+          onClick={handleReserva}
+          disabled={!checkboxChecked} // Deshabilita el botón si el checkbox no está marcado
           sx={{
             fontSize: 20,
             fontWeight: 600,
@@ -181,11 +196,13 @@ export const ProductCalendar = ({ fechasReservadas }) => {
           INICIAR RESERVA
         </Button>
         <div style={{ marginTop: "1em" }}>
-          <Checkbox defaultChecked />
+          <Checkbox
+            checked={checkboxChecked}
+            onChange={(e) => setCheckboxChecked(e.target.checked)}
+          />
           He leído y estoy de acuerdo con las políticas de reserva
         </div>
       </div>
     </>
   );
-  7;
 };
