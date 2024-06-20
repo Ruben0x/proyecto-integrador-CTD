@@ -39,8 +39,18 @@ export const login = async (
         if (loginValues.rememberme) {
           sessionStorage.setItem('isLogged', JSON.stringify(true));
           sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
+          sessionStorage.setItem('token', loginResponse.token.accessToken);
+          sessionStorage.setItem(
+            'refreshToken',
+            loginResponse.token.refreshToken
+          );
           localStorage.setItem('isLogged', JSON.stringify(true));
           localStorage.setItem('globalUserData', JSON.stringify(foundUser));
+          localStorage.setItem('token', loginResponse.token.accessToken);
+          localStorage.setItem(
+            'refreshToken',
+            loginResponse.token.refreshToken
+          );
         } else {
           sessionStorage.setItem('isLogged', JSON.stringify(true));
           sessionStorage.setItem('globalUserData', JSON.stringify(foundUser));
