@@ -38,8 +38,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import IniciarReserva from "../components/IniciarReserva";
-import InstrumentoInfo from "../components/InstrumentoInfo";
-import Precio from "../components/Precio";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -89,42 +87,8 @@ export const ProductPage = () => {
 
   const handleClose = () => setDeleteModal(false);
 
-  const AccordionSection = ({ title, content }) => (
-    <Accordion sx={{ backgroundColor: "#F9E9DE", color: "#121312" }}>
-      <AccordionSummary
-        expandIcon={<ArrowDropDownIcon />}
-        aria-controls={`${title}-content`}
-        id={`${title}-header`}
-      >
-        <Typography
-          sx={{
-            fontSize: 20,
-            textDecoration: "underline",
-            fontWeight: 600,
-            padding: 2,
-          }}
-        >
-          {title}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails sx={{ padding: 4, backgroundColor: "#FCFBF7" }}>
-        {content}
-      </AccordionDetails>
-    </Accordion>
-  );
-
-  const ReserveSection = () => (
-    <Grid container display="flex" flexDirection="column">
-      <ProductCalendar />
-      <Container>
-        <IniciarReserva />
-      </Container>
-    </Grid>
-  );
-
   return (
     <Container sx={{ minHeight: "90vh", backgroundColor: "white" }}>
-      {/* IMAGENES */}
       <Box>
         <Box paddingY={2}>
           <Link
@@ -178,23 +142,289 @@ export const ProductPage = () => {
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
       </Box>
+      {/* ----------------------- DATA INSTRUMENTO -------------------------- */}
+      <Grid
+        container
+        sx={{
+          padding: 4,
+          backgroundColor: "#121312",
+          color: "#FFFFFF",
+          marginBottom: "10%",
+        }}
+      >
+        <Grid item xs={12}>
+          {/* <Typography variant="subtitle1" fontSize="1.5em">
+            Categoría:{" "}
+            <span
+              style={{
+                color: "#FF5500",
+                textTransform: "uppercase",
+              }}
+            >
+              {instrumento.nombreCategoria}
+            </span>
+          </Typography>
 
-      {/* DATA INSTRUMENTO */}
-      <InstrumentoInfo instrumento={instrumento} />
-      <Precio precio={instrumento.precio} />
+          <Typography variant="subtitle1" fontSize="3em">
+            Marca:{" "}
+            <span
+              style={{
+                color: "#FF5500",
+                textTransform: "uppercase",
+              }}
+            >
+              {instrumento.nombreMarca}
+            </span>
+          </Typography>
 
-      {/* Acordeones */}
-      <Box sx={{ marginBottom: "10%" }}>
-        <AccordionSection
-          title="CARACTERÍSTICAS"
-          content={<Characteristics instrumento={instrumento} />}
-        />
-        <AccordionSection
-          title="POLÍTICAS DE RESERVA"
-          content={<Politicas />}
-        />
-        <AccordionSection title="RESERVA AHORA" content={<ReserveSection />} />
-      </Box>
+          <Typography variant="subtitle1" fontSize="1.5em">
+            Modelo:{" "}
+            <span
+              style={{
+                color: "#FF5500",
+                textTransform: "uppercase",
+              }}
+            >
+              {instrumento.nombre}
+            </span>
+          </Typography>
+
+          <Typography variant="subtitle1" py={1} fontSize="1.5em">
+            Descripción:
+            <Box
+              component={"span"}
+              style={{
+                color: "#FF5500",
+                textTransform: "uppercase",
+              }}
+            >
+              {instrumento.descripcion}
+            </Box>
+          </Typography>
+
+          <Box>
+            <Typography
+              variant="subtitle1"
+              py={1}
+              px={5}
+              fontSize="3em"
+              backgroundColor="#2E2D2D"
+            >
+              Costo de arriendo:
+              <span style={{ color: "#FF5500" }}>
+                ${new Intl.NumberFormat().format(instrumento.precio)} x día
+              </span>
+            </Typography>
+          </Box> */}
+          {/* DATA */}
+          <Grid
+            container
+            sx={{
+              padding: 4,
+              backgroundColor: "#121312",
+              color: "#FFFFFF",
+            }}
+          >
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Categoría:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <span
+                  style={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.nombreCategoria}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Marca:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <span
+                  style={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.nombreMarca}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Modelo:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <span
+                  style={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.nombre}
+                </span>
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                Descripción:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                <Box
+                  component="span"
+                  sx={{
+                    color: "#FF5500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {instrumento.descripcion}
+                </Box>
+              </Typography>
+            </Grid>
+          </Grid>
+
+          {/* PRECIO */}
+          <Box
+            sx={{
+              padding: 4,
+              backgroundColor: "#444444",
+              color: "#FFFFFF",
+            }}
+          >
+            <Grid container>
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                  Costo de arriendo:
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={9}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Typography variant="subtitle1" sx={{ fontSize: "1.5em" }}>
+                  <span style={{ color: "#FF5500", fontSize: "1.5em" }}>
+                    ${new Intl.NumberFormat().format(instrumento.precio)} x día
+                  </span>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+
+          {/* Acordeones */}
+          <Box>
+            <Accordion
+              sx={{
+                marginTop: 2,
+
+                backgroundColor: "#F9E9DE",
+                color: "#121312",
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    textDecoration: "underline",
+                    fontWeight: 600,
+                    padding: 2,
+                  }}
+                >
+                  CARACTERÍSTICAS
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Characteristics instrumento={instrumento} />
+              </AccordionDetails>
+            </Accordion>
+            <Accordion sx={{ backgroundColor: "#F9E9DE", color: "#121312" }}>
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon />}
+                aria-controls="panel2-content"
+                id="panel2-header"
+              >
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    textDecoration: "underline",
+                    fontWeight: 600,
+                    padding: 2,
+                  }}
+                >
+                  POLÍTICAS DE RESERVA
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Politicas />
+              </AccordionDetails>
+            </Accordion>
+            <Accordion sx={{ backgroundColor: "#F9E9DE", color: "#121312" }}>
+              <AccordionSummary
+                expandIcon={<ArrowDropDownIcon />}
+                aria-controls="panel3-content"
+                id="panel3-header"
+              >
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    textDecoration: "underline",
+                    fontWeight: 600,
+                    padding: 2,
+                  }}
+                >
+                  RESERVA AHORA
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Grid container display="flex" flexDirection="column">
+                  <ProductCalendar fechasReservadas={instrumento.reserva} />
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+        </Grid>
+      </Grid>
 
       {/* Delete Modal */}
       <Dialog

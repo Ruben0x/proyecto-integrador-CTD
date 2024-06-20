@@ -51,7 +51,7 @@ export const AddCategoryForm = () => {
         await createCategory(values);
         resetForm();
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
       } finally {
         setIsSubmitting(false);
       }

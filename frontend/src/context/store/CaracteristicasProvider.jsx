@@ -16,7 +16,6 @@ export const useCaracteristicas = create((set) => ({
     axios
       .get(`${apiUrl}/caracteristicas`)
       .then((res) => {
-        // console.log(res);
         set((state) => ({
           caracteristicasState: {
             ...state.caracteristicasState,

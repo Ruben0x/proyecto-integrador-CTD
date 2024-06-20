@@ -86,8 +86,8 @@ export const userProductos = create((set) => ({
         isLoading: false,
       }));
     } catch (error) {
-      toast.error('Error deleting the product:', error);
-      console.log(error);
+      toast.error('Error deleting the product:', error.message);
+      console.log(error.message);
 
       set(() => ({
         isLoading: false,
@@ -130,24 +130,49 @@ export const userProductos = create((set) => ({
     }));
   },
 
+<<<<<<< HEAD
   searchProducts: async ({ token, text, date1, date2, autocomplete = false }) => {
     if (!token) return;
 
     try {
       const result = await axios.post(`${apiUrl}/productos/barraBuscador`,
+=======
+  searchProducts: async ({
+    token,
+    text,
+    date1,
+    date2,
+    autocomplete = false,
+  }) => {
+    if (!token) return;
+
+    try {
+      const result = await axios.post(
+        `${apiUrl}/productos/barraBuscador`,
+>>>>>>> dev
         {
           texto: text,
           fechaDesde: date1,
           fechaHasta: date2,
+<<<<<<< HEAD
           autocomplete
+=======
+          autocomplete,
+>>>>>>> dev
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+<<<<<<< HEAD
         },
       )
       return result.data
+=======
+        }
+      );
+      return result.data;
+>>>>>>> dev
     } catch (error) {
       console.error('Error fetching random products:', error.message);
     }

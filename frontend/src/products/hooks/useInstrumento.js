@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export const useInstrumento = (id, accessToken) => {
   const [instrumento, setInstrumento] = useState(null);
@@ -21,9 +21,9 @@ export const useInstrumento = (id, accessToken) => {
         })
         .catch((err) => {
           setError(
-            'No se pudo cargar el producto. Por favor, intenta nuevamente.'
+            "No se pudo cargar el producto. Por favor, intenta nuevamente."
           );
-          console.log('Error ' + err.message);
+          console.error("Error " + err.message);
         });
     }
   }, [id, accessToken]);
