@@ -17,7 +17,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
   const [reserved, setReserved] = useState([]);
   const [values, setValues] = useState([null, null]);
   const [viewError, setViewError] = useState(false);
-  const [checkboxChecked, setCheckboxChecked] = useState(true); // Estado para el checkbox
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
 
   useEffect(() => {
@@ -61,12 +61,41 @@ export const ProductCalendar = ({ fechasReservadas }) => {
       return;
     }
 
+    if (!values[0] || !values[1]) {
+      toast.warning("Debes seleccionar un rango de fechas.");
+      return;
+    }
+
     const [start, end] = values;
-    if (start && end && isLogged) {
+    if (isLogged) {
       console.log(`${start.format()} hasta ${end.format()}`);
     } else {
       toast.warning("Debes estar logueado para realizar la reserva.");
     }
+  };
+
+  const isDateInReservedRange = (date, reservedRanges) => {
+    return reservedRanges.some(([start, end]) => {
+      const dateObj = new Date(date);
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      return dateObj >= startDate && dateObj <= endDate;
+    });
+  };
+
+  const validateRange = (range) => {
+    const [start, end] = range;
+    const isRangeValid = !reserved.some(
+      ([reservedStart, reservedEnd]) =>
+        (start &&
+          end &&
+          start.format() >= reservedStart &&
+          start.format() <= reservedEnd) ||
+        (start.format() <= reservedStart && end.format() >= reservedEnd) ||
+        (start.format() <= reservedEnd && end.format() >= reservedEnd)
+    );
+
+    return isRangeValid;
   };
 
   return (
@@ -94,24 +123,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
               value={values}
               minDate={new DateObject()}
               onChange={(range) => {
-                const [start, end] = range;
-                const isRangeValid = reserved.every(
-                  ([reservedStart, reservedEnd]) =>
-                    !(
-                      (start &&
-                        end &&
-                        (start.format() === reservedStart ||
-                          end.format() === reservedEnd)) ||
-                      (start.format() < reservedStart &&
-                        end.format() > reservedEnd) ||
-                      (start.format() > reservedStart &&
-                        start.format() < reservedEnd) ||
-                      (end.format() > reservedStart &&
-                        end.format() < reservedEnd)
-                    )
-                );
-
-                if (isRangeValid) {
+                if (validateRange(range)) {
                   setValues(range);
                 } else {
                   toast.warning("Este rango de fechas no está disponible.");
@@ -119,13 +131,22 @@ export const ProductCalendar = ({ fechasReservadas }) => {
               }}
               mapDays={({ date }) => {
                 const strDate = date.format();
-                const isDisabled = reserved.some(
-                  ([start, end]) => strDate >= start && strDate <= end
-                );
+                const isDisabled = isDateInReservedRange(strDate, reserved);
+                const isPastDate = new Date(strDate) < new Date();
 
-                if (isDisabled) return { disabled: true };
+                if (isDisabled)
+                  return {
+                    disabled: true,
+                    style: { backgroundColor: "rgba(255, 85, 0, 0.2)" },
+                  }; // Estilo para días reservados
+
+                if (isPastDate)
+                  return {
+                    disabled: true,
+                    style: { backgroundColor: "rgba(137, 137, 137, 0.2)" },
+                  }; // Estilo para días pasados
               }}
-            ></Calendar>
+            />
           ) : (
             <Calendar
               className="bg-dark orange"
@@ -137,24 +158,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
               minDate={new DateObject()}
               value={values}
               onChange={(range) => {
-                const [start, end] = range;
-                const isRangeValid = reserved.every(
-                  ([reservedStart, reservedEnd]) =>
-                    !(
-                      (start &&
-                        end &&
-                        (start.format() === reservedStart ||
-                          end.format() === reservedEnd)) ||
-                      (start.format() < reservedStart &&
-                        end.format() > reservedEnd) ||
-                      (start.format() > reservedStart &&
-                        start.format() < reservedEnd) ||
-                      (end.format() > reservedStart &&
-                        end.format() < reservedEnd)
-                    )
-                );
-
-                if (isRangeValid) {
+                if (validateRange(range)) {
                   setValues(range);
                 } else {
                   toast.warning("Este rango de fechas no está disponible.");
@@ -162,13 +166,22 @@ export const ProductCalendar = ({ fechasReservadas }) => {
               }}
               mapDays={({ date }) => {
                 const strDate = date.format();
-                const isDisabled = reserved.some(
-                  ([start, end]) => strDate >= start && strDate <= end
-                );
+                const isDisabled = isDateInReservedRange(strDate, reserved);
+                const isPastDate = new Date(strDate) < new Date();
 
-                if (isDisabled) return { disabled: true };
+                if (isDisabled)
+                  return {
+                    disabled: true,
+                    style: { backgroundColor: "rgba(255, 85, 0, 0.2)" },
+                  }; // Estilo para días reservados
+
+                if (isPastDate)
+                  return {
+                    disabled: true,
+                    style: { backgroundColor: "rgba(137, 137, 137, 0.2)" },
+                  }; // Estilo para días pasados
               }}
-            ></Calendar>
+            />
           )}
         </Grid>
       )}
@@ -185,7 +198,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
           fullWidth
           variant="contained"
           onClick={handleReserva}
-          disabled={!checkboxChecked} // Deshabilita el botón si el checkbox no está marcado
+          disabled={!checkboxChecked || !values[0] || !values[1]} // Deshabilita el botón si el checkbox no está marcado o no se han seleccionado fechas
           sx={{
             fontSize: 20,
             fontWeight: 600,
@@ -195,6 +208,11 @@ export const ProductCalendar = ({ fechasReservadas }) => {
         >
           INICIAR RESERVA
         </Button>
+        {!checkboxChecked && (
+          <Typography variant="body2" color="error" style={{ marginTop: 10 }}>
+            Debes aceptar nuestras políticas de reserva.
+          </Typography>
+        )}
         <div style={{ marginTop: "1em" }}>
           <Checkbox
             checked={checkboxChecked}
