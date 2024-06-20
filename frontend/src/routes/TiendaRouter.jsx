@@ -26,8 +26,6 @@ export const TiendaRouter = () => {
     }
   }, []);
 
-  // console.log(userState.token.accessToken);
-
   if (isLoading) return <CircularProgress />;
   return (
     <>
@@ -43,7 +41,7 @@ export const TiendaRouter = () => {
           <Route element={<ProductCatPage />} path='/instrumentos/cat/:id' />
           <Route element={<ProductSearchPage />} path='/search' />
           <Route element={<Error404 />} path='/404' />
-          <Route path='*' element={<Navigate to='/404' />} />
+          <Route path='*' element={<Navigate to='/404' replace={false} />} />
           <Route element={<BookingPage />} path='/booking' />
         </Routes>
       </div>

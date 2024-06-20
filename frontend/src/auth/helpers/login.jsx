@@ -70,7 +70,7 @@ export const login = async (
     toast.error(errorMsg);
 
     // alert('Correo o Clave erróneo');
-    console.error(error);
+    console.error(error.message);
   }
 };
 
