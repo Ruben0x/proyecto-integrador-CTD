@@ -12,11 +12,14 @@ import { Calendar, DateObject } from 'react-multi-date-picker';
 import { useTheme } from '@emotion/react';
 import { toast } from 'sonner';
 import { formatDatesArray } from '../../helpers/formattedDate';
+import { useNavigate } from 'react-router-dom';
 
-export const ProductCalendar = ({ fechasReservadas }) => {
+
+export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
   const [reserved, setReserved] = useState([]);
   const [values, setValues] = useState([]);
   const [viewError, setViewError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (fechasReservadas.length > 0) {
@@ -65,13 +68,23 @@ export const ProductCalendar = ({ fechasReservadas }) => {
     const fechasSeleccionadas = fechas.slice(reservas);
 
     if (isLogged) {
-      fechasSeleccionadas.forEach((element) => {
-        console.log(`${element[0].format()} hasta ${element[1].format()}`);
+     fechasSeleccionadas.forEach((element) => {
+        console.log(`${element[0].format('YYYY-MM-DD')} hasta ${element[1].format('YYYY-MM-DD')}`);
       });
+//pasar la data al page de booking
+
+      navigate('/booking', { state: { instrumento, values: fechasSeleccionadas } });
     } else {
       toast.warning('Debes estar logueado, así que regístrate');
     }
   };
+
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setCheckboxChecked(event.target.checked);
+  };
+
 
   return (
     <>
@@ -88,7 +101,8 @@ export const ProductCalendar = ({ fechasReservadas }) => {
         <Grid container justifyContent={'center'}>
           {!isSmallScreen ? (
             <Calendar
-              className='bg-dark orange'
+            maxSelectCount={1}  
+            className='bg-dark orange'
               multiple
               range
               marginRight={2}
@@ -123,6 +137,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
             ></Calendar>
           ) : (
             <Calendar
+ 
               className='bg-dark orange'
               multiple
               range
@@ -177,11 +192,16 @@ export const ProductCalendar = ({ fechasReservadas }) => {
             color: '#121312',
             maxWidth: '250px',
           }}
+          disabled={!checkboxChecked}
         >
           INICIAR RESERVA
         </Button>
         <div style={{ marginTop: '1em' }}>
-          <Checkbox defaultChecked />
+        <Checkbox
+          //defaultChecked={false}
+          onChange={handleCheckboxChange}
+          checked={checkboxChecked}
+        />
           He leído y estoy de acuerdo con las políticas de reserva
         </div>
       </div>

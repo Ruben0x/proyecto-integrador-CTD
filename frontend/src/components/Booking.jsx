@@ -1,24 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import {
-  Button,
   Grid,
   TextField,
   Typography,
-  Link,
-  Checkbox,
   Box,
   Avatar,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AuthLayout } from '../auth/layout/AuthLayout';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
-import { ItemsContext } from '../context/ItemsContext';
 import { InstrumentCardResponsiveXS } from './InstrumentCardResponsiveXS';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { red } from '@mui/material/colors';
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { DateObject } from 'react-multi-date-picker';
 const productoHardCode = {
   id: 1,
   nombre: 'Akai MPK Mini',
@@ -124,7 +120,10 @@ const productoHardCode = {
   ],
 };
 
-export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
+export const Booking = () => {
+  const location = useLocation();
+  const { state } = location;
+  const { instrumento, values } = state;
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const iniciales = [
     globalUserData?.nombre.charAt(0).toUpperCase(),
@@ -141,7 +140,9 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
         // Si llegó a esta pag sin tickear terminos y condiciones, regresa en el nav 
             history.goBack(); 
           }*/
-    console.log(productoHardCode);
+    console.log(instrumento);
+
+    console.log(values);
   }, [
     isLogged,
     //checkAcepta
@@ -157,7 +158,7 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
       >
         {/*seccion detalles producto*/}
         <Grid item sx={{ width: '100%' }}>
-          <InstrumentCardResponsiveXS instrument={productoHardCode} />
+          <InstrumentCardResponsiveXS instrument={instrumento} />
         </Grid>
 
         {/*seccion detalles clientes*/}
@@ -185,18 +186,18 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
               <TextField
                 label='Nombre'
                 value={nombre}
-                fullWidth
+                
                 InputProps={{ readOnly: true }}
-                sx={{ pointerEvents: 'none' }}
+                sx={{ pointerEvents: 'none', width:'100%' }}
               />
             </Grid>
             <Grid item xs={12} sm={5}>
               <TextField
                 label='Correo'
                 value={email}
-                fullWidth
+                
                 InputProps={{ readOnly: true }}
-                sx={{ pointerEvents: 'none' }}
+                sx={{ pointerEvents: 'none', width:'100%' }}
               />
             </Grid>
           </Grid>
@@ -205,13 +206,13 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
         {/*seccion fechas*/}
         <Grid item sx={{ width: '100%'}}>
           <Grid
-   container
+            container
             spacing={3}
             direction='row'
             alignItems='center'
             justifyContent='center'
-            sx={{backgroundColor:'neutralColor.main'}}
-            fullWidth
+            sx={{backgroundColor:'neutralColor.main', width:'100%'}}
+            
           >
             <Grid item xs={6} md={3.5} order={{ xs: 2, md: 1 }} 
             >
@@ -223,7 +224,7 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  {'< '}
+                  <ArrowBackIosIcon/>
                 </Typography>
                 <Typography
                   fontWeight='600'
@@ -249,7 +250,7 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
             </Grid>
 
             <Grid item xs={6} md={3.5} order={{ xs: 3, md: 3 }}>
-            <Box textAlign={'right'}>
+              <Box textAlign={'right'}>
 
                 <Typography
                   fontWeight='600'
@@ -267,7 +268,7 @@ export const Booking = (producto, fechaInicio, fechaFin, checkAcepta) => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  {' >'}
+                  <ArrowForwardIosIcon/>
                 </Typography>                
               </Box>
             </Grid>

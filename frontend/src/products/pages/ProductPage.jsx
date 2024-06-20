@@ -288,7 +288,7 @@ export const ProductPage = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container display='flex' flexDirection='column'>
-                  <ProductCalendar fechasReservadas={instrumento.reserva} />
+                  <ProductCalendar fechasReservadas={instrumento.reserva} instrumento={instrumento}/>
                 </Grid>
               
               </AccordionDetails>
