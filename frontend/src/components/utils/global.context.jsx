@@ -1,14 +1,12 @@
-import axios from "axios";
-import { createContext, useEffect, useReducer } from "react";
-import { instrumentsReducer} from "./reducers";
+import axios from 'axios';
+import { createContext, useEffect, useReducer } from 'react';
+import { instrumentsReducer } from './reducers';
 
 // Crear el contexto global
 export const ContextGlobal = createContext(undefined);
 
-
 // Inicializar el estado de los instrumentos
 const initInstrumentsState = { instrumentsList: [], instruments: {} };
-
 
 // Componente de proveedor de contexto
 export const ContextProvider = ({ children }) => {
@@ -20,11 +18,10 @@ export const ContextProvider = ({ children }) => {
 
   // Obtener datos de los instrumentos
   const fetchInstrumentsData = () => {
-    axios("origen/instruments")
-      .then((res) =>
-        instrumentsDispatch({ type: "GET_INSTRUMENTS", payload: res.data })
-      )
-      .catch((err) => console.log(err));
+    axios('origen/instruments').then((res) =>
+      instrumentsDispatch({ type: 'GET_INSTRUMENTS', payload: res.data })
+    );
+    // .catch((err) => console.log(err));
   };
 
   useEffect(() => {

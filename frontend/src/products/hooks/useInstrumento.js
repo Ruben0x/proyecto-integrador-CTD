@@ -23,7 +23,7 @@ export const useInstrumento = (id, accessToken) => {
           setError(
             'No se pudo cargar el producto. Por favor, intenta nuevamente.'
           );
-          console.log('Error ' + err.message);
+          console.error('Error ' + err.message);
         });
     }
   }, [id, accessToken]);

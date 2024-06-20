@@ -33,8 +33,6 @@ const nombre = 'Portal Sonoro';
 function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
 
-  // console.log(globalUserData.rol);
-
   const iniciales = [
     globalUserData?.nombre.charAt(0).toUpperCase(),
     globalUserData?.apellido.charAt(0).toUpperCase(),

@@ -29,7 +29,6 @@ export const useUsers = create((set) => ({
     axios
       .get(`${apiUrl}/usuarios`, { timeout: 5000 }) // Añadir un tiempo de espera de 5 segundos
       .then((res) => {
-        // console.log(res);
         set((state) => ({
           userState: { ...state.userState, users: res.data },
           isLoading: false,

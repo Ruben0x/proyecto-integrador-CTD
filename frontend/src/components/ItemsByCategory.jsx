@@ -65,7 +65,7 @@ const ItemsByCategory = () => {
           setProductos(transformedData);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err.message);
         });
     } else {
       axios(
@@ -86,7 +86,7 @@ const ItemsByCategory = () => {
           setProductos(transformedData);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err.message);
         });
     }
   };
