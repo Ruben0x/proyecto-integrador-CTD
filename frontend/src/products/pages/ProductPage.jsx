@@ -137,6 +137,7 @@ export const ProductPage = () => {
         </Box>
       </Box>
 
+      {/* DATA */}
       <Grid
         item
         xs={12}
@@ -192,6 +193,7 @@ export const ProductPage = () => {
               {instrumento.nombre}
             </span>
           </Typography>
+        </Grid>
 
           <Typography variant="subtitle1" py={1} fontSize="1.5em">
             Descripción:
@@ -220,7 +222,9 @@ export const ProductPage = () => {
                 ${new Intl.NumberFormat().format(instrumento.precio)} x día
               </span>
             </Typography>
-          </Box>
+          </Grid>
+        </Grid>
+      </Box>
 
           {/*----------------- Acordeones ---------------------*/}
 

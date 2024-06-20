@@ -1,11 +1,19 @@
 import Checkbox from "@mui/material/Checkbox";
 import { Button, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
+import Checkbox from "@mui/material/Checkbox";
+import { Button, Grid, Typography } from "@mui/material";
 import React, { useState } from 'react';
 
 const IniciarReserva = () => {
   return (
     <div
       style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 20,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -29,6 +37,7 @@ const IniciarReserva = () => {
         </Typography>
         
       </Button>
+      <div style={{ marginTop: "1em" }}>
       <div style={{marginTop:"1em" }}>
         <Checkbox defaultChecked />
         He leído y estoy de acuerdo con las políticas de reserva
