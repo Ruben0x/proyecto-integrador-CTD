@@ -213,7 +213,7 @@ const GoogleMaps = ({ onLocationSelect }) => {
             sx={{ marginTop: "20px" }}
             onClick={handleSendLocation}
           >
-            Enviar Ubicación
+            SELECCIONAR PUNTO DE RETIRO
           </Button>
         </Grid>
       </Grid>
