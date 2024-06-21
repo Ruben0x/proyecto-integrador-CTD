@@ -12,19 +12,21 @@ import { Calendar, DateObject } from "react-multi-date-picker";
 import { useTheme } from "@emotion/react";
 import { toast } from "sonner";
 import { formatDatesArray } from "../../helpers/formattedDate";
+import { useNavigate } from "react-router-dom";
 
-export const ProductCalendar = ({ fechasReservadas }) => {
+export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
   const [reserved, setReserved] = useState([]);
   const [values, setValues] = useState([null, null]);
   const [viewError, setViewError] = useState(false);
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
+  const navigate = useNavigate(); // Usar el hook useNavigate
 
   useEffect(() => {
     if (fechasReservadas.length > 0) {
       const formattedDates = formatDatesArray(fechasReservadas);
       setReserved(formattedDates);
-      setValues([null, null]); // Reset selected values if reserved dates change
+      setValues([null, null]);
     }
   }, [fechasReservadas]);
 
@@ -69,6 +71,8 @@ export const ProductCalendar = ({ fechasReservadas }) => {
     const [start, end] = values;
     if (isLogged) {
       console.log(`${start.format()} hasta ${end.format()}`);
+      const rangoFechas = [`${start.format()}`, `${end.format()}`];
+      navigate("/booking", { state: { instrumento, values: rangoFechas } }); // Usar navigate
     } else {
       toast.warning("Debes estar logueado para realizar la reserva.");
     }
@@ -138,13 +142,13 @@ export const ProductCalendar = ({ fechasReservadas }) => {
                   return {
                     disabled: true,
                     style: { backgroundColor: "rgba(255, 85, 0, 0.2)" },
-                  }; // Estilo para días reservados
+                  };
 
                 if (isPastDate)
                   return {
                     disabled: true,
                     style: { backgroundColor: "rgba(137, 137, 137, 0.2)" },
-                  }; // Estilo para días pasados
+                  };
               }}
             />
           ) : (
@@ -173,13 +177,13 @@ export const ProductCalendar = ({ fechasReservadas }) => {
                   return {
                     disabled: true,
                     style: { backgroundColor: "rgba(255, 85, 0, 0.2)" },
-                  }; // Estilo para días reservados
+                  };
 
                 if (isPastDate)
                   return {
                     disabled: true,
                     style: { backgroundColor: "rgba(137, 137, 137, 0.2)" },
-                  }; // Estilo para días pasados
+                  };
               }}
             />
           )}
@@ -198,7 +202,7 @@ export const ProductCalendar = ({ fechasReservadas }) => {
           fullWidth
           variant="contained"
           onClick={handleReserva}
-          disabled={!checkboxChecked || !values[0] || !values[1]} // Deshabilita el botón si el checkbox no está marcado o no se han seleccionado fechas
+          disabled={!checkboxChecked || !values[0] || !values[1]}
           sx={{
             fontSize: 20,
             fontWeight: 600,
@@ -210,7 +214,8 @@ export const ProductCalendar = ({ fechasReservadas }) => {
         </Button>
         {!checkboxChecked && (
           <Typography variant="body2" color="error" style={{ marginTop: 10 }}>
-            Debes aceptar nuestras políticas de reserva.
+            Debes aceptar nuestras políticas de reserva y seleccionar días de
+            reserva disponibles.
           </Typography>
         )}
         <div style={{ marginTop: "1em" }}>
