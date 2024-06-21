@@ -1,20 +1,18 @@
-import React, { useContext, useState, useEffect } from "react";
-import "../../styles/calendar.css";
+import React, { useContext, useState, useEffect } from 'react';
+import '../../styles/calendar.css';
 import {
   Button,
   Checkbox,
   Grid,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { GlobalUserDataContext } from "../../auth/helpers/globalUserData";
-import { Calendar, DateObject } from "react-multi-date-picker";
-import { useTheme } from "@emotion/react";
-import { toast } from "sonner";
-import { formatDatesArray } from "../../helpers/formattedDate";
-import { useNavigate } from "react-router-dom";
-
-
+} from '@mui/material';
+import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
+import { Calendar, DateObject } from 'react-multi-date-picker';
+import { useTheme } from '@emotion/react';
+import { toast } from 'sonner';
+import { formatDatesArray } from '../../helpers/formattedDate';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
   const [reserved, setReserved] = useState([]);
@@ -22,60 +20,62 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
   const [viewError, setViewError] = useState(false);
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Usar el hook useNavigate
+
   useEffect(() => {
     if (fechasReservadas.length > 0) {
       const formattedDates = formatDatesArray(fechasReservadas);
       setReserved(formattedDates);
-      setValues([null, null]); // Reset selected values if reserved dates change
+      setValues([null, null]);
+      // Reset selected values if reserved dates change
     }
   }, [fechasReservadas]);
 
   const dias = [
-    ["Domingo", "Do"],
-    ["Lunes", "Lu"],
-    ["Martes", "Ma"],
-    ["Miércoles", "Mi"],
-    ["Jueves", "Ju"],
-    ["Viernes", "Vi"],
-    ["Sábado", "Sá"],
+    ['Domingo', 'Do'],
+    ['Lunes', 'Lu'],
+    ['Martes', 'Ma'],
+    ['Miércoles', 'Mi'],
+    ['Jueves', 'Ju'],
+    ['Viernes', 'Vi'],
+    ['Sábado', 'Sá'],
   ];
   const meses = [
-    ["Enero", "Ene"],
-    ["Febrero", "Feb"],
-    ["Marzo", "Mar"],
-    ["Abril", "Abr"],
-    ["Mayo", "May"],
-    ["Junio", "Jun"],
-    ["Julio", "Jul"],
-    ["Agosto", "Ago"],
-    ["Septiembre", "Sep"],
-    ["Octubre", "Oct"],
-    ["Noviembre", "Nov"],
-    ["Diciembre", "Dic"],
+    ['Enero', 'Ene'],
+    ['Febrero', 'Feb'],
+    ['Marzo', 'Mar'],
+    ['Abril', 'Abr'],
+    ['Mayo', 'May'],
+    ['Junio', 'Jun'],
+    ['Julio', 'Jul'],
+    ['Agosto', 'Ago'],
+    ['Septiembre', 'Sep'],
+    ['Octubre', 'Oct'],
+    ['Noviembre', 'Nov'],
+    ['Diciembre', 'Dic'],
   ];
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleReserva = () => {
     if (!checkboxChecked) {
-      toast.warning("Debes estar de acuerdo con las políticas de reserva.");
+      toast.warning('Debes estar de acuerdo con las políticas de reserva.');
       return;
     }
 
     if (!values[0] || !values[1]) {
-      toast.warning("Debes seleccionar un rango de fechas.");
+      toast.warning('Debes seleccionar un rango de fechas.');
       return;
     }
 
     const [start, end] = values;
     if (isLogged) {
       console.log(`${start.format()} hasta ${end.format()}`);
-      const rangoFechas = [`${start.format()}`,`${end.format()}`];
-      navigate('/booking', { state: { instrumento, values:rangoFechas } });
+      const rangoFechas = [`${start.format()}`, `${end.format()}`];
+      navigate('/booking', { state: { instrumento, values: rangoFechas } });
     } else {
-      toast.warning("Debes estar logueado para realizar la reserva.");
+      toast.warning('Debes estar logueado para realizar la reserva.');
     }
   };
 
@@ -106,19 +106,19 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
   return (
     <>
       {viewError ? (
-        <Grid container justifyContent={"center"}>
-          <Typography variant="h4" textAlign={"center"}>
+        <Grid container justifyContent={'center'}>
+          <Typography variant='h4' textAlign={'center'}>
             Hubo un problema al obtener las fechas, inténtelo de nuevo más tarde
           </Typography>
-          <Button variant="contained" onClick={() => setViewError(false)}>
+          <Button variant='contained' onClick={() => setViewError(false)}>
             Reintentar
           </Button>
         </Grid>
       ) : (
-        <Grid container justifyContent={"center"}>
+        <Grid container justifyContent={'center'}>
           {!isSmallScreen ? (
             <Calendar
-              className="bg-dark orange"
+              className='bg-dark orange'
               range
               marginRight={2}
               numberOfMonths={2}
@@ -131,7 +131,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                 if (validateRange(range)) {
                   setValues(range);
                 } else {
-                  toast.warning("Este rango de fechas no está disponible.");
+                  toast.warning('Este rango de fechas no está disponible.');
                 }
               }}
               mapDays={({ date }) => {
@@ -142,18 +142,19 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                 if (isDisabled)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#FFB3B3" },
-                  }; // Estilo para días reservados
+                    style: { backgroundColor: 'rgba(255, 85, 0, 0.2)' },
+                  };
+
                 if (isPastDate)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#D3D3D3" },
-                  }; // Estilo para días pasados
+                    style: { backgroundColor: 'rgba(137, 137, 137, 0.2)' },
+                  };
               }}
             />
           ) : (
             <Calendar
-              className="bg-dark orange"
+              className='bg-dark orange'
               range
               numberOfMonths={1}
               weekStartDayIndex={1}
@@ -165,7 +166,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                 if (validateRange(range)) {
                   setValues(range);
                 } else {
-                  toast.warning("Este rango de fechas no está disponible.");
+                  toast.warning('Este rango de fechas no está disponible.');
                 }
               }}
               mapDays={({ date }) => {
@@ -176,13 +177,14 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                 if (isDisabled)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#FFB3B3" },
-                  }; // Estilo para días reservados
+                    style: { backgroundColor: 'rgba(255, 85, 0, 0.2)' },
+                  };
+
                 if (isPastDate)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#D3D3D3" },
-                  }; // Estilo para días pasados
+                    style: { backgroundColor: 'rgba(137, 137, 137, 0.2)' },
+                  };
               }}
             />
           )}
@@ -190,33 +192,33 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
       )}
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
           padding: 20,
         }}
       >
         <Button
           fullWidth
-          variant="contained"
+          variant='contained'
           onClick={handleReserva}
           disabled={!checkboxChecked || !values[0] || !values[1]} // Deshabilita el botón si el checkbox no está marcado o no se han seleccionado fechas
           sx={{
             fontSize: 20,
             fontWeight: 600,
-            color: "#ffffff",
-            maxWidth: "250px",
+            color: '#ffffff',
+            maxWidth: '250px',
           }}
         >
           INICIAR RESERVA
         </Button>
         {!checkboxChecked && (
-          <Typography variant="body2" color="error" style={{ marginTop: 10 }}>
+          <Typography variant='body2' color='error' style={{ marginTop: 10 }}>
             Debes aceptar nuestras políticas de reserva.
           </Typography>
         )}
-        <div style={{ marginTop: "1em" }}>
+        <div style={{ marginTop: '1em' }}>
           <Checkbox
             checked={checkboxChecked}
             onChange={(e) => setCheckboxChecked(e.target.checked)}
