@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import "../../styles/calendar.css";
+import React, { useContext, useState, useEffect } from "react";
+import "../../styles/calendar.css";
 import {
   Button,
   Checkbox,
@@ -22,16 +24,25 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
   const [viewError, setViewError] = useState(false);
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const { isLogged } = useContext(GlobalUserDataContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Usar el hook useNavigate
+
   useEffect(() => {
     if (fechasReservadas.length > 0) {
       const formattedDates = formatDatesArray(fechasReservadas);
       setReserved(formattedDates);
+      setValues([null, null]);
       setValues([null, null]); // Reset selected values if reserved dates change
     }
   }, [fechasReservadas]);
 
   const dias = [
+    ["Domingo", "Do"],
+    ["Lunes", "Lu"],
+    ["Martes", "Ma"],
+    ["Miércoles", "Mi"],
+    ["Jueves", "Ju"],
+    ["Viernes", "Vi"],
+    ["Sábado", "Sá"],
     ["Domingo", "Do"],
     ["Lunes", "Lu"],
     ["Martes", "Ma"],
@@ -53,11 +64,36 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
     ["Octubre", "Oct"],
     ["Noviembre", "Nov"],
     ["Diciembre", "Dic"],
+    ["Enero", "Ene"],
+    ["Febrero", "Feb"],
+    ["Marzo", "Mar"],
+    ["Abril", "Abr"],
+    ["Mayo", "May"],
+    ["Junio", "Jun"],
+    ["Julio", "Jul"],
+    ["Agosto", "Ago"],
+    ["Septiembre", "Sep"],
+    ["Octubre", "Oct"],
+    ["Noviembre", "Nov"],
+    ["Diciembre", "Dic"],
   ];
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const handleReserva = () => {
+    if (!checkboxChecked) {
+      toast.warning("Debes estar de acuerdo con las políticas de reserva.");
+      return;
+    }
+
+    if (!values[0] || !values[1]) {
+      toast.warning("Debes seleccionar un rango de fechas.");
+      return;
+    }
+
+    const [start, end] = values;
   const handleReserva = () => {
     if (!checkboxChecked) {
       toast.warning("Debes estar de acuerdo con las políticas de reserva.");
@@ -142,13 +178,14 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                 if (isDisabled)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#FFB3B3" },
-                  }; // Estilo para días reservados
+                    style: { backgroundColor: "rgba(255, 85, 0, 0.2)" },
+                  };
+
                 if (isPastDate)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#D3D3D3" },
-                  }; // Estilo para días pasados
+                    style: { backgroundColor: "rgba(137, 137, 137, 0.2)" },
+                  };
               }}
             />
           ) : (
@@ -176,13 +213,14 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                 if (isDisabled)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#FFB3B3" },
-                  }; // Estilo para días reservados
+                    style: { backgroundColor: "rgba(255, 85, 0, 0.2)" },
+                  };
+
                 if (isPastDate)
                   return {
                     disabled: true,
-                    style: { backgroundColor: "#D3D3D3" },
-                  }; // Estilo para días pasados
+                    style: { backgroundColor: "rgba(137, 137, 137, 0.2)" },
+                  };
               }}
             />
           )}

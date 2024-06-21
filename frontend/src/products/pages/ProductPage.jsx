@@ -142,7 +142,7 @@ export const ProductPage = () => {
           <GridImagenes listaImagenes={listaImagenes} />
         </Box>
       </Box>
-
+      {/* ----------------------- DATA INSTRUMENTO -------------------------- */}
       <Grid
         container
         sx={{
@@ -153,68 +153,121 @@ export const ProductPage = () => {
         }}
       >
         <Grid item xs={12}>
-          <Typography variant='subtitle1' fontSize='1.5em'>
-            Categoría:{' '}
-            <span
-              style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
-              }}
-            >
-              {instrumento.nombreCategoria}
-            </span>
-          </Typography>
+          {/* DATA */}
+          <Grid
+            container
+            sx={{
+              padding: 4,
+              backgroundColor: '#121312',
+              color: '#FFFFFF',
+            }}
+          >
+            <Grid item xs={12} md={3}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                Categoría:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                <span
+                  style={{
+                    color: '#FF5500',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {instrumento.nombreCategoria}
+                </span>
+              </Typography>
+            </Grid>
 
-          <Typography variant='subtitle1' fontSize='3em'>
-            Marca:{' '}
-            <span
-              style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
-              }}
-            >
-              {instrumento.nombreMarca}
-            </span>
-          </Typography>
+            <Grid item xs={12} md={3}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                Marca:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                <span
+                  style={{
+                    color: '#FF5500',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {instrumento.nombreMarca}
+                </span>
+              </Typography>
+            </Grid>
 
-          <Typography variant='subtitle1' fontSize='1.5em'>
-            Modelo:{' '}
-            <span
-              style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
-              }}
-            >
-              {instrumento.nombre}
-            </span>
-          </Typography>
+            <Grid item xs={12} md={3}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                Modelo:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                <span
+                  style={{
+                    color: '#FF5500',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {instrumento.nombre}
+                </span>
+              </Typography>
+            </Grid>
 
-          <Typography variant='subtitle1' py={1} fontSize='1.5em'>
-            Descripción:
-            <Box
-              component={'span'}
-              style={{
-                color: '#FF5500',
-                textTransform: 'uppercase',
-              }}
-            >
-              {instrumento.descripcion}
-            </Box>
-          </Typography>
+            <Grid item xs={12} md={3}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                Descripción:
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                <Box
+                  component='span'
+                  sx={{
+                    color: '#FF5500',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {instrumento.descripcion}
+                </Box>
+              </Typography>
+            </Grid>
+          </Grid>
 
-          <Box>
-            <Typography
-              variant='subtitle1'
-              py={1}
-              px={5}
-              fontSize='3em'
-              backgroundColor='#2E2D2D'
-            >
-              Costo de arriendo:
-              <span style={{ color: '#FF5500' }}>
-                ${new Intl.NumberFormat().format(instrumento.precio)} x día
-              </span>
-            </Typography>
+          {/* PRECIO */}
+          <Box
+            sx={{
+              padding: 4,
+              backgroundColor: '#444444',
+              color: '#FFFFFF',
+            }}
+          >
+            <Grid container>
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
+                <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                  Costo de arriendo:
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={9}
+                sx={{ display: 'flex', alignItems: 'center' }}
+              >
+                <Typography variant='subtitle1' sx={{ fontSize: '1.5em' }}>
+                  <span style={{ color: '#FF5500', fontSize: '1.5em' }}>
+                    ${new Intl.NumberFormat().format(instrumento.precio)} x día
+                  </span>
+                </Typography>
+              </Grid>
+            </Grid>
           </Box>
 
           {/* Acordeones */}
@@ -222,7 +275,7 @@ export const ProductPage = () => {
             <Accordion
               sx={{
                 marginTop: 2,
-                padding: 2,
+
                 backgroundColor: '#F9E9DE',
                 color: '#121312',
               }}
@@ -237,18 +290,22 @@ export const ProductPage = () => {
                     fontSize: 20,
                     textDecoration: 'underline',
                     fontWeight: 600,
+                    padding: 2,
                   }}
                 >
                   CARACTERÍSTICAS
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: '#ffffff',
+                }}
+              >
                 <Characteristics instrumento={instrumento} />
               </AccordionDetails>
             </Accordion>
-            <Accordion
-              sx={{ padding: 2, backgroundColor: '#FADCAF', color: '#121312' }}
-            >
+            <Accordion sx={{ backgroundColor: '#F9E9DE', color: '#121312' }}>
               <AccordionSummary
                 expandIcon={<ArrowDropDownIcon />}
                 aria-controls='panel2-content'
@@ -259,18 +316,22 @@ export const ProductPage = () => {
                     fontSize: 20,
                     textDecoration: 'underline',
                     fontWeight: 600,
+                    padding: 2,
                   }}
                 >
                   POLÍTICAS DE RESERVA
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: '#ffffff',
+                }}
+              >
                 <Politicas />
               </AccordionDetails>
             </Accordion>
-            <Accordion
-              sx={{ padding: 2, backgroundColor: '#F8CE8F', color: '#121312' }}
-            >
+            <Accordion sx={{ backgroundColor: '#F9E9DE', color: '#121312' }}>
               <AccordionSummary
                 expandIcon={<ArrowDropDownIcon />}
                 aria-controls='panel3-content'
@@ -281,16 +342,24 @@ export const ProductPage = () => {
                     fontSize: 20,
                     textDecoration: 'underline',
                     fontWeight: 600,
+                    padding: 2,
                   }}
                 >
                   RESERVA AHORA
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                sx={{
+                  padding: 2,
+                  backgroundColor: '#ffffff',
+                }}
+              >
                 <Grid container display='flex' flexDirection='column'>
-                  <ProductCalendar fechasReservadas={instrumento.reserva} instrumento={instrumento}/>
+                  <ProductCalendar
+                    fechasReservadas={instrumento.reserva}
+                    instrumento={instrumento}
+                  />
                 </Grid>
-              
               </AccordionDetails>
             </Accordion>
           </Box>
