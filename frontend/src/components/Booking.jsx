@@ -203,7 +203,6 @@ export const Booking = () => {
         <Grid item sx={{ width: '100%' }}>
           <Grid
             container
-            container
             spacing={3}
             direction='row'
             alignItems='center'
