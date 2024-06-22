@@ -26,6 +26,7 @@ export const UserInfoPage = () => {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const { itemState } = useContext(ItemsContext);
   const [productos, setProductos] = useState([]);
+  // const [reservas, setReservas] = useState([]);
 
   useEffect(() => {
     //este codigo redirige a 'login' cuando intenta ir a /user sin loggear

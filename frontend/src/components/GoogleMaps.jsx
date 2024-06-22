@@ -131,7 +131,7 @@ const GoogleMaps = ({ onLocationSelect }) => {
 
   const handleSendLocation = () => {
     if (selectedId !== null && onLocationSelect) {
-      onLocationSelect(selectedId);
+      onLocationSelect(selectedId, selectedAddress);
     }
   };
 

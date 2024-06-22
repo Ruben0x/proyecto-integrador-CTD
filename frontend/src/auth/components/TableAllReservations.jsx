@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Box,
   Container,
@@ -10,30 +10,7 @@ import {
   Avatar,
 } from "@mui/material";
 
-export const TableAllReservations = () => {
-  const [reservations, setReservations] = useState([]);
-
-  useEffect(() => {
-    // Datos ficticios de ejemplo
-    const reservasHardcode = [
-      {
-        id: 1,
-        instrumento: { nombre: "Guitarra", imagenUrl: "/images/guitar.png" },
-        fechaInicio: "2024-07-01",
-        fechaFin: "2024-07-10",
-        sucursal: { nombre: "Sucursal A" },
-      },
-      {
-        id: 2,
-        instrumento: { nombre: "Piano", imagenUrl: "/images/piano.png" },
-        fechaInicio: "2024-07-05",
-        fechaFin: "2024-07-15",
-        sucursal: { nombre: "Sucursal B" },
-      },
-    ];
-    setReservations(reservasHardcode);
-  }, []);
-
+export const TableAllReservations = ({ reservas = [] }) => {
   return (
     <Container
       sx={{
@@ -49,15 +26,15 @@ export const TableAllReservations = () => {
         RESERVAS
       </Typography>
       <Box sx={{ width: "100%", textAlign: "center" }}>
-        {reservations.length === 0 ? (
+        {reservas.length === 0 ? (
           <Typography variant="body1" color="textSecondary">
             No tienes reservas actualmente
           </Typography>
         ) : (
           <List sx={{ width: "100%", maxWidth: 600, mx: "auto" }}>
-            {reservations.map((reservation) => (
+            {reservas.map((reserva) => (
               <ListItem
-                key={reservation.id}
+                key={reserva.id}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -68,8 +45,8 @@ export const TableAllReservations = () => {
               >
                 <ListItemAvatar>
                   <Avatar
-                    src={reservation.instrumento.imagenUrl}
-                    alt={reservation.instrumento.nombre}
+                    src={reserva.instrumento.imagenUrl}
+                    alt={reserva.instrumento.nombre}
                     sx={{ width: 50, height: 50 }}
                   />
                 </ListItemAvatar>
@@ -80,7 +57,7 @@ export const TableAllReservations = () => {
                       component="span"
                       fontWeight="bold"
                     >
-                      {reservation.instrumento.nombre}
+                      {reserva.instrumento.nombre}
                     </Typography>
                   }
                   secondary={
@@ -90,21 +67,21 @@ export const TableAllReservations = () => {
                         component="span"
                         display="block"
                       >
-                        {`Fecha de inicio: ${reservation.fechaInicio}`}
+                        {`Fecha de inicio: ${reserva.fechaInicio}`}
                       </Typography>
                       <Typography
                         variant="body2"
                         component="span"
                         display="block"
                       >
-                        {`Fecha de fin: ${reservation.fechaFin}`}
+                        {`Fecha de fin: ${reserva.fechaFin}`}
                       </Typography>
                       <Typography
                         variant="body2"
                         component="span"
                         display="block"
                       >
-                        {`Sucursal: ${reservation.sucursal.nombre}`}
+                        {`Sucursal: ${reserva.sucursal}`}
                       </Typography>
                     </Box>
                   }
