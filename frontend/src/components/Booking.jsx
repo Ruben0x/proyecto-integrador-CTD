@@ -179,8 +179,8 @@ export const Booking = () => {
     initialValues: {
       usuarioId: globalUserData.id,
       productoId: instrumento.id,
-      fechaInicio: moment(values[0], 'YYYY/MM/DD').format('YYYY-MM-DD'),
-      fechaFin: moment(values[1], 'YYYY/MM/DD').format('YYYY-MM-DD'),
+      fechaInicio: moment(values[0], 'YYYY/MM/DD').format('YYYY-MMM-DD'),
+      fechaFin: moment(values[1], 'YYYY/MM/DD').format('YYYY-MMM-DD'),
       sucursalId:'',
     },onSubmit: (values) => {
       //crearReserva(values);
@@ -277,7 +277,7 @@ export const Booking = () => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  {values[0]}
+                  {formattedDateInicio}
                 </Typography>
               </Box>
             </Grid>
@@ -302,7 +302,7 @@ export const Booking = () => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  {values[1]}
+                  {formattedDateFin}
                 </Typography>
                 <Typography
                   fontWeight='600'
@@ -326,19 +326,7 @@ export const Booking = () => {
                 <GoogleMaps
                 onLocationSelect={handleLocationSelect}/>
               </Grid>
-              <Grid item xs={12} sx={{ mt: 2 }}>
-                
 
-                  <Button
-                    type='submit'
-                    variant='contained'
-                    fullWidth
-                    color='secondary'
-                  >
-                    INGRESA
-                  </Button>
-
-              </Grid>
             </Grid>
           </form>
         </Grid>
