@@ -1,18 +1,36 @@
 import React, { useContext, useEffect } from 'react';
-import { Grid, TextField, Typography, Box, Avatar } from '@mui/material';
+import {
+  Grid,
+  TextField,
+  Typography,
+  Box,
+  Avatar,
+  Button,
+} from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AuthLayout } from '../auth/layout/AuthLayout';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { InstrumentCardResponsiveXS } from './InstrumentCardResponsiveXS';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import moment from 'moment';
+import 'moment/locale/es';
+import 'moment/min/moment-with-locales'
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import GoogleMaps from './GoogleMaps';
-const handleLocationSelect = (id) => {
-  console.log('ID de sucursal:', id);
-  // Aquí puedes manejar el id recibido, por ejemplo, enviarlo a un formulario
-};
+
+
+
+
+moment.locale('es', {
+  months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+  monthsShort: 'Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic'.split('_'),
+  weekdays: 'Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado'.split('_'),
+  weekdaysShort: 'Dom_Lun_Mar_Mié_Jue_Vie_Sáb'.split('_'),
+  weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sá'.split('_')
+});
+
 const productoHardCode = {
   id: 1,
   nombre: 'Akai MPK Mini',
@@ -119,6 +137,12 @@ const productoHardCode = {
 };
 
 export const Booking = () => {
+  const validationSchema = Yup.object({
+    sucursalId: Yup.string('Seleccione sucursal').required(
+      'Debe seleccionar una sucursal'
+    ),
+  });
+
   const location = useLocation();
   const { state } = location;
 
@@ -133,18 +157,44 @@ export const Booking = () => {
   ];
   const nombre = `${globalUserData?.nombre} ${globalUserData?.apellido}`;
   const email = globalUserData?.email;
+  
 
   useEffect(() => {
     if (!isLogged) {
       window.location.replace('/auth/login');
     }
-    // Additional logic as needed
-  }, [isLogged]);
 
-  // Render loading or handle state not initialized scenarios
-  if (!state) {
-    return <div>Loading...</div>; // or handle differently based on your application flow
-  }
+    console.log(instrumento);
+    console.log(values);
+    formik.setFieldValue('usuarioId', globalUserData?.id)
+    formik.setFieldValue('productoId', instrumento?.id)
+    formik.setFieldValue('fechaInicio', moment(values[0], 'YYYY/MM/DD').format('YYYY/MM/DD'))
+    formik.setFieldValue('fechaFin', moment(values[1], 'YYYY/MM/DD').format('YYYY/MM/DD'))
+  }, [isLogged,]);
+  const formattedDateInicio = moment(values[0], 'YYYY/MM/DD').format('DD MMM');
+  const formattedDateFin = moment(values[1], 'YYYY/MM/DD').format('DD MMM');
+
+
+  const formik = useFormik({
+    initialValues: {
+      usuarioId: globalUserData.id,
+      productoId: instrumento.id,
+      fechaInicio: moment(values[0], 'YYYY/MM/DD').format('YYYY-MMM-DD'),
+      fechaFin: moment(values[1], 'YYYY/MM/DD').format('YYYY-MMM-DD'),
+      sucursalId:'',
+    },onSubmit: (values) => {
+      //crearReserva(values);
+      console.log(values);
+
+    },
+  });
+
+  const handleLocationSelect = (id) => {
+    formik.setFieldValue('sucursalId', id)
+    formik.handleSubmit()
+    console.log('ID de sucursal:', id);
+  };
+  
   return (
     <AuthLayout title='CONFIRMA' subtitle=' TU RESERVA'>
       <Grid
@@ -227,7 +277,7 @@ export const Booking = () => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  {values[0]}
+                  {formattedDateInicio}
                 </Typography>
               </Box>
             </Grid>
@@ -252,7 +302,7 @@ export const Booking = () => {
                   sx={{ fontSize: '40PX' }}
                   display={'inline'}
                 >
-                  {values[1]}
+                  {formattedDateFin}
                 </Typography>
                 <Typography
                   fontWeight='600'
@@ -267,11 +317,20 @@ export const Booking = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item sx={{ width: '100%' }}>
-          <Grid>
-            <GoogleMaps onLocationSelect={handleLocationSelect} />
-          </Grid>
+
+        {/*seccion mapa + submit*/}
+        <Grid item  sx={{ width: '100%'}}>
+        <form onSubmit={formik.handleSubmit}>
+            <Grid container>
+              <Grid item xs={12} sx={{ mt: 2 }}>
+                <GoogleMaps
+                onLocationSelect={handleLocationSelect}/>
+              </Grid>
+
+            </Grid>
+          </form>
         </Grid>
+
       </Grid>
     </AuthLayout>
   );
