@@ -1,4 +1,4 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from '@mui/x-data-grid';
 import {
   Box,
   Button,
@@ -10,14 +10,15 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
-} from "@mui/material";
-import HistoryIcon from "@mui/icons-material/History";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import { AdminLayout } from "../../layout/AdminLayout";
-import { useUsers } from "../../../context/store/UsersProvider";
+} from '@mui/material';
+import HistoryIcon from '@mui/icons-material/History';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import { useState, useEffect, useContext } from 'react';
+import { toast } from 'sonner';
+import { AdminLayout } from '../../layout/AdminLayout';
+import { useUsers } from '../../../context/store/UsersProvider';
+import { GlobalUserDataContext } from '../../../auth/helpers/globalUserData';
 
 export const ListAllUsuarios = ({}) => {
   const { getAllUsers, isLoading, userState, deleteUser, changeUserRol } =
@@ -25,10 +26,15 @@ export const ListAllUsuarios = ({}) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [usuario, setUsuario] = useState();
+  const { globalUserData } = useContext(GlobalUserDataContext);
 
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  const usersFiltrados = userState.users.filter(
+    (user) => user.id !== globalUserData.id
+  );
 
   const handleClickOpen = (params) => {
     setUsuario(params.row);
@@ -54,9 +60,9 @@ export const ListAllUsuarios = ({}) => {
     try {
       await deleteUser(id);
       setDeleteModal(false);
-      toast.success("Usuario eliminado con éxito");
+      toast.success('Usuario eliminado con éxito');
     } catch (error) {
-      toast.error("Hubo un problema eliminado al usuario");
+      toast.error('Hubo un problema eliminado al usuario');
     }
   };
 
@@ -64,19 +70,19 @@ export const ListAllUsuarios = ({}) => {
     return (
       <>
         <Button
-          size="small"
+          size='small'
           sx={{ marginRight: 2 }}
-          variant="contained"
-          color="buttonGreen"
+          variant='contained'
+          color='buttonGreen'
           onClick={() => handleClickOpenEdit(params)}
           startIcon={<HistoryIcon />}
         >
           <Typography fontWeight={600}>Editar</Typography>
         </Button>
         <Button
-          size="small"
-          variant="contained"
-          color="buttonRed"
+          size='small'
+          variant='contained'
+          color='buttonRed'
           onClick={() => handleClickOpen(params)}
           startIcon={<DeleteOutlineOutlinedIcon />}
         >
@@ -87,25 +93,25 @@ export const ListAllUsuarios = ({}) => {
   };
 
   return (
-    <AdminLayout title={""}>
+    <AdminLayout title={''}>
       {isLoading && <CircularProgress />}
-      <Container sx={{ display: "flex", justifyContent: "center" }}>
-        <Box sx={{ width: "90%" }}>
+      <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ width: '90%' }}>
           <DataGrid
-            rows={userState.users}
+            rows={usersFiltrados}
             columns={[
-              { field: "id", headerName: "ID", width: 50 },
-              { field: "nombre", headerName: "Nombre", width: 100 },
-              { field: "apellido", headerName: "Apellido", width: 100 },
+              { field: 'id', headerName: 'ID', width: 50 },
+              { field: 'nombre', headerName: 'Nombre', width: 100 },
+              { field: 'apellido', headerName: 'Apellido', width: 100 },
               {
-                field: "email",
-                headerName: "Email",
+                field: 'email',
+                headerName: 'Email',
                 width: 150,
               },
-              { field: "rol", headerName: "Rol", width: 100 },
+              { field: 'rol', headerName: 'Rol', width: 100 },
               {
-                field: "accions",
-                headerName: "Acciones",
+                field: 'accions',
+                headerName: 'Acciones',
                 width: 280,
                 renderCell: renderActions,
               },
@@ -123,27 +129,27 @@ export const ListAllUsuarios = ({}) => {
         <Dialog
           open={deleteModal}
           onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
           fullWidth={true}
-          maxWidth={"xs"}
-          sx={{ textAlign: "center" }}
+          maxWidth={'xs'}
+          sx={{ textAlign: 'center' }}
         >
           <DialogContent>
-            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color="primary" />
+            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color='primary' />
           </DialogContent>
-          <DialogTitle id="alert-dialog-title" fontWeight={600}>
-            {"¿Estas seguro?"}
+          <DialogTitle id='alert-dialog-title' fontWeight={600}>
+            {'¿Estas seguro?'}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description" fontWeight={600}>
+            <DialogContentText id='alert-dialog-description' fontWeight={600}>
               Esta acción eliminara al {usuario.nombre}
             </DialogContentText>
           </DialogContent>
-          <DialogActions sx={{ justifyContent: "center" }}>
+          <DialogActions sx={{ justifyContent: 'center' }}>
             <Button
-              variant="contained"
-              color="buttonGreen"
+              variant='contained'
+              color='buttonGreen'
               onClick={() => {
                 handleAcceptDelete(usuario.id);
               }}
@@ -151,7 +157,7 @@ export const ListAllUsuarios = ({}) => {
             >
               ELIMINAR
             </Button>
-            <Button variant="contained" color="buttonRed" onClick={handleClose}>
+            <Button variant='contained' color='buttonRed' onClick={handleClose}>
               CANCELAR
             </Button>
           </DialogActions>
@@ -162,28 +168,28 @@ export const ListAllUsuarios = ({}) => {
         <Dialog
           open={editModal}
           onClose={handleCloseEdit}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
           fullWidth={true}
-          maxWidth={"xs"}
-          sx={{ textAlign: "center" }}
+          maxWidth={'xs'}
+          sx={{ textAlign: 'center' }}
         >
           <DialogContent>
-            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color="primary" />
+            <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color='primary' />
           </DialogContent>
-          <DialogTitle id="alert-dialog-title" fontWeight={600}>
-            {"¿Estas seguro?"}
+          <DialogTitle id='alert-dialog-title' fontWeight={600}>
+            {'¿Estas seguro?'}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description" fontWeight={600}>
+            <DialogContentText id='alert-dialog-description' fontWeight={600}>
               Esta acción modificara a {usuario?.nombre} sus permisos de
               Administrador
             </DialogContentText>
           </DialogContent>
-          <DialogActions sx={{ justifyContent: "center" }}>
+          <DialogActions sx={{ justifyContent: 'center' }}>
             <Button
-              variant="contained"
-              color="buttonGreen"
+              variant='contained'
+              color='buttonGreen'
               onClick={() => {
                 handleAcceptAdmin(usuario);
               }}
@@ -192,8 +198,8 @@ export const ListAllUsuarios = ({}) => {
               MODIFICAR
             </Button>
             <Button
-              variant="contained"
-              color="buttonRed"
+              variant='contained'
+              color='buttonRed'
               onClick={handleCloseEdit}
             >
               CANCELAR

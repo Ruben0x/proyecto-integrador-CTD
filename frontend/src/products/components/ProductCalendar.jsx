@@ -27,6 +27,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
       const formattedDates = formatDatesArray(fechasReservadas);
       setReserved(formattedDates);
       setValues([null, null]);
+      // Reset selected values if reserved dates change
     }
   }, [fechasReservadas]);
 
@@ -203,7 +204,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
           fullWidth
           variant="contained"
           onClick={handleReserva}
-          disabled={!checkboxChecked || !values[0] || !values[1]}
+          disabled={!checkboxChecked || !values[0] || !values[1]} // Deshabilita el botón si el checkbox no está marcado o no se han seleccionado fechas
           sx={{
             fontSize: 20,
             fontWeight: 600,
