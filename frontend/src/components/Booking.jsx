@@ -6,6 +6,11 @@ import {
   Box,
   Avatar,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { AuthLayout } from "../auth/layout/AuthLayout";
@@ -13,6 +18,7 @@ import { GlobalUserDataContext } from "../auth/helpers/globalUserData";
 import { InstrumentCardResponsiveXS } from "./InstrumentCardResponsiveXS";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import moment from "moment";
 import "moment/locale/es";
 import "moment/min/moment-with-locales";
@@ -149,6 +155,7 @@ export const Booking = () => {
   const [reservas, setReservas] = useState([]);
   const instrumento = state ? state.instrumento : null;
   const values = state ? state.values : null;
+  const [open, setOpen] = useState(false);
 
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const iniciales = [
@@ -215,6 +222,14 @@ export const Booking = () => {
 
   const handleCrearReserva = () => {
     formik.handleSubmit();
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -346,7 +361,7 @@ export const Booking = () => {
           </form>
         </Grid>
       </Grid>
-      <Button
+      {/* <Button
         type="button"
         variant="contained"
         color="primary"
@@ -355,8 +370,56 @@ export const Booking = () => {
         sx={{ mt: 2, width: "100%", padding: "1rem" }}
       >
         CONFIRMAR RESERVA
+      </Button> */}
+
+      <Button
+        type="button"
+        variant="contained"
+        color="primary"
+        width="100%"
+        onClick={handleOpen} // Abre el modal al hacer clic
+        sx={{ mt: 2, width: "100%", padding: "1rem" }}
+      >
+        CONFIRMAR RESERVA
       </Button>
+
       <TableAllReservations reservas={reservas} />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth
+        maxWidth="xs"
+        sx={{ textAlign: "center" }}
+      >
+        <DialogContent>
+          <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color="warning" />
+        </DialogContent>
+        <DialogTitle id="alert-dialog-title">Confirmar Reserva</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            ¿Estás seguro de que deseas confirmar esta reserva?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="warning">
+            Cancelar
+          </Button>
+          <Button
+            component={RouterLink}
+            to="/auth/user"
+            onClick={() => {
+              handleClose(); // Cierra el modal al redirigir
+              handleCrearReserva(); // Realiza la acción de reserva
+            }}
+            color="primary"
+            autoFocus
+          >
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </AuthLayout>
   );
 };
