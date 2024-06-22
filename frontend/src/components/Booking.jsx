@@ -5,20 +5,30 @@ import {
   Typography,
   Box,
   Avatar,
+  Button,
 } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AuthLayout } from '../auth/layout/AuthLayout';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
+
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { InstrumentCardResponsiveXS } from './InstrumentCardResponsiveXS';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { DateObject } from 'react-multi-date-picker';
+
 import moment from 'moment';
 import 'moment/locale/es';
+import 'moment/min/moment-with-locales'
 
-moment.locale('es');
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+moment.locale('es', {
+  months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+  monthsShort: 'Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic'.split('_'),
+  weekdays: 'Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado'.split('_'),
+  weekdaysShort: 'Dom_Lun_Mar_Mié_Jue_Vie_Sáb'.split('_'),
+  weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sá'.split('_')
+});
 
 const productoHardCode = {
   id: 1,
@@ -126,6 +136,18 @@ const productoHardCode = {
 };
 
 export const Booking = () => {
+  const validationSchema = Yup.object({
+    email: Yup.string('Ingrese su correo')
+      .email('Correo Invalido')
+      .required('Correo es obligatorio'),
+    password: Yup.string('Ingrese su contraseña').required(
+      'Debe ingresar una contraseña'
+    ),
+  });
+
+
+
+
   const location = useLocation();
   const { state } = location;
   const { instrumento, values } = state;
@@ -153,6 +175,21 @@ export const Booking = () => {
   ]);
   const formattedDateInicio = moment(values[0], 'YYYY/MM/DD').format('DD MMM');
   const formattedDateFin = moment(values[1], 'YYYY/MM/DD').format('DD MMM');
+
+
+  const formik = useFormik({
+    initialValues: {
+      usuarioId: globalUserData.id,
+      productoId: instrumento.id,
+      fechaInicio: moment(values[0], 'YYYY/MM/DD').format('YYYY-MM-DD'),
+      fechaFin: moment(values[1], 'YYYY/MM/DD').format('YYYY-MM-DD'),
+      sucursalId:'',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      //login(values, setIsLogged, setGlobalUserData, getUserById);
+    },
+  });
 
   return (
 
@@ -284,6 +321,32 @@ export const Booking = () => {
           </Grid>
         </Grid>
 
+        {/*seccion mapa + submit*/}
+        <Grid item>
+        <form onSubmit={formik.handleSubmit}>
+            <Grid container>
+              <Grid item xs={12} md={6} sx={{ mt: 2 }}>
+                Reservado para listado de direcciones
+              </Grid>
+              <Grid item xs={12} md={6} sx={{ mt: 2 }}>
+                Reservado para mapa
+              </Grid>
+              <Grid item xs={12} sx={{ mt: 2 }}>
+                
+
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    fullWidth
+                    color='secondary'
+                  >
+                    INGRESA
+                  </Button>
+
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
 
       </Grid>
     </AuthLayout>
