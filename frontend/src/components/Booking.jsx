@@ -9,18 +9,19 @@ import {
 } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AuthLayout } from '../auth/layout/AuthLayout';
-
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { InstrumentCardResponsiveXS } from './InstrumentCardResponsiveXS';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
 import moment from 'moment';
 import 'moment/locale/es';
 import 'moment/min/moment-with-locales'
-
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import GoogleMaps from './GoogleMaps';
+
+
+
 
 moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
@@ -137,16 +138,10 @@ const productoHardCode = {
 
 export const Booking = () => {
   const validationSchema = Yup.object({
-    email: Yup.string('Ingrese su correo')
-      .email('Correo Invalido')
-      .required('Correo es obligatorio'),
-    password: Yup.string('Ingrese su contraseña').required(
-      'Debe ingresar una contraseña'
+    sucursalId: Yup.string('Seleccione sucursal').required(
+      'Debe seleccionar una sucursal'
     ),
   });
-
-
-
 
   const location = useLocation();
   const { state } = location;
@@ -158,21 +153,21 @@ export const Booking = () => {
   ];
   const nombre = `${globalUserData?.nombre} ${globalUserData?.apellido}`;
   const email = globalUserData?.email;
+  
+
   useEffect(() => {
     //este codigo redirige a 'login' cuando intenta ir a /booking sin loggear
     if (!isLogged) {
       window.location.replace('/auth/login');
     }
-    /*if (!checkAcepta) {
-        // Si llegó a esta pag sin tickear terminos y condiciones, regresa en el nav 
-            history.goBack(); 
-          }*/
+
     console.log(instrumento);
     console.log(values);
-  }, [
-    isLogged,
-    //checkAcepta
-  ]);
+    formik.setFieldValue('usuarioId', globalUserData?.id)
+    formik.setFieldValue('productoId', instrumento?.id)
+    formik.setFieldValue('fechaInicio', moment(values[0], 'YYYY/MM/DD').format('YYYY/MM/DD'))
+    formik.setFieldValue('fechaFin', moment(values[0], 'YYYY/MM/DD').format('YYYY/MM/DD'))
+  }, [isLogged,]);
   const formattedDateInicio = moment(values[0], 'YYYY/MM/DD').format('DD MMM');
   const formattedDateFin = moment(values[1], 'YYYY/MM/DD').format('DD MMM');
 
@@ -184,13 +179,19 @@ export const Booking = () => {
       fechaInicio: moment(values[0], 'YYYY/MM/DD').format('YYYY-MM-DD'),
       fechaFin: moment(values[1], 'YYYY/MM/DD').format('YYYY-MM-DD'),
       sucursalId:'',
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      //login(values, setIsLogged, setGlobalUserData, getUserById);
+    },onSubmit: (values) => {
+      //crearReserva(values);
+      console.log(values);
+
     },
   });
 
+  const handleLocationSelect = (id) => {
+    formik.setFieldValue('sucursalId', id)
+    formik.handleSubmit()
+    console.log('ID de sucursal:', id);
+  };
+  
   return (
 
     
@@ -322,14 +323,12 @@ export const Booking = () => {
         </Grid>
 
         {/*seccion mapa + submit*/}
-        <Grid item>
+        <Grid item  sx={{ width: '100%'}}>
         <form onSubmit={formik.handleSubmit}>
             <Grid container>
-              <Grid item xs={12} md={6} sx={{ mt: 2 }}>
-                Reservado para listado de direcciones
-              </Grid>
-              <Grid item xs={12} md={6} sx={{ mt: 2 }}>
-                Reservado para mapa
+              <Grid item xs={12} sx={{ mt: 2 }}>
+                <GoogleMaps
+                onLocationSelect={handleLocationSelect}/>
               </Grid>
               <Grid item xs={12} sx={{ mt: 2 }}>
                 
