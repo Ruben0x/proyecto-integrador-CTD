@@ -183,24 +183,34 @@ const GoogleMaps = ({ onLocationSelect }) => {
           }}
         >
           <APIProvider apiKey={API_KEY}>
-            <Map
-              style={{ width: "80%", height: "60%" }}
-              center={mapCenter}
-              zoom={mapZoom}
-              gestureHandling={"greedy"}
-              disableDefaultUI={true}
-              onLoad={(map) => {
-                const marker = new google.maps.Marker({
-                  position: mapCenter,
-                  map: map,
-                });
-
-                if (selectedSucursal) {
-                  marker.setPosition(selectedSucursal);
-                  marker.setMap(map);
-                }
+            <div
+              style={{
+                width: "100%",
+                height: "500px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
+            >
+              <Map
+                style={{ width: "100%", height: "100%" }}
+                center={mapCenter}
+                zoom={mapZoom}
+                gestureHandling={"greedy"}
+                disableDefaultUI={true}
+                onLoad={(map) => {
+                  const marker = new google.maps.Marker({
+                    position: mapCenter,
+                    map: map,
+                  });
+
+                  if (selectedSucursal) {
+                    marker.setPosition(selectedSucursal);
+                    marker.setMap(map);
+                  }
+                }}
+              />
+            </div>
           </APIProvider>
           {selectedAddress && (
             <Typography variant="body1" sx={{ marginTop: "20px" }}>

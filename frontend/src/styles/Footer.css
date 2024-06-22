@@ -18,7 +18,7 @@
   align-items: center;
   display: flex;
   color: white;
-  padding-top: 1rem;
+  padding: 1rem;
   max-width: 1536px;
 }
 
@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   font-size: medium;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   max-width: 100%;
   height: auto;
   padding: 1rem;
