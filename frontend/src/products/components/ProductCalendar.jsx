@@ -76,6 +76,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
       navigate('/booking', { state: { instrumento, values: rangoFechas } });
     } else {
       toast.warning('Debes estar logueado para realizar la reserva.');
+      navigate('/auth/login');
     }
   };
 
