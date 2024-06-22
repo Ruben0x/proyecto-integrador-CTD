@@ -166,7 +166,7 @@ export const Booking = () => {
     formik.setFieldValue('usuarioId', globalUserData?.id)
     formik.setFieldValue('productoId', instrumento?.id)
     formik.setFieldValue('fechaInicio', moment(values[0], 'YYYY/MM/DD').format('YYYY/MM/DD'))
-    formik.setFieldValue('fechaFin', moment(values[0], 'YYYY/MM/DD').format('YYYY/MM/DD'))
+    formik.setFieldValue('fechaFin', moment(values[1], 'YYYY/MM/DD').format('YYYY/MM/DD'))
   }, [isLogged,]);
   const formattedDateInicio = moment(values[0], 'YYYY/MM/DD').format('DD MMM');
   const formattedDateFin = moment(values[1], 'YYYY/MM/DD').format('DD MMM');
