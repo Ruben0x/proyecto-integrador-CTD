@@ -361,23 +361,13 @@ export const Booking = () => {
           </form>
         </Grid>
       </Grid>
-      {/* <Button
-        type="button"
-        variant="contained"
-        color="primary"
-        width="100%"
-        onClick={handleCrearReserva}
-        sx={{ mt: 2, width: "100%", padding: "1rem" }}
-      >
-        CONFIRMAR RESERVA
-      </Button> */}
 
       <Button
         type="button"
         variant="contained"
         color="primary"
         width="100%"
-        onClick={handleOpen} // Abre el modal al hacer clic
+        onClick={handleOpen}
         sx={{ mt: 2, width: "100%", padding: "1rem" }}
       >
         CONFIRMAR RESERVA
@@ -407,11 +397,11 @@ export const Booking = () => {
             Cancelar
           </Button>
           <Button
-            component={RouterLink}
-            to="/auth/user"
+            // component={RouterLink}
+            // to="/auth/user"
             onClick={() => {
-              handleClose(); // Cierra el modal al redirigir
-              handleCrearReserva(); // Realiza la acción de reserva
+              handleClose();
+              handleCrearReserva();
             }}
             color="primary"
             autoFocus
