@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -8,8 +8,8 @@ import {
   ListItemText,
   Typography,
   Avatar,
-} from "@mui/material";
-import axios from "axios";
+} from '@mui/material';
+import axios from 'axios';
 
 export const TableAllReservations = () => {
   const [reservas, setReservas] = useState([]);
@@ -18,9 +18,9 @@ export const TableAllReservations = () => {
 
   useEffect(() => {
     const fetchReservasYSucursales = async () => {
-      const loggedToken = sessionStorage.getItem("token");
+      const loggedToken = sessionStorage.getItem('token');
       if (!loggedToken) {
-        setError("No se encontró el token de autenticación");
+        setError('No se encontró el token de autenticación');
         setLoading(false);
         return;
       }
@@ -65,7 +65,7 @@ export const TableAllReservations = () => {
             const imagenUrl =
               productoData.imagenes && productoData.imagenes.length > 0
                 ? productoData.imagenes[0].url
-                : "/default-image.png";
+                : '/default-image.png';
 
             const instrumento = {
               nombre: productoData.nombre,
@@ -74,7 +74,7 @@ export const TableAllReservations = () => {
             };
 
             const sucursal =
-              sucursalesMap[reserva.sucursalId] || "Sin sucursal asignada";
+              sucursalesMap[reserva.sucursalId] || 'Sin sucursal asignada';
 
             return {
               ...reserva,
@@ -99,15 +99,15 @@ export const TableAllReservations = () => {
     return (
       <Container
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
           marginTop: 2,
           padding: 2,
         }}
       >
-        <Typography variant="h5" gutterBottom>
+        <Typography variant='h5' gutterBottom>
           Cargando reservas...
         </Typography>
       </Container>
@@ -118,18 +118,18 @@ export const TableAllReservations = () => {
     return (
       <Container
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
           marginTop: 2,
           padding: 2,
         }}
       >
-        <Typography variant="h5" gutterBottom>
+        <Typography variant='h5' gutterBottom>
           Error al cargar las reservas
         </Typography>
-        <Typography variant="body1" color="textSecondary">
+        <Typography variant='body1' color='textSecondary'>
           {error}
         </Typography>
       </Container>
@@ -137,39 +137,39 @@ export const TableAllReservations = () => {
   }
 
   const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-
+  console.log(reservas);
   return (
     <Container
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
         marginTop: 2,
         padding: 2,
       }}
     >
-      <Typography variant="h5" gutterBottom>
+      <Typography variant='h5' gutterBottom>
         RESERVAS
       </Typography>
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box sx={{ width: '100%', textAlign: 'center' }}>
         {reservas.length === 0 ? (
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant='body1' color='textSecondary'>
             No tienes reservas actualmente
           </Typography>
         ) : (
-          <List sx={{ width: "100%", maxWidth: 600, mx: "auto" }}>
+          <List sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
             {reservas.map((reserva) => (
               <ListItem
                 key={reserva.id}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
                   padding: 1,
                 }}
               >
@@ -182,78 +182,78 @@ export const TableAllReservations = () => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={
-                    <Box component="span">
+                    <Box component='span'>
                       <Typography
-                        variant="body1"
-                        component="span"
-                        fontWeight="bold"
+                        variant='body1'
+                        component='span'
+                        fontWeight='bold'
                       >
                         {reserva.instrumento.nombre}
                       </Typography>
                     </Box>
                   }
                   secondary={
-                    <Box component="span">
+                    <Box component='span'>
                       <Typography
-                        variant="body2"
-                        component="span"
-                        display="block"
+                        variant='body2'
+                        component='span'
+                        display='block'
                       >
-                        <Typography variant="body2" component="span">
-                          Marca:{" "}
+                        <Typography variant='body2' component='span'>
+                          Marca:{' '}
                         </Typography>
                         <Typography
-                          variant="body2"
-                          component="span"
-                          fontWeight="bold"
+                          variant='body2'
+                          component='span'
+                          fontWeight='bold'
                         >
                           {reserva.instrumento.marca}
                         </Typography>
                       </Typography>
                       <Typography
-                        variant="body2"
-                        component="span"
-                        display="block"
+                        variant='body2'
+                        component='span'
+                        display='block'
                       >
-                        <Typography variant="body2" component="span">
-                          Fecha de Inicio:{" "}
+                        <Typography variant='body2' component='span'>
+                          Fecha de Inicio:{' '}
                         </Typography>
                         <Typography
-                          variant="body2"
-                          component="span"
-                          fontWeight="bold"
+                          variant='body2'
+                          component='span'
+                          fontWeight='bold'
                         >
                           {formatDate(reserva.fechaInicio)}
                         </Typography>
                       </Typography>
                       <Typography
-                        variant="body2"
-                        component="span"
-                        display="block"
+                        variant='body2'
+                        component='span'
+                        display='block'
                       >
-                        <Typography variant="body2" component="span">
-                          Fecha de Término:{" "}
+                        <Typography variant='body2' component='span'>
+                          Fecha de Término:{' '}
                         </Typography>
                         <Typography
-                          variant="body2"
-                          component="span"
-                          fontWeight="bold"
+                          variant='body2'
+                          component='span'
+                          fontWeight='bold'
                         >
                           {formatDate(reserva.fechaFin)}
                         </Typography>
                       </Typography>
                       <Typography
-                        variant="body2"
-                        component="span"
-                        display="block"
+                        variant='body2'
+                        component='span'
+                        display='block'
                       >
-                        <Typography variant="body2" component="span">
-                          Punto de Retiro:{" "}
+                        <Typography variant='body2' component='span'>
+                          Punto de Retiro:{' '}
                         </Typography>
                         <Typography
-                          variant="body2"
-                          component="span"
-                          fontWeight="bold"
+                          variant='body2'
+                          component='span'
+                          fontWeight='bold'
                         >
                           {reserva.sucursal}
                         </Typography>
