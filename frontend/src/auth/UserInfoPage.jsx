@@ -226,7 +226,7 @@ export const UserInfoPage = () => {
         <Grid item xs={12} md={6}>
           <Grid
             item
-            sx={{ backgroundColor: "background.main", minWidth: 400 }}
+            sx={{ backgroundColor: "background.main", minWidth: 200 }}
             padding={5}
             borderRadius={5}
           >
@@ -352,7 +352,7 @@ export const UserInfoPage = () => {
             <Grid item marginBottom={2}>
               <Grid
                 item
-                sx={{ backgroundColor: "background.main", minWidth: 400 }}
+                sx={{ backgroundColor: "background.main", minWidth: 200 }}
                 padding={5}
                 borderRadius={5}
               >
@@ -362,7 +362,7 @@ export const UserInfoPage = () => {
             <Grid item>
               <Grid
                 item
-                sx={{ backgroundColor: "background.main", minWidth: 400 }}
+                sx={{ backgroundColor: "background.main", minWidth: 200 }}
                 padding={5}
                 borderRadius={5}
               >

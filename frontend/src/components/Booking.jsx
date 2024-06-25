@@ -177,11 +177,11 @@ export const Booking = () => {
     formik.setFieldValue("productoId", instrumento?.id);
     formik.setFieldValue(
       "fechaInicio",
-      moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD")+'T00:00:00.605Z'
+      moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD") + "T00:00:00.605Z"
     );
     formik.setFieldValue(
       "fechaFin",
-      moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD")+'T23:59:59.605Z'
+      moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD") + "T23:59:59.605Z"
     );
   }, [isLogged]);
 
@@ -207,15 +207,16 @@ export const Booking = () => {
     initialValues: {
       usuarioId: globalUserData.id,
       productoId: instrumento.id,
-      fechaInicio: moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD")+'T00:00:00.605Z',
-      fechaFin: moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD")+'T23:59:59.605Z',
+      fechaInicio:
+        moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD") + "T00:00:00.605Z",
+      fechaFin:
+        moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD") + "T23:59:59.605Z",
       sucursalId: null,
-      
     },
     onSubmit: (values) => {
       //enviarDatosReserva(values);
       console.log(values);
-      crearReserva(values)
+      crearReserva(values);
     },
   });
 
@@ -373,12 +374,12 @@ export const Booking = () => {
         width="100%"
         onClick={handleOpen}
         sx={{ mt: 2, width: "100%", padding: "1rem" }}
-        disabled={formik.values.sucursalId===null? true:false}
+        disabled={formik.values.sucursalId === null ? true : false}
       >
         {`CONFIRMAR RESERVA EN DIRECCIÓN: ${direccion}`}
       </Button>
 
-      <TableAllReservations reservas={reservas} />
+      {/* <TableAllReservations reservas={reservas} /> */}
       <Dialog
         open={open}
         onClose={handleClose}
