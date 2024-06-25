@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import React, { useState, useEffect } from 'react';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import {
   Container,
   Grid,
@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
   Button,
-} from "@mui/material";
+} from '@mui/material';
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -21,7 +21,7 @@ const GoogleMaps = ({ onLocationSelect }) => {
   });
   const [mapZoom, setMapZoom] = useState(3);
   const [selectedId, setSelectedId] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState('');
 
   useEffect(() => {
     const fetchSucursales = async () => {
@@ -30,7 +30,7 @@ const GoogleMaps = ({ onLocationSelect }) => {
           `${import.meta.env.VITE_API_URL}/sucursales`
         );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
 
@@ -44,7 +44,7 @@ const GoogleMaps = ({ onLocationSelect }) => {
         }));
         setLocations(formattedData);
       } catch (error) {
-        console.error("Error fetching sucursales:", error);
+        console.error('Error fetching sucursales:', error);
       }
     };
 
@@ -70,16 +70,16 @@ const GoogleMaps = ({ onLocationSelect }) => {
       <Grid
         container
         spacing={2}
-        sx={{ marginTop: "30px", marginBottom: "30px" }}
+        sx={{ marginTop: '30px', marginBottom: '30px' }}
       >
-        <Grid item xs={12} md={6} sx={{ backgroundColor: "#F9E9DE" }}>
+        <Grid item xs={12} md={6} sx={{ backgroundColor: '#F9E9DE' }}>
           <Typography
-            variant="h4"
-            sx={{ color: "#ff5500", fontWeight: "900", marginBottom: "10px" }}
+            variant='h4'
+            sx={{ color: '#ff5500', fontWeight: '900', marginBottom: '10px' }}
           >
             SUCURSALES DISPONIBLES:
           </Typography>
-          <Typography variant="h6">
+          <Typography variant='h6'>
             Selecciona el lugar que se más te acomode
           </Typography>
           <List>
@@ -106,27 +106,27 @@ const GoogleMaps = ({ onLocationSelect }) => {
           xs={12}
           md={6}
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <APIProvider apiKey={API_KEY}>
             <div
               style={{
-                width: "100%",
-                height: "500px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                width: '100%',
+                height: '500px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <Map
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: '100%', height: '100%' }}
                 center={mapCenter}
                 zoom={mapZoom}
-                gestureHandling={"greedy"}
+                gestureHandling={'greedy'}
                 disableDefaultUI={true}
                 onLoad={(map) => {
                   const marker = new google.maps.Marker({
@@ -143,16 +143,19 @@ const GoogleMaps = ({ onLocationSelect }) => {
             </div>
           </APIProvider>
           {selectedAddress && (
-            <Typography variant="body1" sx={{ marginTop: "20px" }}>
+            <Typography variant='body1' sx={{ marginTop: '20px' }}>
               Dirección: {selectedAddress}
             </Typography>
           )}
           <Button
-            variant="contained"
-            color="primary"
-            sx={{ marginTop: "20px" }}
+            variant='contained'
+            sx={{
+              marginTop: '20px',
+              backgroundColor: '#121312',
+              color: '#ffffff',
+            }}
             onClick={handleSendLocation}
-            disabled= {selectedId === null? true: false}
+            disabled={selectedId === null ? true : false}
           >
             CONFIRMAR PUNTO DE RETIRO
           </Button>
