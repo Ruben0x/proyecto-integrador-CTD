@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Container,
@@ -9,62 +9,22 @@ import {
   Typography,
   Avatar,
 } from '@mui/material';
-import axios from 'axios';
+import { useReservas } from '../../context/store/ReservasProvider';
 
 export const TableAllReservations = () => {
-  const [reservas, setReservas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { isLoading, reservasState, getAllReservas } = useReservas();
+  const { reservas } = reservasState;
 
   useEffect(() => {
-    const fetchReservas = async () => {
-      const loggedToken = sessionStorage.getItem('token');
-      if (!loggedToken) {
-        setError('No se encontró el token de autenticación');
-        setLoading(false);
-        return;
-      }
+    getAllReservas();
+  }, [getAllReservas]);
 
-      try {
-        const reservasResponse = await axios.get(
-          `${import.meta.env.VITE_API_URL}/reservas`,
-          {
-            headers: {
-              Authorization: `Bearer ${loggedToken}`,
-            },
-          }
-        );
-        const reservasData = reservasResponse.data;
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
-        const reservasDetalles = reservasData.map((reserva) => {
-          const imagenUrl =
-            reserva.imagen && reserva.imagen.length > 0
-              ? reserva.imagen[0]
-              : '/default-image.png';
-
-          const instrumento = {
-            nombre: reserva.nombre,
-            imagenUrl,
-          };
-
-          return {
-            ...reserva,
-            instrumento,
-          };
-        });
-
-        setReservas(reservasDetalles);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReservas();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Container
         sx={{
@@ -83,33 +43,6 @@ export const TableAllReservations = () => {
     );
   }
 
-  if (error) {
-    return (
-      <Container
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          marginTop: 2,
-          padding: 2,
-        }}
-      >
-        <Typography variant='h5' gutterBottom>
-          Error al cargar las reservas
-        </Typography>
-        <Typography variant='body1' color='textSecondary'>
-          {error}
-        </Typography>
-      </Container>
-    );
-  }
-
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-  console.log(reservas);
   return (
     <Container
       sx={{
@@ -140,12 +73,20 @@ export const TableAllReservations = () => {
                   justifyContent: 'space-between',
                   flexWrap: 'wrap',
                   padding: 1,
+                  textDecoration: 'none',
+                  color: 'inherit',
                 }}
+                component='a'
+                href={`/instrumentos/${reserva.id}`}
               >
                 <ListItemAvatar>
                   <Avatar
-                    src={reserva.instrumento.imagenUrl}
-                    alt={reserva.instrumento.nombre}
+                    src={
+                      reserva.imagen && reserva.imagen.length > 0
+                        ? reserva.imagen[0]
+                        : '/default-image.png'
+                    }
+                    alt={reserva.nombre}
                     sx={{ width: 50, height: 50 }}
                   />
                 </ListItemAvatar>
@@ -156,8 +97,12 @@ export const TableAllReservations = () => {
                         variant='body1'
                         component='span'
                         fontWeight='bold'
+                        sx={{
+                          color: 'inherit',
+                          textDecoration: 'none',
+                        }}
                       >
-                        {reserva.instrumento.nombre}
+                        {reserva.nombre}
                       </Typography>
                     </Box>
                   }

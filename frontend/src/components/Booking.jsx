@@ -115,6 +115,7 @@ export const Booking = () => {
       //enviarDatosReserva(values);
       console.log(values);
       crearReserva(values);
+      crearReserva(values);
     },
   });
 
