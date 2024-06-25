@@ -26,6 +26,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import GoogleMaps from "./GoogleMaps";
 import { TableAllReservations } from "../auth/components/TableAllReservations";
+import { crearReserva } from "../helpers/crearReserva";
 
 moment.locale("es", {
   months:
@@ -144,6 +145,8 @@ const productoHardCode = {
 };
 
 export const Booking = () => {
+  const [direccion, setDireccion] = useState([]);
+
   const validationSchema = Yup.object({
     sucursalId: Yup.string("Seleccione sucursal").required(
       "Debe seleccionar una sucursal"
@@ -174,11 +177,11 @@ export const Booking = () => {
     formik.setFieldValue("productoId", instrumento?.id);
     formik.setFieldValue(
       "fechaInicio",
-      moment(values[0], "YYYY/MM/DD").format("YYYY/MM/DD")
+      moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD")+'T00:00:00.605Z'
     );
     formik.setFieldValue(
       "fechaFin",
-      moment(values[1], "YYYY/MM/DD").format("YYYY/MM/DD")
+      moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD")+'T23:59:59.605Z'
     );
   }, [isLogged]);
 
@@ -194,7 +197,7 @@ export const Booking = () => {
       },
       fechaInicio: values.fechaInicio,
       fechaFin: values.fechaFin,
-      sucursal: values.sucursalAddress,
+      //sucursal: values.sucursalAddress,
     };
 
     setReservas([...reservas, nuevaReserva]);
@@ -204,20 +207,21 @@ export const Booking = () => {
     initialValues: {
       usuarioId: globalUserData.id,
       productoId: instrumento.id,
-      fechaInicio: moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD"),
-      fechaFin: moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD"),
-      sucursalId: "",
-      sucursalAddress: "",
+      fechaInicio: moment(values[0], "YYYY/MM/DD").format("YYYY-MM-DD")+'T00:00:00.605Z',
+      fechaFin: moment(values[1], "YYYY/MM/DD").format("YYYY-MM-DD")+'T23:59:59.605Z',
+      sucursalId: null,
+      
     },
     onSubmit: (values) => {
-      enviarDatosReserva(values);
+      //enviarDatosReserva(values);
       console.log(values);
+      crearReserva(values)
     },
   });
 
   const handleLocationSelect = (id, selectedAddress) => {
     formik.setFieldValue("sucursalId", id);
-    formik.setFieldValue("sucursalAddress", selectedAddress);
+    setDireccion(selectedAddress);
   };
 
   const handleCrearReserva = () => {
@@ -369,8 +373,9 @@ export const Booking = () => {
         width="100%"
         onClick={handleOpen}
         sx={{ mt: 2, width: "100%", padding: "1rem" }}
+        disabled={formik.values.sucursalId===null? true:false}
       >
-        CONFIRMAR RESERVA
+        {`CONFIRMAR RESERVA EN DIRECCIÓN: ${direccion}`}
       </Button>
 
       <TableAllReservations reservas={reservas} />
