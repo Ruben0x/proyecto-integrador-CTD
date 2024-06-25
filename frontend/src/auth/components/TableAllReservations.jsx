@@ -17,7 +17,7 @@ export const TableAllReservations = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchReservasYSucursales = async () => {
+    const fetchReservas = async () => {
       const loggedToken = sessionStorage.getItem('token');
       if (!loggedToken) {
         setError('No se encontró el token de autenticación');
@@ -36,53 +36,22 @@ export const TableAllReservations = () => {
         );
         const reservasData = reservasResponse.data;
 
-        const sucursalesResponse = await axios.get(
-          `${import.meta.env.VITE_API_URL}/sucursales`,
-          {
-            headers: {
-              Authorization: `Bearer ${loggedToken}`,
-            },
-          }
-        );
-        const sucursalesData = sucursalesResponse.data;
+        const reservasDetalles = reservasData.map((reserva) => {
+          const imagenUrl =
+            reserva.imagen && reserva.imagen.length > 0
+              ? reserva.imagen[0]
+              : '/default-image.png';
 
-        const sucursalesMap = sucursalesData.reduce((map, sucursal) => {
-          map[sucursal.id] = sucursal.adress;
-          return map;
-        }, {});
-        const reservasDetalles = await Promise.all(
-          reservasData.map(async (reserva) => {
-            const productoResponse = await axios.get(
-              `${import.meta.env.VITE_API_URL}/productos/${reserva.productoId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${loggedToken}`,
-                },
-              }
-            );
+          const instrumento = {
+            nombre: reserva.nombre,
+            imagenUrl,
+          };
 
-            const productoData = productoResponse.data;
-            const imagenUrl =
-              productoData.imagenes && productoData.imagenes.length > 0
-                ? productoData.imagenes[0].url
-                : '/default-image.png';
-
-            const instrumento = {
-              nombre: productoData.nombre,
-              imagenUrl,
-              marca: productoData.nombreMarca,
-            };
-
-            const sucursal =
-              sucursalesMap[reserva.sucursalId] || 'Sin sucursal asignada';
-
-            return {
-              ...reserva,
-              instrumento,
-              sucursal,
-            };
-          })
-        );
+          return {
+            ...reserva,
+            instrumento,
+          };
+        });
 
         setReservas(reservasDetalles);
       } catch (error) {
@@ -92,7 +61,7 @@ export const TableAllReservations = () => {
       }
     };
 
-    fetchReservasYSucursales();
+    fetchReservas();
   }, []);
 
   if (loading) {
@@ -194,22 +163,6 @@ export const TableAllReservations = () => {
                   }
                   secondary={
                     <Box component='span'>
-                      <Typography
-                        variant='body2'
-                        component='span'
-                        display='block'
-                      >
-                        <Typography variant='body2' component='span'>
-                          Marca:{' '}
-                        </Typography>
-                        <Typography
-                          variant='body2'
-                          component='span'
-                          fontWeight='bold'
-                        >
-                          {reserva.instrumento.marca}
-                        </Typography>
-                      </Typography>
                       <Typography
                         variant='body2'
                         component='span'
