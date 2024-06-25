@@ -152,7 +152,7 @@ const GoogleMaps = ({ onLocationSelect }) => {
             color="primary"
             sx={{ marginTop: "20px" }}
             onClick={handleSendLocation}
-            disabled= {selectedId === null? true: false}
+            disabled={selectedId === null ? true : false}
           >
             CONFIRMAR PUNTO DE RETIRO
           </Button>
