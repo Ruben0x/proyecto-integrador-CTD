@@ -4,6 +4,7 @@ import iconportalsonoro from '../assets/img/iconportalsonoro.png';
 export const WhatsappButton = () => {
   return (
     <FloatingWhatsApp
+      phoneNumber='+56988775000'
       allowEsc
       allowClickAway
       avatar={iconportalsonoro}
