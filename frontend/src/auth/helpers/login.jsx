@@ -79,9 +79,11 @@ export const logout = () => {
   sessionStorage.removeItem('globalUserData');
   localStorage.setItem('isLogged', JSON.stringify(false));
   sessionStorage.setItem('isLogged', JSON.stringify(false));
-
   localStorage.removeItem('isLogged');
   sessionStorage.removeItem('isLogged');
+  localStorage.removeItem('token');
+  sessionStorage.removeItem('token');
+
 
   setTimeout(() => {
     window.location.replace('/');
