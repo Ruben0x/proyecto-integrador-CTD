@@ -131,9 +131,9 @@ export const TableAllReservations = () => {
           </Typography>
         ) : (
           <List sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
-            {reservas.map((reserva) => (
+            {reservas.map((reserva, index) => (
               <ListItem
-                key={reserva.id}
+                key={`${reserva.id}-${index}`}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
