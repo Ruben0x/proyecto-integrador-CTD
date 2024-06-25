@@ -113,8 +113,7 @@ export const Booking = () => {
     },
     onSubmit: (values) => {
       //enviarDatosReserva(values);
-      console.log(values);
-      crearReserva(values);
+      // console.log(values);
       crearReserva(values);
     },
   });
