@@ -2,15 +2,18 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { Box, Button, sliderClasses,  } from '@mui/material';
+import { Box, Button, sliderClasses } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export default function MediaCardXS({ imagen, categoria, idCategoria, onClick,
-  arrayFilter, seleccionState}) {
-
+export default function MediaCardXS({
+  imagen,
+  categoria,
+  idCategoria,
+  onClick,
+  arrayFilter,
+  seleccionState,
+}) {
   const [seleccion, setSeleccion] = useState(seleccionState);
-
-
 
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -18,12 +21,12 @@ export default function MediaCardXS({ imagen, categoria, idCategoria, onClick,
       setIsLoading(false);
     }, 100);
   }, []);
-  
+
   const handleClick = () => {
     setSeleccion(!seleccion);
     onClick(idCategoria);
   };
-  
+
   //estilo para el 'strip' contenedor de texto
   const stripStylesInactive = {
     position: 'absolute',
@@ -36,7 +39,7 @@ export default function MediaCardXS({ imagen, categoria, idCategoria, onClick,
     alignItems: 'center',
     paddingLeft: '10px',
   };
-  
+
   const stripStylesActive = {
     position: 'absolute',
     bottom: '0px',
@@ -49,39 +52,35 @@ export default function MediaCardXS({ imagen, categoria, idCategoria, onClick,
     paddingLeft: '10px',
   };
 
-
   return (
-    <Button sx={{
-      padding:'0'}
-    
-    }
-    onClick={handleClick}>
-    <Card
+    <Button
       sx={{
-        width: '300px',
-        height: '50px',
-        position: 'relative',
-        margin: '10px',
-      }} 
+        padding: '0',
+      }}
+      onClick={handleClick}
     >
-             
+      <Card
+        sx={{
+          width: '300px',
+          height: '50px',
+          position: 'relative',
+          margin: '10px',
+        }}
+      >
         <CardMedia
           component='img'
           image={imagen}
           title={categoria}
           height='100%'
-          
+          alt={categoria}
         />
-      
 
-      <Box sx={seleccion? stripStylesActive : stripStylesInactive}>
-        <Typography variant='h5' component='div' color={'#FFFFFF'}>
-          {categoria.toUpperCase()}
-        </Typography>
-      </Box>
-
-  
-    </Card>
+        <Box sx={seleccion ? stripStylesActive : stripStylesInactive}>
+          <Typography variant='h5' component='div' color={'#FFFFFF'}>
+            {categoria.toUpperCase()}
+          </Typography>
+        </Box>
+      </Card>
     </Button>
   );
 }

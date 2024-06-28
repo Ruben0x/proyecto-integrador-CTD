@@ -18,7 +18,7 @@ export const login = async (
     });
     const loginResponse = response.data;
 
-    console.log(loginResponse);
+    // console.log(loginResponse);
     if (loginResponse?.statusCode === 400) {
       errorMsg = loginResponse.message;
       throw new Error(errorMsg);
@@ -83,7 +83,6 @@ export const logout = () => {
   sessionStorage.removeItem('isLogged');
   localStorage.removeItem('token');
   sessionStorage.removeItem('token');
-
 
   setTimeout(() => {
     window.location.replace('/');
