@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import {
   Box,
+  CircularProgress,
   Container,
   List,
   ListItem,
@@ -39,6 +40,7 @@ export const TableAllReservations = () => {
         <Typography variant='h5' gutterBottom>
           Cargando reservas...
         </Typography>
+        <CircularProgress />
       </Container>
     );
   }
