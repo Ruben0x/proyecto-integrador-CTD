@@ -1,5 +1,3 @@
-// //https://www.npmjs.com/package/react-multi-date-picker
-
 import { useMediaQuery, useTheme } from '@mui/material';
 import '../styles/calendar.css';
 import React, { useState, useEffect } from 'react';
@@ -38,7 +36,9 @@ export const Calendario = ({ setSelectedDates }) => {
 
   useEffect(() => {
     setSelectedDates(
-      values.map((date) => (date instanceof DateObject ? date.toDate() : date))
+      (values || []).map((date) =>
+        date instanceof DateObject ? date.toDate() : date
+      )
     );
   }, [values]);
 
@@ -46,7 +46,7 @@ export const Calendario = ({ setSelectedDates }) => {
     <DatePicker
       className='bg-dark orange'
       value={values}
-      onChange={setValues}
+      onChange={(newValues) => setValues(newValues || [])}
       range
       numberOfMonths={!isSmallScreen ? 2 : 1}
       weekStartDayIndex={1}
@@ -61,6 +61,7 @@ export const Calendario = ({ setSelectedDates }) => {
         height: '52px',
         fontSize: '16px',
         padding: 0,
+        // fontFamily: 'Roboto',
       }}
       containerStyle={{
         width: '100%',
