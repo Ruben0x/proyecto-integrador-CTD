@@ -66,6 +66,8 @@ export const Booking = () => {
   const nombre = `${globalUserData?.nombre} ${globalUserData?.apellido}`;
   const email = globalUserData?.email;
 
+  const dateInicio = moment(values[0], 'YYYY/MM/DD');
+  const dateFin = moment(values[1], 'YYYY/MM/DD');
   useEffect(() => {
     if (!isLogged) {
       window.location.replace('/auth/login');
@@ -75,31 +77,18 @@ export const Booking = () => {
     formik.setFieldValue('productoId', instrumento?.id);
     formik.setFieldValue(
       'fechaInicio',
-      moment(values[0], 'YYYY/MM/DD').format('YYYY-MM-DD') + 'T12:00:00.605Z'
+      dateInicio.format('YYYY-MM-DD') + 'T12:00:00.605Z'
     );
     formik.setFieldValue(
       'fechaFin',
-      moment(values[1], 'YYYY/MM/DD').format('YYYY-MM-DD') + 'T23:59:59.605Z'
+      dateFin.format('YYYY-MM-DD') + 'T23:59:59.605Z'
     );
   }, [isLogged]);
 
-  const formattedDateInicio = moment(values[0], 'YYYY/MM/DD').format('DD MMM');
-  const formattedDateFin = moment(values[1], 'YYYY/MM/DD').format('DD MMM');
+  const formattedDateInicio = dateInicio.format('DD MMM');
+  const formattedDateFin = dateFin.format('DD MMM');
 
-  const enviarDatosReserva = (values) => {
-    const nuevaReserva = {
-      id: reservas.length + 1,
-      instrumento: {
-        nombre: instrumento.nombre,
-        imagenUrl: instrumento.imagenes[0].url,
-      },
-      fechaInicio: values.fechaInicio,
-      fechaFin: values.fechaFin,
-      //sucursal: values.sucursalAddress,
-    };
-
-    setReservas([...reservas, nuevaReserva]);
-  };
+  const diferenciaDias = dateFin.diff(dateInicio, 'days') + 1;
 
   const formik = useFormik({
     initialValues: {
@@ -112,8 +101,6 @@ export const Booking = () => {
       sucursalId: null,
     },
     onSubmit: (values) => {
-      //enviarDatosReserva(values);
-      // console.log(values);
       crearReserva(values);
     },
   });
@@ -154,7 +141,10 @@ export const Booking = () => {
         justifyContent='center'
       >
         <Grid item sx={{ width: '100%' }}>
-          <InstrumentCardResponsiveXS instrument={instrumento} />
+          <InstrumentCardResponsiveXS
+            instrument={instrumento}
+            diasReservados={diferenciaDias}
+          />
         </Grid>
 
         <Grid item sx={{ width: '100%', margin: '20px 0px' }}>
@@ -283,7 +273,7 @@ export const Booking = () => {
         sx={{ mt: 2, width: '100%', padding: '1rem' }}
         disabled={formik.values.sucursalId === null ? true : false}
       >
-        {`CONFIRMAR RESERVA EN DIRECCIÓN: ${direccion}`}
+        {`RESERVA EN DIRECCIÓN: ${direccion}`}
       </Button>
 
       {/* <TableAllReservations reservas={reservas} /> */}

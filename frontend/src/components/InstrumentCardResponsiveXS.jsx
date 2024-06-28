@@ -2,11 +2,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Box, } from '@mui/material';
+import { Box } from '@mui/material';
 
-
-export const InstrumentCardResponsiveXS = ({ instrument}) => {
-
+export const InstrumentCardResponsiveXS = ({ instrument, diasReservados }) => {
   const {
     id,
     nombre,
@@ -56,7 +54,7 @@ export const InstrumentCardResponsiveXS = ({ instrument}) => {
         textAlign: 'left',
         position: 'relative',
         width: '100%',
-        minWidth:'100%',
+        minWidth: '100%',
         margin: '0 auto',
       }}
     >
@@ -71,21 +69,19 @@ export const InstrumentCardResponsiveXS = ({ instrument}) => {
           marginBottom: { xs: '0', md: '0' },
         }}
       >
-          <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-            <CardMedia
-              component='img'
-              sx={{ width: '100%', height: '100%',objectFit: 'cover'}}
-              image={obtenerUrlImagen()}
-              alt='Instrumento'
-              
-            />
-            <Box sx={stripStyles}>
-              <Typography variant='h5' component='div' color={'#FFFFFF'}>
-                {nombreCategoria}
-              </Typography>
-            </Box>
+        <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+          <CardMedia
+            component='img'
+            sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            image={obtenerUrlImagen()}
+            alt='Instrumento'
+          />
+          <Box sx={stripStyles}>
+            <Typography variant='h5' component='div' color={'#FFFFFF'}>
+              {nombreCategoria}
+            </Typography>
           </Box>
-
+        </Box>
       </Card>
       <Card
         sx={{
@@ -117,7 +113,13 @@ export const InstrumentCardResponsiveXS = ({ instrument}) => {
             component='div'
             sx={{ display: 'flex', alignItems: 'center' }}
           >
-            ${precio} <Typography color='white'> /diario</Typography>
+            <Box component={'span'} color='white' pr={1}>
+              Valor Total:
+            </Box>
+            ${precio * diasReservados}
+            {/* <Box component={'span'} color='white'>
+              por {diasReservados} días
+            </Box> */}
           </Typography>
           <Typography color='white' pt={1} variant='subtitle2'>
             {descripcion}
