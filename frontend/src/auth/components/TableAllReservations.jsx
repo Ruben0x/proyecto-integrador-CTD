@@ -14,11 +14,10 @@ import { useReservas } from '../../context/store/ReservasProvider';
 
 export const TableAllReservations = () => {
   const { isLoading, reservasState, getAllReservas } = useReservas();
-  const { reservas } = reservasState;
 
   useEffect(() => {
     getAllReservas();
-  }, [getAllReservas]);
+  }, []);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -60,13 +59,13 @@ export const TableAllReservations = () => {
         RESERVAS
       </Typography>
       <Box sx={{ width: '100%', textAlign: 'center' }}>
-        {reservas.length === 0 ? (
+        {reservasState.reservas.length === 0 ? (
           <Typography variant='body1' color='textSecondary'>
             No tienes reservas actualmente
           </Typography>
         ) : (
           <List sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
-            {reservas.map((reserva, index) => (
+            {reservasState.reservas.map((reserva, index) => (
               <ListItem
                 key={`${reserva.id}-${index}`}
                 sx={{

@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  CircularProgress,
 } from '@mui/material';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { AuthLayout } from '../auth/layout/AuthLayout';
@@ -28,6 +29,7 @@ import GoogleMaps from './GoogleMaps';
 import { TableAllReservations } from '../auth/components/TableAllReservations';
 import { crearReserva } from '../helpers/crearReserva';
 import { toast } from 'sonner';
+import { useReservas } from '../context/store/ReservasProvider';
 
 moment.locale('es', {
   months:
@@ -42,21 +44,14 @@ moment.locale('es', {
 
 export const Booking = () => {
   const [direccion, setDireccion] = useState([]);
-
   const navigate = useNavigate();
-
-  // const validationSchema = Yup.object({
-  //   sucursalId: Yup.string('Seleccione sucursal').required(
-  //     'Debe seleccionar una sucursal'
-  //   ),
-  // });
-
   const location = useLocation();
   const { state } = location;
-  const [reservas, setReservas] = useState([]);
   const instrumento = state ? state.instrumento : null;
   const values = state ? state.values : null;
   const [open, setOpen] = useState(false);
+  const { getAllReservas } = useReservas();
+  const [loading, setLoading] = useState(false);
 
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
   const iniciales = [
@@ -100,27 +95,26 @@ export const Booking = () => {
         moment(values[1], 'YYYY/MM/DD').format('YYYY-MM-DD') + 'T23:59:59.605Z',
       sucursalId: null,
     },
-    onSubmit: (values) => {
-      crearReserva(values);
+    onSubmit: async (values) => {
+      try {
+        await crearReserva(values);
+        await getAllReservas();
+        setLoading(false);
+        toast.success('Producto reservado con éxito');
+        handleClose();
+        navigate('/auth/user');
+      } catch (error) {
+        console.log(error.message);
+        toast.success('Error al reservar el producto');
+        setLoading(false);
+        handleClose();
+      }
     },
   });
 
   const handleLocationSelect = (id, selectedAddress) => {
     formik.setFieldValue('sucursalId', id);
     setDireccion(selectedAddress);
-  };
-
-  const handleCrearReserva = () => {
-    try {
-      formik.handleSubmit();
-      toast.success('Producto reservado con éxito');
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        navigate('/auth/user');
-      }, 500);
-    }
   };
 
   const handleOpen = () => {
@@ -277,6 +271,7 @@ export const Booking = () => {
       </Button>
 
       {/* <TableAllReservations reservas={reservas} /> */}
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -286,32 +281,45 @@ export const Booking = () => {
         maxWidth='xs'
         sx={{ textAlign: 'center' }}
       >
-        <DialogContent>
-          <ErrorOutlineOutlinedIcon sx={{ fontSize: 150 }} color='warning' />
-        </DialogContent>
-        <DialogTitle id='alert-dialog-title'>Confirmar Reserva</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            ¿Estás seguro de que deseas confirmar esta reserva?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='warning'>
-            Cancelar
-          </Button>
-          <Button
-            // component={RouterLink}
-            // to='/auth/user'
-            onClick={() => {
-              handleClose();
-              handleCrearReserva();
-            }}
-            color='primary'
-            autoFocus
-          >
-            Confirmar
-          </Button>
-        </DialogActions>
+        {loading ? (
+          <DialogContent>
+            <CircularProgress />
+            <DialogTitle id='alert-dialog-title'>Cargando ...</DialogTitle>
+          </DialogContent>
+        ) : (
+          <>
+            <DialogContent>
+              <ErrorOutlineOutlinedIcon
+                sx={{ fontSize: 150 }}
+                color='warning'
+              />
+            </DialogContent>
+            <DialogTitle id='alert-dialog-title'>Confirmar Reserva</DialogTitle>
+            <DialogContent>
+              <DialogContentText id='alert-dialog-description'>
+                ¿Estás seguro de que deseas confirmar esta reserva?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color='warning'>
+                Cancelar
+              </Button>
+              <Button
+                // component={RouterLink}
+                // to='/auth/user'
+                onClick={() => {
+                  setLoading(true);
+                  formik.handleSubmit();
+                  // handleCrearReserva();
+                }}
+                color='primary'
+                autoFocus
+              >
+                Confirmar
+              </Button>
+            </DialogActions>
+          </>
+        )}
       </Dialog>
     </AuthLayout>
   );
