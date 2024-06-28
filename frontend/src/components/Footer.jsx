@@ -14,7 +14,7 @@ export const Footer = () => {
         <div className='footer-logo'>
           {/* columna 1 - logo */}
           <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <img src={LOGO} alt='' />
+            <img src={LOGO} alt='portal sonoro logo' />
           </Link>
         </div>
 
@@ -30,19 +30,19 @@ export const Footer = () => {
           {/* columna 3 - iconos */}
           <ul className='Lista-sin-estilo'>
             <li>
-              <img src={facebook} alt='' />
+              <img src={facebook} alt='facebook logo' />
             </li>
             <li>
-              <img src={instagram} alt='' />
+              <img src={instagram} alt='instagram logo' />
             </li>
             <li>
-              <img src={tiktok} alt='' />
+              <img src={tiktok} alt='tiktok logo' />
             </li>
             <li>
-              <img src={youtube} alt='' />
+              <img src={youtube} alt='youtube logo' />
             </li>
             <li>
-              <img src={whatsapp} alt='' />
+              <img src={whatsapp} alt='whatsapp logo' />
             </li>
           </ul>
         </div>

@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Avatar, Divider } from '@mui/material';
 import logoportalsonoroprincipal from '../assets/img/logoportalsonoroprincipal.png';
 import logomobile from '../assets/img/logomobile.png';
@@ -26,12 +26,9 @@ const pagesSites = [
   { title: 'Iniciar Sesión', site: '/auth/login' },
 ];
 
-//iniciales debe extraerse del back, una vez logeado
-const iniciales = ['P', 'S'];
-const nombre = 'Portal Sonoro';
-
 function ResponsiveAppBar() {
   const { isLogged, globalUserData } = useContext(GlobalUserDataContext);
+  const navigate = useNavigate();
 
   const iniciales = [
     globalUserData?.nombre.charAt(0).toUpperCase(),
@@ -53,15 +50,26 @@ function ResponsiveAppBar() {
     <AppBar position='sticky' color='neutralColor'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <Link
+          {/* <Link
             component={RouterLink}
             to={'/'}
             style={{ textDecoration: 'none' }}
+            aria-label='logo redirige a home'
+          > */}
+          <Divider
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              mr: 1,
+              cursor: 'pointer',
+            }}
           >
-            <Divider sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-              <img src={logoportalsonoroprincipal} alt='' />
-            </Divider>
-          </Link>
+            <img
+              src={logoportalsonoroprincipal}
+              alt='portal sonoro logo'
+              onClick={() => navigate('/')}
+            />
+          </Divider>
+          {/* </Link> */}
           <Typography
             variant='h6'
             noWrap
@@ -76,15 +84,24 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           ></Typography>
-          <Link
+          {/* <Link
             component={RouterLink}
             to={'/'}
             style={{ textDecoration: 'none' }}
+          > */}
+          <Divider
+            sx={{
+              display: { xs: 'flex', md: 'none', cursor: 'pointer' },
+              mr: 1,
+            }}
           >
-            <Divider sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-              <img src={logomobile} alt='' />
-            </Divider>
-          </Link>
+            <img
+              src={logomobile}
+              alt='portal sonoro logo'
+              onClick={() => navigate('/')}
+            />
+          </Divider>
+          {/* </Link> */}
           <Typography
             variant='h5'
             noWrap
@@ -174,46 +191,50 @@ function ResponsiveAppBar() {
                 : { xs: 'none', sm: 'flex', justifyContent: 'flex-end' },
             }}
           >
-            <Link
+            {/* <Link
               component={RouterLink}
               to={'/auth/registro'}
               style={{ textDecoration: 'none' }}
+            > */}
+            <Button
+              variant='contained'
+              color='terceario'
+              size='large'
+              sx={{
+                my: 2,
+                color: 'white',
+                display: 'block',
+                borderRadius: 70,
+                fontSize: '.75rem',
+              }}
+              onClick={() => navigate('/auth/registro')}
             >
-              <Button
-                variant='contained'
-                color='terceario'
-                sx={{
-                  my: 2,
-                  color: 'white',
-                  display: 'block',
-                  borderRadius: 70,
-                  fontSize: '.5rem',
-                }}
-              >
-                Crear Cuenta
-              </Button>
-            </Link>
+              Crear Cuenta
+            </Button>
             {/* </Link> */}
-            <Link
+            {/* </Link> */}
+            {/* <Link
               component={RouterLink}
               to={'/auth/login'}
               style={{ textDecoration: 'none' }}
+            > */}
+            <Button
+              variant='contained'
+              color='terceario'
+              size='large'
+              sx={{
+                my: 2,
+                ml: 2,
+                color: 'white',
+                display: 'block',
+                borderRadius: 70,
+                fontSize: '.75rem',
+              }}
+              onClick={() => navigate('/auth/login')}
             >
-              <Button
-                variant='contained'
-                color='terceario'
-                sx={{
-                  my: 2,
-                  color: 'white',
-                  display: 'block',
-                  borderRadius: 70,
-                  fontSize: '.5rem',
-                  marginLeft: '0.5rem',
-                }}
-              >
-                Iniciar Sesión
-              </Button>
-            </Link>
+              Iniciar Sesión
+            </Button>
+            {/* </Link> */}
           </Box>
 
           <Box

@@ -6,6 +6,7 @@ import { Calendario } from './Calendario';
 import { useFormik } from 'formik';
 import { BarraAutocompletado } from './BarraAutocompletado';
 import { useNavigate } from 'react-router-dom';
+import Banner from '../assets/img/Banner.webp';
 import axios from 'axios';
 
 const SearchSection = (props) => {
@@ -60,7 +61,8 @@ const SearchSection = (props) => {
       maxWidth='100%'
       className='section-buscar'
       sx={{
-        backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
+        // backgroundImage: `url('/images/banner-portal-sonoro 1.png')`,
+        backgroundImage: `url(${Banner})`,
         backgroundSize: 'cover',
         minHeight: '300px',
         paddingBottom: '10px',

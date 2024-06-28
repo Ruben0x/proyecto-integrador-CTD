@@ -48,6 +48,7 @@ export default function MediaCard({ imagen, categoria }) {
           component='img'
           image={imagen}
           title={categoria}
+          alt={`imagen de categoria: ${categoria}`}
           height='100%'
         />
       )}

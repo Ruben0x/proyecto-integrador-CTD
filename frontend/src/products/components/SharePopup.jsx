@@ -17,7 +17,12 @@ export default function SimplePopup({ url, title }) {
 
   return (
     <>
-      <IconButton aria-describedby={id} type='button' onClick={handleClick}>
+      <IconButton
+        aria-describedby={id}
+        title='boton compartir'
+        type='button'
+        onClick={handleClick}
+      >
         <ShareIcon color='primary' />
       </IconButton>
 

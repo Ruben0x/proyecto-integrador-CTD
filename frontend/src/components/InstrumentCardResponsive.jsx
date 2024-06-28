@@ -10,7 +10,7 @@ import { Box, CardActions, CircularProgress, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { GlobalUserDataContext } from '../auth/helpers/globalUserData';
 import { useFavoritos } from '../context/store/FavoritosProvider';
-import SimplePopup from './SharePopup';
+import SimplePopup from '../products/components/SharePopup';
 
 export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
   const [favs, setFavs] = useState(instrument.esFavorito);
@@ -140,7 +140,7 @@ export const InstrumentCardResponsive = ({ instrument, onFavChange }) => {
               component='img'
               sx={{ width: '100%', height: '100%' }}
               image={obtenerUrlImagen()}
-              alt='Instrumento'
+              alt={nombre}
             />
             <Box sx={stripStyles}>
               <Typography variant='h5' component='div' color={'#FFFFFF'}>

@@ -17,9 +17,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import WestIcon from '@mui/icons-material/West';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
-import ShareIcon from '@mui/icons-material/Share';
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Characteristics } from '../components/Characteristics';
 import { GridImagenes } from '../components/GridImagenes';
 import { GlobalUserDataContext } from '../../auth/helpers/globalUserData';
@@ -29,7 +27,6 @@ import { useUsers } from '../../context/store/UsersProvider';
 import { useFavoritos } from '../../context/store/FavoritosProvider';
 import { toast } from 'sonner';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import SimplePopup from '../../components/SharePopup';
 import { userProductos } from '../../context/store/ProductosProvider';
 import { useInstrumento } from '../hooks/useInstrumento';
 import Accordion from '@mui/material/Accordion';
@@ -38,6 +35,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import IniciarReserva from '../components/IniciarReserva';
+import SimplePopup from '../components/SharePopup';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -130,6 +128,7 @@ export const ProductPage = () => {
                 size='large'
                 aria-label='add to favorites'
                 onClick={favs ? handleClickOpen : handleAddFavs}
+                title='botonCompartir'
               >
                 {favs ? (
                   <FavoriteIcon color='buttonRed' />
