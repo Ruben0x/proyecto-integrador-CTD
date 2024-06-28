@@ -353,7 +353,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
           </Button>
         </Grid>
       ) : (
-        <Grid container justifyContent={"center"}>
+        <Grid container justifyContent={"center"} sx={{ marginTop: "1rem" }}>
           {!isSmallScreen ? (
             <Calendar
               className="bg-dark orange"
@@ -437,6 +437,13 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
           padding: 20,
         }}
       >
+        <div style={{ marginTop: "1em" }}>
+          <Checkbox
+            checked={checkboxChecked}
+            onChange={(e) => setCheckboxChecked(e.target.checked)}
+          />
+          He leído y estoy de acuerdo con las políticas de reserva
+        </div>
         <Button
           fullWidth
           variant="contained"
@@ -447,6 +454,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
             fontWeight: 600,
             color: "#ffffff",
             maxWidth: "250px",
+            marginTop: "1rem",
           }}
         >
           INICIAR RESERVA
@@ -457,13 +465,6 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
             reserva disponibles.
           </Typography>
         )}
-        <div style={{ marginTop: "1em" }}>
-          <Checkbox
-            checked={checkboxChecked}
-            onChange={(e) => setCheckboxChecked(e.target.checked)}
-          />
-          He leído y estoy de acuerdo con las políticas de reserva
-        </div>
       </div>
     </>
   );
