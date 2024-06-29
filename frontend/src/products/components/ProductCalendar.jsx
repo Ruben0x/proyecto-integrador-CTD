@@ -135,6 +135,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                   setValues(range);
                 } else if (range.length === 2) {
                   toast.warning('Este rango de fechas no está disponible.');
+                  setValues([null, null]);
                 }
               }}
               mapDays={({ date }) => {
@@ -170,6 +171,7 @@ export const ProductCalendar = ({ fechasReservadas, instrumento }) => {
                   setValues(range);
                 } else if (range.length === 2) {
                   toast.warning('Este rango de fechas no está disponible.');
+                  setValues([null, null]);
                 }
               }}
               mapDays={({ date }) => {
