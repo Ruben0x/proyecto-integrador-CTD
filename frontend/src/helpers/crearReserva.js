@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const apiUrl = import.meta.env.VITE_API_URL;
-let reservaId;
 const loggedToken = sessionStorage.getItem('token');
 
 export const crearReserva = async (datos) => {
@@ -11,16 +11,12 @@ export const crearReserva = async (datos) => {
         Authorization: `Bearer ${loggedToken}`,
       },
     });
-
-    if (res.status === 201) {
-      // console.log(res);
-      const reservaId = res.data.id;
-      // console.log(`ID de reserva ${reservaId}`);
-      await modReserva(datos, reservaId); // Asegúrate de que modReserva sea también una función asíncrona si estás utilizando async/await aquí
-    }
+    const reservaId = res.data.id;
+    await modReserva(datos, reservaId);
+    // toast.success('Producto reservado con éxito');
   } catch (error) {
     console.error(error.message);
-    //toast.error(error.response.data.message);
+    toast.error(error.response.data.message);
   }
 };
 
@@ -33,12 +29,17 @@ const modReserva = async (datos, id) => {
       },
     });
 
-    if (res.status === 201) {
-      console.log(res);
-      //toast.success(res.data.message);
+    if (res.status === 200) {
+      toast.success('Producto reservado con éxito');
+      setTimeout(() => {
+        location.replace('/auth/user');
+      }, 500);
     }
   } catch (error) {
-    console.log(error);
-    //toast.error(error.response.data.message);
+    // console.log(error.message);
+    toast.error(error.response.data.message);
+    setTimeout(() => {
+      location.replace(`/instrumentos/${datos.productoId}`);
+    }, 500);
   }
 };
