@@ -44,7 +44,6 @@ moment.locale('es', {
 
 export const Booking = () => {
   const [direccion, setDireccion] = useState([]);
-  const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
   const instrumento = state ? state.instrumento : null;
@@ -99,15 +98,11 @@ export const Booking = () => {
       try {
         await crearReserva(values);
         await getAllReservas();
-        setLoading(false);
-        toast.success('Producto reservado con éxito');
         handleClose();
-        navigate('/auth/user');
+        // setLoading(false);
       } catch (error) {
-        console.log(error.message);
-        toast.success('Error al reservar el producto');
-        setLoading(false);
         handleClose();
+        // setLoading(false);
       }
     },
   });
